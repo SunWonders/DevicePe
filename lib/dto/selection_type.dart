@@ -1,0 +1,1 @@
+enum SelectionType { single, multiple }
