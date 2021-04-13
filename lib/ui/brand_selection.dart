@@ -1,5 +1,7 @@
-import 'package:devicepe_client/dto/selection_item.dart';
+import 'package:devicepe_client/repositories/network/controllers/brand_controller.dart';
+import 'package:devicepe_client/repositories/network/models/brand_detail_response.dart';
 import 'package:devicepe_client/ui/model_selection.dart';
+import 'package:devicepe_client/ui/progress_bar.dart';
 import 'package:devicepe_client/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -12,42 +14,26 @@ class BrandSelectionPage extends StatefulWidget {
 }
 
 class _BrandSelectionPageState extends State<BrandSelectionPage> {
-  final List<SelectionItem> _icons = [
-    SelectionItem(
-        "https://assets.stickpng.com/images/580b57fcd9996e24bc43c516.png",
-        "Apple"),
-    SelectionItem(
-        "https://assets.stickpng.com/images/580b57fcd9996e24bc43c51f.png",
-        "Google"),
-    SelectionItem(
-        "https://cdn.iconscout.com/icon/free/png-512/samsung-226432.png",
-        "Samsung"),
-    SelectionItem(
-        "https://www.pngitem.com/pimgs/m/77-776203_moto-logo-motorola-logo-hd-png-download.png",
-        "Moto"),
-    SelectionItem(
-        "https://brandslogos.com/wp-content/uploads/images/large/oneplus-logo.png",
-        "One Plus"),
-  ];
+  BrandController brandController = Get.put(BrandController());
 
-  SelectionItem _selectedIcons;
+  BrandData _selectedBrand;
 
   Widget gridViewSelection() {
     return GridView.count(
       crossAxisCount:
           MediaQuery.of(context).orientation == Orientation.portrait ? 3 : 5,
       padding: EdgeInsets.symmetric(horizontal: 1.0, vertical: 1),
-      children: _icons.map((SelectionItem iconData) {
+      children: brandController.brandDetails.map((brandData) {
         return GestureDetector(
           onTap: () {
             setState(() {
-              _selectedIcons = iconData;
+              _selectedBrand = brandData;
             });
           },
           child: BrandGridItem(
-              iconData,
-              _selectedIcons ==
-                  iconData), // Pass iconData and a boolean that specifies if the icon is selected or not
+              brandData,
+              _selectedBrand ==
+                  brandData), // Pass iconData and a boolean that specifies if the icon is selected or not
         );
       }).toList(), // Convert the map to a list of widgets
     );
@@ -64,14 +50,18 @@ class _BrandSelectionPageState extends State<BrandSelectionPage> {
           style: TextStyle(color: AppColors.whiteText),
         ),
       ),
-      body: gridViewSelection(),
+      body: Obx(
+        () => brandController.isLoading.value
+            ? ProgressBar()
+            : gridViewSelection(),
+      ),
       floatingActionButton: ElevatedButton(
         style: ButtonStyle(
           backgroundColor:
               MaterialStateProperty.all<Color>(AppColors.primaryLight),
         ),
         onPressed: () {
-          if (_selectedIcons == null) {
+          if (_selectedBrand == null) {
             Get.defaultDialog(
                 title: "🙁  Alert 🙁",
                 middleText: "Please Select Brand to continue",
@@ -91,7 +81,7 @@ class _BrandSelectionPageState extends State<BrandSelectionPage> {
 }
 
 class BrandGridItem extends StatelessWidget {
-  final SelectionItem _brandDetail;
+  final BrandData _brandDetail;
   final bool _isSelected;
 
   BrandGridItem(this._brandDetail, this._isSelected);
@@ -139,15 +129,29 @@ class BrandGridItem extends StatelessWidget {
                   )
                 : Container(),
             Image.network(
-              _brandDetail.imageUrl,
+              _brandDetail.brandIconUrl,
               height: 48,
-              fit: BoxFit.fitWidth,
+              errorBuilder: (context, error, stackTrace) {
+                print(error); //do something
+                return Center(
+                  child: Image(
+                    image: AssetImage('assets/images/mobile.png'),
+                  ),
+                );
+              },
+              loadingBuilder: (BuildContext context, Widget child,
+                  ImageChunkEvent loadingProgress) {
+                if (loadingProgress == null) return child;
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              },
             ),
             SizedBox(
               height: 5.0,
             ),
             Text(
-              _brandDetail.name,
+              _brandDetail.brandName,
               style: TextStyle(
                 color: AppColors.primaryDark,
                 fontSize: 18,
