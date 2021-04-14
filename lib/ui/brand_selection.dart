@@ -1,8 +1,10 @@
 import 'package:devicepe_client/repositories/network/controllers/brand_controller.dart';
 import 'package:devicepe_client/repositories/network/models/brand_detail_response.dart';
+import 'package:devicepe_client/ui/common/no_dat_found.dart';
 import 'package:devicepe_client/ui/model_selection.dart';
-import 'package:devicepe_client/ui/progress_bar.dart';
+import 'package:devicepe_client/ui/common/progress_bar.dart';
 import 'package:devicepe_client/utils/colors.dart';
+import 'package:devicepe_client/utils/sahred_pref.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -19,24 +21,28 @@ class _BrandSelectionPageState extends State<BrandSelectionPage> {
   BrandData _selectedBrand;
 
   Widget gridViewSelection() {
-    return GridView.count(
-      crossAxisCount:
-          MediaQuery.of(context).orientation == Orientation.portrait ? 3 : 5,
-      padding: EdgeInsets.symmetric(horizontal: 1.0, vertical: 1),
-      children: brandController.brandDetails.map((brandData) {
-        return GestureDetector(
-          onTap: () {
-            setState(() {
-              _selectedBrand = brandData;
-            });
-          },
-          child: BrandGridItem(
-              brandData,
-              _selectedBrand ==
-                  brandData), // Pass iconData and a boolean that specifies if the icon is selected or not
-        );
-      }).toList(), // Convert the map to a list of widgets
-    );
+    return brandController.brandDetails.isNotEmpty
+        ? GridView.count(
+            crossAxisCount:
+                MediaQuery.of(context).orientation == Orientation.portrait
+                    ? 3
+                    : 5,
+            padding: EdgeInsets.symmetric(horizontal: 1.0, vertical: 1),
+            children: brandController.brandDetails.map((brandData) {
+              return GestureDetector(
+                onTap: () {
+                  setState(() {
+                    _selectedBrand = brandData;
+                  });
+                },
+                child: BrandGridItem(
+                    brandData,
+                    _selectedBrand ==
+                        brandData), // Pass iconData and a boolean that specifies if the icon is selected or not
+              );
+            }).toList(), // Convert the map to a list of widgets
+          )
+        : NoDataFound();
   }
 
   @override
@@ -72,6 +78,7 @@ class _BrandSelectionPageState extends State<BrandSelectionPage> {
                 });
             return;
           }
+          SharedPref().saveBrandSelection(_selectedBrand.id);
           Get.to(() => ModelSelectionPage());
         },
         child: Text("Next"),

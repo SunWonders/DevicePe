@@ -1,5 +1,8 @@
-import 'package:devicepe_client/dto/selection_item.dart';
+import 'package:devicepe_client/repositories/network/controllers/model_controller.dart';
+import 'package:devicepe_client/repositories/network/models/model_detail_response.dart';
+import 'package:devicepe_client/ui/common/no_dat_found.dart';
 import 'package:devicepe_client/ui/device_model_details.dart';
+import 'package:devicepe_client/ui/common/progress_bar.dart';
 import 'package:devicepe_client/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -12,41 +15,33 @@ class ModelSelectionPage extends StatefulWidget {
 }
 
 class _ModelSelectionPageState extends State<ModelSelectionPage> {
-  final List<SelectionItem> _icons = [
-    SelectionItem(
-        "https://rukminim1.flixcart.com/image/416/416/j7qi9ow0/mobile/6/t/q/apple-iphone-6s-mn0w2hn-a-original-imaexw6smfzjgqsz.jpeg?q=70",
-        "Iphone 6s"),
-    SelectionItem(
-        "https://rukminim1.flixcart.com/image/416/416/jnj7iq80/mobile/u/b/g/apple-iphone-xr-mryj2hn-a-original-imafa6zkm7qhv2zd.jpeg?q=70",
-        "Iphone xr"),
-    SelectionItem(
-        "https://rukminim1.flixcart.com/image/416/416/kg8avm80/mobile/j/f/9/apple-iphone-12-dummyapplefsn-original-imafwg8dhe5aeyhk.jpeg?q=70",
-        "Iphone 12"),
-  ];
+  ModelController modelController = Get.put(ModelController());
 
-  SelectionItem _selectedIcons;
+  ModelData _selectedModel;
 
   Widget gridViewSelection() {
-    return GridView.count(
-      crossAxisCount:
-          MediaQuery.of(context).orientation == Orientation.portrait ? 2 : 3,
-      padding: EdgeInsets.symmetric(horizontal: 1.0, vertical: 1),
-      children: _icons.map(
-        (SelectionItem iconData) {
-          return GestureDetector(
-            onTap: () {
-              setState(() {
-                _selectedIcons = iconData;
-              });
-            },
-            child: BrandModelGridItem(
-                iconData,
-                _selectedIcons ==
-                    iconData), // Pass iconData and a boolean that specifies if the icon is selected or not
-          );
-        },
-      ).toList(), // Convert the map to a list of widgets
-    );
+    return modelController.modelDetails.isNotEmpty
+        ? GridView.count(
+            crossAxisCount:
+                MediaQuery.of(context).orientation == Orientation.portrait
+                    ? 2
+                    : 3,
+            padding: EdgeInsets.symmetric(horizontal: 1.0, vertical: 1),
+            children: modelController.modelDetails.map(
+              (iconData) {
+                return GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      _selectedModel = iconData;
+                    });
+                  },
+                  child:
+                      BrandModelGridItem(iconData, _selectedModel == iconData),
+                );
+              },
+            ).toList(),
+          )
+        : NoDataFound();
   }
 
   @override
@@ -60,14 +55,17 @@ class _ModelSelectionPageState extends State<ModelSelectionPage> {
           style: TextStyle(color: AppColors.whiteText),
         ),
       ),
-      body: gridViewSelection(),
+      //body: gridViewSelection(),
+      body: Obx(() => modelController.isLoading.value
+          ? ProgressBar()
+          : gridViewSelection()),
       floatingActionButton: ElevatedButton(
         style: ButtonStyle(
           backgroundColor:
               MaterialStateProperty.all<Color>(AppColors.primaryLight),
         ),
         onPressed: () {
-          if (_selectedIcons == null) {
+          if (_selectedModel == null) {
             Get.defaultDialog(
               title: "🙁  Alert 🙁",
               middleText: "Please Select Model to continue",
@@ -88,10 +86,10 @@ class _ModelSelectionPageState extends State<ModelSelectionPage> {
 }
 
 class BrandModelGridItem extends StatelessWidget {
-  final SelectionItem _brandDetail;
+  final ModelData _modelDetail;
   final bool _isSelected;
 
-  BrandModelGridItem(this._brandDetail, this._isSelected);
+  BrandModelGridItem(this._modelDetail, this._isSelected);
 
   @override
   Widget build(BuildContext context) {
@@ -138,15 +136,28 @@ class BrandModelGridItem extends StatelessWidget {
                     )
                   : Container(),
               Image.network(
-                _brandDetail.imageUrl,
-                height: 100,
-                fit: BoxFit.fitWidth,
+                _modelDetail.modelIconUrl,
+                height: 120,
+                errorBuilder: (context, error, stackTrace) {
+                  return Center(
+                    child: Image(
+                      image: AssetImage('assets/images/mobile.png'),
+                    ),
+                  );
+                },
+                loadingBuilder: (BuildContext context, Widget child,
+                    ImageChunkEvent loadingProgress) {
+                  if (loadingProgress == null) return child;
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                },
               ),
               SizedBox(
                 height: 5.0,
               ),
               Text(
-                _brandDetail.name,
+                _modelDetail.modelName,
                 style: TextStyle(
                   color: AppColors.primaryDark,
                   fontSize: 18,
@@ -159,10 +170,3 @@ class BrandModelGridItem extends StatelessWidget {
     );
   }
 }
-
-// class SelectionItem {
-//   final String _imageUrl;
-//   final String _name;
-
-//   SelectionItem(this._imageUrl, this._name);
-// }
