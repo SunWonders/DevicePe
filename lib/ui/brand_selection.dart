@@ -137,7 +137,7 @@ class BrandGridItem extends StatelessWidget {
                 : Container(),
             Image.network(
               _brandDetail.brandIconUrl,
-              height: 48,
+              height: 40,
               errorBuilder: (context, error, stackTrace) {
                 print(error); //do something
                 return Center(
@@ -161,7 +161,7 @@ class BrandGridItem extends StatelessWidget {
               _brandDetail.brandName,
               style: TextStyle(
                 color: AppColors.primaryDark,
-                fontSize: 18,
+                fontSize: 16,
               ),
             ),
           ],

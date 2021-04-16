@@ -1,41 +1,37 @@
 import 'package:devicepe_client/dto/selection_item.dart';
-import 'package:devicepe_client/ui/exact_value/device_condition.dart';
 import 'package:devicepe_client/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class MultipleSelectionPage extends StatefulWidget {
-  MultipleSelectionPage({Key key}) : super(key: key);
+class DeviceConditionPage extends StatefulWidget {
+  DeviceConditionPage({Key key}) : super(key: key);
 
   @override
-  _MultipleSelectionPageState createState() => _MultipleSelectionPageState();
+  _DeviceConditionPageState createState() => _DeviceConditionPageState();
 }
 
-class _MultipleSelectionPageState extends State<MultipleSelectionPage> {
+class _DeviceConditionPageState extends State<DeviceConditionPage> {
   final List<SelectionItem> _icons = [
     SelectionItem(
-        "https://assets.stickpng.com/images/580b57fcd9996e24bc43c516.png",
-        "Apple",
-        description: "No Scratches"),
+        "https://firebasestorage.googleapis.com/v0/b/test-ec84e.appspot.com/o/like_new.png?alt=media&token=7347a2f5-cfda-4db4-8b14-527c0ebd517a",
+        "Like New",
+        description: "No Scratches. No Dents, No Functional issues"),
     SelectionItem(
-        "https://assets.stickpng.com/images/580b57fcd9996e24bc43c51f.png",
-        "Google",
-        description: "No Scratches"),
+        "https://firebasestorage.googleapis.com/v0/b/test-ec84e.appspot.com/o/very_good.png?alt=media&token=47222c6c-c64e-4c9d-af5d-7701e4efb96a",
+        "Good",
+        description:
+            "Minor Scratches with one or two dents, No cracks on body"),
     SelectionItem(
-        "https://cdn.iconscout.com/icon/free/png-512/samsung-226432.png",
-        "Samsung",
-        description: "No Scratches"),
+        "https://firebasestorage.googleapis.com/v0/b/test-ec84e.appspot.com/o/good.png?alt=media&token=bf3697e5-dd3d-40df-96e9-c93a5c147f2b",
+        "Average",
+        description: "Major Scratches and dents. But body not cracked"),
     SelectionItem(
-        "https://www.pngitem.com/pimgs/m/77-776203_moto-logo-motorola-logo-hd-png-download.png",
-        "Moto",
-        description: "No Scratches"),
-    SelectionItem(
-        "https://brandslogos.com/wp-content/uploads/images/large/oneplus-logo.png",
-        "One Plus",
-        description: "No Scratches"),
+        "https://firebasestorage.googleapis.com/v0/b/test-ec84e.appspot.com/o/very_good.png?alt=media&token=47222c6c-c64e-4c9d-af5d-7701e4efb96a",
+        "Below Average",
+        description: "Cracked, Broken or Discolored body/Panel"),
   ];
 
-  List<SelectionItem> _selectedIcons = [];
+  SelectionItem _selectedIcons;
 
   Widget gridViewSelection() {
     return GridView.count(
@@ -47,21 +43,16 @@ class _MultipleSelectionPageState extends State<MultipleSelectionPage> {
         return GestureDetector(
           onTap: () {
             setState(() {
-              if (!checkIsPresent(iconData)) {
-                _selectedIcons.add(iconData);
-              } else {
-                _selectedIcons.remove(iconData);
-              }
+              _selectedIcons = iconData;
             });
           },
-          child: SingleGridItem(iconData, checkIsPresent(iconData)),
+          child: SingleGridItem(
+              iconData,
+              _selectedIcons ==
+                  iconData), // Pass iconData and a boolean that specifies if the icon is selected or not
         );
-      }).toList(),
+      }).toList(), // Convert the map to a list of widgets
     );
-  }
-
-  bool checkIsPresent(SelectionItem iconData) {
-    return _selectedIcons.any((element) => element == iconData);
   }
 
   @override
@@ -71,7 +62,7 @@ class _MultipleSelectionPageState extends State<MultipleSelectionPage> {
         iconTheme: IconThemeData(color: AppColors.whiteText),
         backgroundColor: AppColors.primaryLight,
         title: Text(
-          "Device Details",
+          "Device Condition",
           style: TextStyle(color: AppColors.whiteText),
         ),
       ),
@@ -82,7 +73,7 @@ class _MultipleSelectionPageState extends State<MultipleSelectionPage> {
               padding: EdgeInsets.all(10.0),
               alignment: Alignment.centerLeft,
               child: Text(
-                "Accessories",
+                "Select Device Condition",
                 style: TextStyle(
                   color: AppColors.blackText,
                   fontWeight: FontWeight.bold,
@@ -94,7 +85,7 @@ class _MultipleSelectionPageState extends State<MultipleSelectionPage> {
               padding: EdgeInsets.all(10.0),
               alignment: Alignment.centerLeft,
               child: Text(
-                "Please Select Available Accessories",
+                "Please Select Any one of the following",
                 style: TextStyle(fontSize: 14.0),
               ),
             ),
@@ -110,10 +101,10 @@ class _MultipleSelectionPageState extends State<MultipleSelectionPage> {
               MaterialStateProperty.all<Color>(AppColors.primaryLight),
         ),
         onPressed: () {
-          if (_selectedIcons == null || _selectedIcons.isEmpty) {
+          if (_selectedIcons == null) {
             Get.defaultDialog(
                 title: "🙁  Alert 🙁",
-                middleText: "Please Select Brand to continue",
+                middleText: "Please Select Device Condition",
                 radius: 10,
                 buttonColor: AppColors.primaryDark,
                 onConfirm: () {
@@ -121,7 +112,14 @@ class _MultipleSelectionPageState extends State<MultipleSelectionPage> {
                 });
             return;
           }
-          Get.to(() => DeviceConditionPage());
+          Get.defaultDialog(
+              title: "Under Development",
+              middleText: "Coming Soon",
+              radius: 10,
+              buttonColor: AppColors.primaryDark,
+              onConfirm: () {
+                Get.back();
+              });
         },
         child: Text("Next"),
       ),
@@ -196,13 +194,17 @@ class SingleGridItem extends StatelessWidget {
             SizedBox(
               height: 5.0,
             ),
-            Text(
-              _selectionItem.description,
-              style: TextStyle(
-                color: AppColors.blackText,
-                fontSize: 14,
+            Container(
+              padding: EdgeInsets.all(5.0),
+              child: Text(
+                _selectionItem.description,
+                style: TextStyle(
+                  color: AppColors.blackText,
+                  fontSize: 14,
+                ),
+                textAlign: TextAlign.center,
               ),
-            ),
+            )
           ],
         ),
       ),
