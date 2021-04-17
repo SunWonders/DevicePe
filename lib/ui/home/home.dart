@@ -1,8 +1,10 @@
 import 'package:devicepe_client/ui/home/home_screen.dart';
 import 'package:devicepe_client/ui/orders/orders.dart';
 import 'package:devicepe_client/ui/profile/user_profile.dart';
+import 'package:devicepe_client/ui/select_city.dart';
 import 'package:devicepe_client/utils/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
 class HomePage extends StatefulWidget {
@@ -68,7 +70,7 @@ class _HomePageState extends State<HomePage> {
               color: AppColors.whiteText,
             ),
             onPressed: () {
-              // do something
+              Get.to(() => SelectCity());
             },
           )
         ],

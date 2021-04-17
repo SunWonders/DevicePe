@@ -16,6 +16,7 @@ extension AppColors on ColorScheme {
   static const shadowTwo = Color.fromARGB(255, 112, 112, 112);
   static const shadowThree = Color.fromARGB(255, 85, 85, 85);
   static const lightGrey = Color.fromARGB(255, 226, 226, 226);
+  static const hintGrey = Color.fromARGB(255, 186, 206, 206);
   static const lightGreyTransparent = Color.fromARGB(125, 226, 226, 226);
   static const background = Color.fromARGB(255, 239, 255, 245);
 

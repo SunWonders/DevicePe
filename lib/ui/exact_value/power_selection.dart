@@ -3,6 +3,7 @@ import 'package:devicepe_client/repositories/network/controllers/check_list_cont
 import 'package:devicepe_client/repositories/network/models/check_list_detail_response.dart';
 import 'package:devicepe_client/ui/common/not_accepting_page.dart';
 import 'package:devicepe_client/ui/common/progress_bar.dart';
+import 'package:devicepe_client/ui/exact_value/information_request_sheet.dart';
 import 'package:devicepe_client/ui/exact_value/single_selection_list.dart';
 import 'package:devicepe_client/utils/colors.dart';
 import 'package:devicepe_client/utils/common_utility.dart';
@@ -22,8 +23,21 @@ class _PowerStateSelectionState extends State<PowerStateSelection> {
   List<int> _selectedCheckListIndex = [];
 
   @override
+  void initState() {
+    super.initState();
+    _modalBottomSheetMenu();
+  }
+
+  void _modalBottomSheetMenu() {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await Get.bottomSheet(DetailsRequestAgreement(), isDismissible: false);
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     var isSelected = true.obs;
+
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(color: AppColors.whiteText),

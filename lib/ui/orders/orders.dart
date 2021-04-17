@@ -11,7 +11,11 @@ class _UserOrdersState extends State<UserOrders> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Text("Orders Coming Soon"),
+      child: Center(
+        child: Image(
+          image: AssetImage('assets/images/coming_soon.png'),
+        ),
+      ),
     );
   }
 }
