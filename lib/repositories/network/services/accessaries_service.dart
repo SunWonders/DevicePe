@@ -9,7 +9,6 @@ class AccessariesService {
     try {
       Response<String> response =
           await ApiClient.dio.get<String>(GET_ACCESSORIES_URL);
-      print(response.data);
       return accessoriesDetailResponseFromJson(response.data);
     } catch (e) {
       print(e);

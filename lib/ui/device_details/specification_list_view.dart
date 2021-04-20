@@ -1,10 +1,11 @@
-import 'package:devicepe_client/ui/device_model_details.dart';
+import 'package:devicepe_client/repositories/network/models/variant_response_model.dart';
 import 'package:devicepe_client/utils/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class SpecificationListView extends StatefulWidget {
   SpecificationListView(this.specificationDetails);
-  final List<SpecificationDetails> specificationDetails;
+  final List<Specification> specificationDetails;
 
   @override
   _SpecificationListViewState createState() =>
@@ -12,21 +13,21 @@ class SpecificationListView extends StatefulWidget {
 }
 
 class _SpecificationListViewState extends State<SpecificationListView> {
-  List<SpecificationDetails> specificationDetails;
+  List<Specification> specificationDetails;
   _SpecificationListViewState(this.specificationDetails);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       height: MediaQuery.of(context).orientation == Orientation.portrait
-          ? MediaQuery.of(context).size.height / 2 - 10
-          : MediaQuery.of(context).size.width / 3 - 10,
+          ? Get.height / 2 - 10
+          : Get.width / 3 - 10,
       child: ListView.builder(
         padding: const EdgeInsets.all(10),
         itemCount: specificationDetails.length,
         itemBuilder: (BuildContext context, int index) {
-          var title = specificationDetails[index].title;
-          var values = specificationDetails[index].details;
+          var title = specificationDetails[index].key;
+          var value = specificationDetails[index].value;
           return Column(
             children: [
               Container(
@@ -51,19 +52,8 @@ class _SpecificationListViewState extends State<SpecificationListView> {
                       ),
                     ),
                     Container(
-                      alignment: Alignment.centerRight,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: values
-                            .map((e) => Column(
-                                  children: [
-                                    Text(" - " + e),
-                                    SizedBox(height: 7)
-                                  ],
-                                ))
-                            .toList(),
-                      ),
-                    ),
+                        alignment: Alignment.centerRight,
+                        child: Text("- $value")),
                   ],
                 ),
               ),

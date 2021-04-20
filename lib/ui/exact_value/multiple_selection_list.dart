@@ -14,25 +14,19 @@ class MultipleSelectionPage extends StatefulWidget {
 class _MultipleSelectionPageState extends State<MultipleSelectionPage> {
   final List<SelectionItem> _icons = [
     SelectionItem(
-        "https://assets.stickpng.com/images/580b57fcd9996e24bc43c516.png",
-        "Apple",
-        description: "No Scratches"),
+      "https://image.flaticon.com/icons/png/512/189/189058.png",
+      "Box",
+    ),
     SelectionItem(
-        "https://assets.stickpng.com/images/580b57fcd9996e24bc43c51f.png",
-        "Google",
-        description: "No Scratches"),
+      "https://cdn4.iconfinder.com/data/icons/gradient-4/50/375-512.png",
+      "Valid Bill",
+    ),
     SelectionItem(
-        "https://cdn.iconscout.com/icon/free/png-512/samsung-226432.png",
-        "Samsung",
-        description: "No Scratches"),
+        "https://png.pngtree.com/png-vector/20200724/ourmid/pngtree-charging-phone-vector-illustration-with-flat-design-png-image_2312909.jpg",
+        "Original Charger"),
     SelectionItem(
-        "https://www.pngitem.com/pimgs/m/77-776203_moto-logo-motorola-logo-hd-png-download.png",
-        "Moto",
-        description: "No Scratches"),
-    SelectionItem(
-        "https://brandslogos.com/wp-content/uploads/images/large/oneplus-logo.png",
-        "One Plus",
-        description: "No Scratches"),
+        "https://icons.iconarchive.com/icons/paomedia/small-n-flat/1024/headphone-icon.png",
+        "Original Headphones"),
   ];
 
   List<SelectionItem> _selectedIcons = [];
@@ -110,17 +104,17 @@ class _MultipleSelectionPageState extends State<MultipleSelectionPage> {
               MaterialStateProperty.all<Color>(AppColors.primaryLight),
         ),
         onPressed: () {
-          if (_selectedIcons == null || _selectedIcons.isEmpty) {
-            Get.defaultDialog(
-                title: "🙁  Alert 🙁",
-                middleText: "Please Select Brand to continue",
-                radius: 10,
-                buttonColor: AppColors.primaryDark,
-                onConfirm: () {
-                  Get.back();
-                });
-            return;
-          }
+          // if (_selectedIcons == null || _selectedIcons.isEmpty) {
+          //   Get.defaultDialog(
+          //       title: "🙁  Alert 🙁",
+          //       middleText: "Please Select Brand to continue",
+          //       radius: 10,
+          //       buttonColor: AppColors.primaryDark,
+          //       onConfirm: () {
+          //         Get.back();
+          //       });
+          //   return;
+          // }
           Get.to(() => DeviceConditionPage());
         },
         child: Text("Next"),
@@ -183,26 +177,26 @@ class SingleGridItem extends StatelessWidget {
               fit: BoxFit.fitWidth,
             ),
             SizedBox(
-              height: 5.0,
+              height: 15.0,
             ),
             Text(
               _selectionItem.name,
               style: TextStyle(
                 color: AppColors.primaryDark,
-                fontWeight: FontWeight.bold,
-                fontSize: 18,
+                fontSize: 16,
               ),
+              textAlign: TextAlign.center,
             ),
             SizedBox(
               height: 5.0,
             ),
-            Text(
-              _selectionItem.description,
-              style: TextStyle(
-                color: AppColors.blackText,
-                fontSize: 14,
-              ),
-            ),
+            // Text(
+            //   _selectionItem.description,
+            //   style: TextStyle(
+            //     color: AppColors.blackText,
+            //     fontSize: 14,
+            //   ),
+            // ),
           ],
         ),
       ),

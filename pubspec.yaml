@@ -50,7 +50,6 @@ dependencies:
   toggle_switch: "^0.1.9"
   autocomplete_textfield: ^1.7.3
 
-
 dev_dependencies:
   flutter_test:
     sdk: flutter

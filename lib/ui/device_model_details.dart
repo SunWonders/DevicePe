@@ -1,3 +1,6 @@
+import 'package:devicepe_client/repositories/network/controllers/variant_controller.dart';
+import 'package:devicepe_client/repositories/network/models/variant_response_model.dart';
+import 'package:devicepe_client/ui/common/progress_bar.dart';
 import 'package:devicepe_client/ui/device_details/device_slider.dart';
 import 'package:devicepe_client/ui/device_details/specification_list_view.dart';
 import 'package:devicepe_client/ui/exact_value/power_selection.dart';
@@ -13,112 +16,202 @@ class DeviceModelDetails extends StatefulWidget {
 }
 
 class _DeviceModelDetailsState extends State<DeviceModelDetails> {
-  List<SpecificationDetails> _specificationDetails = [
-    SpecificationDetails(
-        "Capacity", ["32 GB", "64 GB", "128 GB", "256 GB", "512 GB"]),
-    SpecificationDetails("Colors", ["Black", "Red", "Blue"]),
-  ];
+  VariantController variantController = Get.put(VariantController());
+
+  var variantDetails = [
+    VariantData(varientName: "Oneplus 7 64 GB"),
+    VariantData(varientName: "128 GB"),
+    VariantData(varientName: "256 GB"),
+  ].obs;
+
+  Widget selectVarientView() {
+    return Container(
+      height: 80,
+      child: GridView.count(
+        crossAxisCount: 3,
+        childAspectRatio: 1.8,
+        padding: EdgeInsets.all(5.0),
+        crossAxisSpacing: 10,
+        mainAxisSpacing: 10,
+        children: variantController.variantDetails
+            .map(
+              (data) => GestureDetector(
+                  child: Container(
+                    alignment: Alignment.center,
+                    margin: EdgeInsets.all(10.0),
+                    padding: EdgeInsets.all(5.0),
+                    decoration: BoxDecoration(
+                        color: data.varientName ==
+                                variantController
+                                    .selectedVariantData.value.varientName
+                            ? AppColors.card1
+                            : Colors.black12,
+                        border: Border.all(
+                          color: data.varientName ==
+                                  variantController
+                                      .selectedVariantData.value.varientName
+                              ? AppColors.card1
+                              : AppColors.background,
+                        ),
+                        borderRadius: BorderRadius.all(Radius.circular(5))),
+                    child: Text(data.varientName,
+                        style: TextStyle(
+                            color: data.varientName ==
+                                    variantController
+                                        .selectedVariantData.value.varientName
+                                ? AppColors.whiteText
+                                : Colors.black54),
+                        textAlign: TextAlign.center),
+                  ),
+                  onTap: () {
+                    variantController.selectedVariantData.value = data;
+                    variantController.selectedVariantData.refresh();
+                  }),
+            )
+            .toList(),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.nutralLight,
-      appBar: AppBar(
-        iconTheme: IconThemeData(color: AppColors.whiteText),
-        backgroundColor: AppColors.primaryLight,
-        title: Text(
-          "Iphone XR",
-          style: TextStyle(color: AppColors.whiteText),
+    return Obx(
+      () => Scaffold(
+        backgroundColor: AppColors.nutralLight,
+        appBar: AppBar(
+          iconTheme: IconThemeData(color: AppColors.whiteText),
+          backgroundColor: AppColors.primaryLight,
+          title: Text(
+            variantController.isLoading.value
+                ? "Device Details"
+                : variantController.selectedVariantData.value.varientName ==
+                        null
+                    ? ""
+                    : variantController.selectedVariantData.value.varientName,
+            style: TextStyle(color: AppColors.whiteText),
+          ),
         ),
-      ),
-      body: SingleChildScrollView(
-        child: Container(
-          child:
-              //Card(
-              // shape: RoundedRectangleBorder(
-              //   borderRadius: BorderRadius.all(Radius.circular(10))),
-              InkWell(
-            splashColor: AppColors.nutralLight,
-            onTap: () {
-              print('Card tapped.');
-            },
-            child: Column(
-              children: [
-                DeviceSliderCarousel(),
-                Container(
-                  padding: EdgeInsets.all(10),
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    "Specification",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.blackText,
-                      fontSize: 16,
+        body: variantController.isLoading.value
+            ? ProgressBar()
+            : SingleChildScrollView(
+                child: Container(
+                  child: Column(
+                    children: [
+                      DeviceSliderCarousel(
+                          imgList: variantController
+                              .selectedVariantData.value.varientIconUrl),
+                      Container(
+                        padding: EdgeInsets.all(10),
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          "Select Varient",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.blackText,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+                        color: AppColors.background,
+                        height: 1,
+                      ),
+                      selectVarientView(),
+                      Container(
+                        margin: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+                        color: AppColors.background,
+                        height: 1,
+                      ),
+                      Container(
+                        padding: EdgeInsets.all(10),
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          "Specification",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.blackText,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+                        color: AppColors.background,
+                        height: 1,
+                      ),
+                      if (variantController.selectedVariantData.value != null &&
+                          variantController
+                                  .selectedVariantData.value.specifications !=
+                              null &&
+                          variantController.selectedVariantData.value
+                              .specifications.isNotEmpty)
+                        SpecificationListView(variantController
+                            .selectedVariantData.value.specifications)
+                      else
+                        Container(
+                          margin: EdgeInsets.all(20.0),
+                          child: Text("Specification Details Not Available"),
+                        ),
+                    ],
+                  ),
+                ),
+              ),
+        floatingActionButton: variantController.isLoading.value
+            ? Container()
+            : ClipRRect(
+                borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                child: Container(
+                  color: AppColors.primaryLight,
+                  child: TextButton(
+                    onPressed: () {
+                      Get.to(() => PowerStateSelection());
+                    },
+                    child: Text(
+                      "Get Exact Value",
+                      style: TextStyle(
+                        color: AppColors.whiteText,
+                        fontSize: 16,
+                      ),
                     ),
                   ),
                 ),
-                Container(
-                  margin: const EdgeInsets.fromLTRB(10, 0, 0, 0),
-                  color: AppColors.background,
-                  height: 1,
-                ),
-                SpecificationListView(_specificationDetails),
-              ],
-            ),
-          ),
-          //),
-        ),
-      ),
-      bottomNavigationBar: ClipRRect(
-        borderRadius: BorderRadius.all(Radius.circular(10.0)),
-        child: Container(
-          color: AppColors.primaryDark,
-          padding: EdgeInsets.all(2),
-          child: ClipRRect(
-            borderRadius: BorderRadius.all(Radius.circular(15.0)),
-            child: Container(
-              color: AppColors.nutralLight,
-              padding: EdgeInsets.all(10),
-              width: 100,
-              height: 60,
-              alignment: Alignment.center,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "Get Upto",
-                    style: TextStyle(fontSize: 14, color: AppColors.dark),
-                    textAlign: TextAlign.center,
-                  ),
-                  SizedBox(
-                    width: 50,
-                  ),
-                  Text(
-                    "\u20B9 1028",
-                    style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.dark),
-                  ),
-                ],
               ),
-            ),
-          ),
-        ),
-      ),
-      floatingActionButton: ClipRRect(
-        borderRadius: BorderRadius.all(Radius.circular(10.0)),
-        child: Container(
-          color: AppColors.primaryLight,
-          child: TextButton(
-            onPressed: () {
-              Get.to(() => PowerStateSelection());
-            },
-            child: Text(
-              "Get Exact Value",
-              style: TextStyle(
-                color: AppColors.whiteText,
-                fontSize: 16,
+        bottomNavigationBar: Container(
+          child: ClipRRect(
+            borderRadius: BorderRadius.all(Radius.circular(10.0)),
+            child: Container(
+              color: AppColors.primaryDark,
+              padding: EdgeInsets.all(2),
+              child: ClipRRect(
+                borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                child: Container(
+                  color: AppColors.nutralLight,
+                  padding: EdgeInsets.all(10),
+                  width: 100,
+                  height: 60,
+                  alignment: Alignment.center,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Get Upto",
+                        style: TextStyle(fontSize: 14, color: AppColors.dark),
+                        textAlign: TextAlign.center,
+                      ),
+                      SizedBox(
+                        width: 50,
+                      ),
+                      Text(
+                        "\u20B9 ${variantController.selectedVariantData.value.basePrice == null ? 0 : variantController.selectedVariantData.value.basePrice}",
+                        style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.dark),
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ),
           ),
@@ -126,11 +219,4 @@ class _DeviceModelDetailsState extends State<DeviceModelDetails> {
       ),
     );
   }
-}
-
-class SpecificationDetails {
-  final String title;
-  final List<String> details;
-
-  SpecificationDetails(this.title, this.details);
 }

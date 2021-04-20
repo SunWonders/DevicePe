@@ -13,16 +13,16 @@ class DeviceConditionPage extends StatefulWidget {
 class _DeviceConditionPageState extends State<DeviceConditionPage> {
   final List<SelectionItem> _icons = [
     SelectionItem(
-        "https://firebasestorage.googleapis.com/v0/b/test-ec84e.appspot.com/o/like_new.png?alt=media&token=7347a2f5-cfda-4db4-8b14-527c0ebd517a",
+        "https://firebasestorage.googleapis.com/v0/b/test-ec84e.appspot.com/o/good.png?alt=media&token=bf3697e5-dd3d-40df-96e9-c93a5c147f2b",
         "Like New",
         description: "No Scratches. No Dents, No Functional issues"),
     SelectionItem(
-        "https://firebasestorage.googleapis.com/v0/b/test-ec84e.appspot.com/o/very_good.png?alt=media&token=47222c6c-c64e-4c9d-af5d-7701e4efb96a",
+        "https://firebasestorage.googleapis.com/v0/b/suntransfer-28afc.appspot.com/o/user-interface.png?alt=media&token=600732ed-3118-4aae-8cdb-eaf5c2d19f84",
         "Good",
         description:
             "Minor Scratches with one or two dents, No cracks on body"),
     SelectionItem(
-        "https://firebasestorage.googleapis.com/v0/b/test-ec84e.appspot.com/o/good.png?alt=media&token=bf3697e5-dd3d-40df-96e9-c93a5c147f2b",
+        "https://firebasestorage.googleapis.com/v0/b/test-ec84e.appspot.com/o/like_new.png?alt=media&token=7347a2f5-cfda-4db4-8b14-527c0ebd517a",
         "Average",
         description: "Major Scratches and dents. But body not cracked"),
     SelectionItem(
