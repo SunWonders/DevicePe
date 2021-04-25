@@ -25,8 +25,10 @@ class _DeviceModelDetailsState extends State<DeviceModelDetails> {
   ].obs;
 
   Widget selectVarientView() {
+    var h = (variantController.variantDetails.length / 3).ceilToDouble() * 80;
+
     return Container(
-      height: 80,
+      height: h,
       child: GridView.count(
         crossAxisCount: 3,
         childAspectRatio: 1.8,

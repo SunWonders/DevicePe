@@ -30,18 +30,21 @@ class _DeviceSliderCarouselState extends State<DeviceSliderCarousel> {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(15.0),
-      color: AppColors.whiteText,
-      child: CarouselSlider(
-        options: CarouselOptions(
-          aspectRatio:
-              MediaQuery.of(context).orientation == Orientation.portrait
-                  ? 16 / 9
-                  : 7,
-          autoPlay: true,
-          autoPlayInterval: Duration(seconds: 3),
-        ),
-        items: imgList
-            .map((item) => Container(
+      child: ClipRRect(
+        borderRadius: BorderRadius.all(Radius.circular(5.0)),
+        child: CarouselSlider(
+          options: CarouselOptions(
+            aspectRatio:
+                MediaQuery.of(context).orientation == Orientation.portrait
+                    ? 16 / 9
+                    : 7,
+            autoPlay: true,
+            autoPlayInterval: Duration(seconds: 3),
+          ),
+          items: imgList
+              .map(
+                (item) => Container(
+                  color: AppColors.whiteText,
                   child: Center(
                     child: Image.network(
                       item,
@@ -63,8 +66,10 @@ class _DeviceSliderCarouselState extends State<DeviceSliderCarousel> {
                       },
                     ),
                   ),
-                ))
-            .toList(),
+                ),
+              )
+              .toList(),
+        ),
       ),
     );
   }

@@ -1,16 +1,15 @@
+import 'package:devicepe_client/ui/common/login_register_popup.dart';
+import 'package:devicepe_client/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:devicepe_client/routes/routes.dart';
 import 'package:devicepe_client/styles/text_styles.dart';
+import 'package:get/get.dart';
 import 'package:liquid_swipe/PageHelpers/LiquidController.dart';
 import 'package:liquid_swipe/liquid_swipe.dart';
 
 class GetStartedPage extends StatefulWidget {
   @override
   _GetStartedPageState createState() => _GetStartedPageState();
-}
-
-class Test {
-  static bool redirectToHome = false;
 }
 
 class _GetStartedPageState extends State<GetStartedPage> {
@@ -39,17 +38,41 @@ class _GetStartedPageState extends State<GetStartedPage> {
             ),
             Column(
               children: <Widget>[
+                Image(
+                  height: 300,
+                  image: AssetImage('assets/images/sell_mobile.png'),
+                ),
+                SizedBox(height: 50),
                 Text(
-                  "Hi",
+                  "Feel Free to",
                   style: commonTextStyle,
                 ),
+                SizedBox(height: 10),
                 Text(
-                  "It's Me",
+                  "Sell Your Mobile",
                   style: commonTextStyle,
                 ),
+                SizedBox(height: 10),
                 Text(
-                  "Yabaze",
+                  "With Us.",
                   style: commonTextStyle,
+                ),
+                SizedBox(height: 40),
+                FloatingActionButton(
+                    heroTag: null,
+                    onPressed: () {
+                      liquidController.jumpToPage(page: 1);
+                    },
+                    child: Icon(Icons.forward),
+                    backgroundColor: Colors.transparent),
+                Container(
+                  alignment: Alignment.center,
+                  margin: EdgeInsets.all(20),
+                  child: Image(
+                    height: 20,
+                    color: AppColors.whiteText,
+                    image: AssetImage('assets/images/swipe_right.png'),
+                  ),
                 ),
               ],
             ),
@@ -70,17 +93,42 @@ class _GetStartedPageState extends State<GetStartedPage> {
             ),
             Column(
               children: <Widget>[
+                Image(
+                  height: 300,
+                  image: AssetImage('assets/images/best_price.png'),
+                ),
+                SizedBox(height: 50),
                 Text(
-                  "Take a",
+                  "Best & Highest",
                   style: commonTextStyle,
                 ),
+                SizedBox(height: 10),
                 Text(
-                  "look at",
+                  " Value for Your",
                   style: commonTextStyle,
                 ),
+                SizedBox(height: 10),
                 Text(
-                  "Liquid Swipe",
+                  "Device",
                   style: commonTextStyle,
+                ),
+                SizedBox(height: 40),
+                FloatingActionButton(
+                    heroTag: null,
+                    onPressed: () {
+                      liquidController.jumpToPage(page: 2);
+                      //Get.to(() => LoginPage());
+                    },
+                    child: Icon(Icons.forward),
+                    backgroundColor: Colors.transparent),
+                Container(
+                  alignment: Alignment.center,
+                  margin: EdgeInsets.all(20),
+                  child: Image(
+                    height: 20,
+                    color: AppColors.whiteText,
+                    image: AssetImage('assets/images/swipe_right.png'),
+                  ),
                 ),
               ],
             ),
@@ -88,7 +136,7 @@ class _GetStartedPageState extends State<GetStartedPage> {
         ),
       ),
       Container(
-        color: Colors.greenAccent,
+        color: Colors.green,
         height: double.infinity,
         width: double.infinity,
         child: Column(
@@ -101,21 +149,38 @@ class _GetStartedPageState extends State<GetStartedPage> {
             ),
             Column(
               children: <Widget>[
-                Text(
-                  "Liked?",
+                Image(
+                  height: 300,
+                  image: AssetImage('assets/images/lovely_service.png'),
                 ),
+                SizedBox(height: 50),
                 Text(
-                  "Fork!",
+                  "Lakhs Of People",
                   style: commonTextStyle,
                 ),
+                SizedBox(height: 10),
                 Text(
-                  "Give Star!",
+                  "Loved Our Valuable",
                   style: commonTextStyle,
                 ),
-                FloatingActionButton(onPressed: () {
-                  redirectToHome = true;
-                  launchScreen(context, home);
-                })
+                SizedBox(height: 10),
+                Text(
+                  "Service",
+                  style: commonTextStyle,
+                ),
+                SizedBox(height: 40),
+                FloatingActionButton(
+                    onPressed: () {
+                      // redirectToHome = true;
+                      // launchScreen(context, home);
+                      Get.bottomSheet(AuthenticationRequest());
+                    },
+                    child: Icon(Icons.home),
+                    backgroundColor: Colors.transparent),
+                Image(
+                  height: 100,
+                  image: AssetImage('assets/images/stay-home.png'),
+                )
               ],
             ),
           ],

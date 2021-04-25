@@ -4,7 +4,7 @@ import 'package:devicepe_client/repositories/network/models/check_list_detail_re
 import 'package:devicepe_client/ui/common/not_accepting_page.dart';
 import 'package:devicepe_client/ui/common/progress_bar.dart';
 import 'package:devicepe_client/ui/exact_value/information_request_sheet.dart';
-import 'package:devicepe_client/ui/exact_value/single_selection_list.dart';
+import 'package:devicepe_client/ui/exact_value/multiple_selection_list.dart';
 import 'package:devicepe_client/utils/colors.dart';
 import 'package:devicepe_client/utils/common_utility.dart';
 import 'package:flutter/material.dart';
@@ -136,7 +136,7 @@ class _PowerStateSelectionState extends State<PowerStateSelection> {
                 }
               else
                 {
-                  Get.to(() => SingleSelectionPage()),
+                  Get.to(() => MultipleSelectionPage()),
                 },
             },
             child: Text(

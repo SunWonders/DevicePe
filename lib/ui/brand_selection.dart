@@ -99,17 +99,27 @@ class BrandGridItem extends StatelessWidget {
       borderRadius: BorderRadius.all(Radius.circular(10.0)),
       child: Container(
         decoration: new BoxDecoration(
+          border: Border.all(
+              color: _isSelected ? AppColors.primaryLight : Colors.transparent),
+          borderRadius: BorderRadius.circular(15),
           boxShadow: [
             BoxShadow(
-              color: AppColors.shadowOne,
-              blurRadius: 1.0,
+              color: Colors.grey.withOpacity(0.5),
+              spreadRadius: 1,
+              blurRadius: 5,
+              offset: Offset(0, 3),
             ),
           ],
           gradient: new LinearGradient(
-            colors: [
-              AppColors.whiteSubText,
-              AppColors.whiteSubText,
-            ],
+            colors: _isSelected
+                ? [
+                    AppColors.nutralLight,
+                    AppColors.nutralLight,
+                  ]
+                : [
+                    AppColors.whiteText,
+                    AppColors.whiteText,
+                  ],
           ),
         ),
         margin: EdgeInsets.all(5.0),
@@ -120,16 +130,16 @@ class BrandGridItem extends StatelessWidget {
             SizedBox(
               height: 5.0,
             ),
-            Container(
-              width: 24,
-              height: 24,
-              child: _isSelected
-                  ? Icon(
-                      Icons.task_alt,
-                      color: AppColors.primaryLight,
-                    )
-                  : Container(),
-            ),
+            // Container(
+            //   width: 24,
+            //   height: 24,
+            //   child: _isSelected
+            //       ? Icon(
+            //           Icons.task_alt,
+            //           color: AppColors.primaryLight,
+            //         )
+            //       : Container(),
+            // ),
             _isSelected
                 ? SizedBox(
                     height: 5.0,

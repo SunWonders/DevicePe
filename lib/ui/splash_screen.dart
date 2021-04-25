@@ -34,7 +34,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 color: Colors.black,
               ),
               onPressed: () {
-                launchScreen(context, home);
+                launchScreen(context, getStarted);
               },
             ),
           ],

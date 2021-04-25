@@ -1,38 +1,36 @@
 import 'package:devicepe_client/dto/selection_item.dart';
-import 'package:devicepe_client/ui/summary/device_summary.dart';
+import 'package:devicepe_client/ui/exact_value/device_condition.dart';
 import 'package:devicepe_client/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class DeviceConditionPage extends StatefulWidget {
-  DeviceConditionPage({Key key}) : super(key: key);
+class DeviceFaultSelectionPage extends StatefulWidget {
+  DeviceFaultSelectionPage({Key key}) : super(key: key);
 
   @override
-  _DeviceConditionPageState createState() => _DeviceConditionPageState();
+  _DeviceFaultSelectionPageState createState() =>
+      _DeviceFaultSelectionPageState();
 }
 
-class _DeviceConditionPageState extends State<DeviceConditionPage> {
+class _DeviceFaultSelectionPageState extends State<DeviceFaultSelectionPage> {
   final List<SelectionItem> _icons = [
     SelectionItem(
-        "https://firebasestorage.googleapis.com/v0/b/test-ec84e.appspot.com/o/good.png?alt=media&token=bf3697e5-dd3d-40df-96e9-c93a5c147f2b",
-        "Like New",
-        description: "No Scratches. No Dents, No Functional issues"),
+      "https://image.flaticon.com/icons/png/512/189/189058.png",
+      "Glass Broken",
+    ),
     SelectionItem(
-        "https://firebasestorage.googleapis.com/v0/b/suntransfer-28afc.appspot.com/o/user-interface.png?alt=media&token=600732ed-3118-4aae-8cdb-eaf5c2d19f84",
-        "Good",
-        description:
-            "Minor Scratches with one or two dents, No cracks on body"),
+      "https://cdn4.iconfinder.com/data/icons/gradient-4/50/375-512.png",
+      "Display Cracked",
+    ),
     SelectionItem(
-        "https://firebasestorage.googleapis.com/v0/b/test-ec84e.appspot.com/o/like_new.png?alt=media&token=7347a2f5-cfda-4db4-8b14-527c0ebd517a",
-        "Average",
-        description: "Major Scratches and dents. But body not cracked"),
+        "https://png.pngtree.com/png-vector/20200724/ourmid/pngtree-charging-phone-vector-illustration-with-flat-design-png-image_2312909.jpg",
+        "Front Camera Faulty"),
     SelectionItem(
-        "https://firebasestorage.googleapis.com/v0/b/test-ec84e.appspot.com/o/very_good.png?alt=media&token=47222c6c-c64e-4c9d-af5d-7701e4efb96a",
-        "Below Average",
-        description: "Cracked, Broken or Discolored body/Panel"),
+        "https://icons.iconarchive.com/icons/paomedia/small-n-flat/1024/headphone-icon.png",
+        "Mic Issue"),
   ];
 
-  SelectionItem _selectedIcons;
+  List<SelectionItem> _selectedIcons = [];
 
   Widget gridViewSelection() {
     return GridView.count(
@@ -44,16 +42,21 @@ class _DeviceConditionPageState extends State<DeviceConditionPage> {
         return GestureDetector(
           onTap: () {
             setState(() {
-              _selectedIcons = iconData;
+              if (!checkIsPresent(iconData)) {
+                _selectedIcons.add(iconData);
+              } else {
+                _selectedIcons.remove(iconData);
+              }
             });
           },
-          child: SingleGridItem(
-              iconData,
-              _selectedIcons ==
-                  iconData), // Pass iconData and a boolean that specifies if the icon is selected or not
+          child: SingleGridItem(iconData, checkIsPresent(iconData)),
         );
-      }).toList(), // Convert the map to a list of widgets
+      }).toList(),
     );
+  }
+
+  bool checkIsPresent(SelectionItem iconData) {
+    return _selectedIcons.any((element) => element == iconData);
   }
 
   @override
@@ -63,7 +66,7 @@ class _DeviceConditionPageState extends State<DeviceConditionPage> {
         iconTheme: IconThemeData(color: AppColors.whiteText),
         backgroundColor: AppColors.primaryLight,
         title: Text(
-          "Device Condition",
+          "Device Details",
           style: TextStyle(color: AppColors.whiteText),
         ),
       ),
@@ -74,7 +77,7 @@ class _DeviceConditionPageState extends State<DeviceConditionPage> {
               padding: EdgeInsets.all(10.0),
               alignment: Alignment.centerLeft,
               child: Text(
-                "Select Device Condition",
+                "Device Issues",
                 style: TextStyle(
                   color: AppColors.blackText,
                   fontWeight: FontWeight.bold,
@@ -86,7 +89,7 @@ class _DeviceConditionPageState extends State<DeviceConditionPage> {
               padding: EdgeInsets.all(10.0),
               alignment: Alignment.centerLeft,
               child: Text(
-                "Please Select Any one of the following",
+                "Plese Select Device Physical & Functional Issue",
                 style: TextStyle(fontSize: 14.0),
               ),
             ),
@@ -102,26 +105,18 @@ class _DeviceConditionPageState extends State<DeviceConditionPage> {
               MaterialStateProperty.all<Color>(AppColors.primaryLight),
         ),
         onPressed: () {
-          if (_selectedIcons == null) {
-            Get.defaultDialog(
-                title: "🙁  Alert 🙁",
-                middleText: "Please Select Device Condition",
-                radius: 10,
-                buttonColor: AppColors.primaryDark,
-                onConfirm: () {
-                  Get.back();
-                });
-            return;
-          }
-          // Get.defaultDialog(
-          //     title: "Under Development",
-          //     middleText: "Coming Soon",
-          //     radius: 10,
-          //     buttonColor: AppColors.primaryDark,
-          //     onConfirm: () {
-          //       Get.back();
-          //     });
-          Get.bottomSheet(DeviceSummaryPage());
+          // if (_selectedIcons == null || _selectedIcons.isEmpty) {
+          //   Get.defaultDialog(
+          //       title: "🙁  Alert 🙁",
+          //       middleText: "Please Select Brand to continue",
+          //       radius: 10,
+          //       buttonColor: AppColors.primaryDark,
+          //       onConfirm: () {
+          //         Get.back();
+          //       });
+          //   return;
+          // }
+          Get.to(() => DeviceConditionPage());
         },
         child: Text("Next"),
       ),
@@ -183,30 +178,26 @@ class SingleGridItem extends StatelessWidget {
               fit: BoxFit.fitWidth,
             ),
             SizedBox(
-              height: 5.0,
+              height: 15.0,
             ),
             Text(
               _selectionItem.name,
               style: TextStyle(
                 color: AppColors.primaryDark,
-                fontWeight: FontWeight.bold,
-                fontSize: 18,
+                fontSize: 16,
               ),
+              textAlign: TextAlign.center,
             ),
             SizedBox(
               height: 5.0,
             ),
-            Container(
-              padding: EdgeInsets.all(5.0),
-              child: Text(
-                _selectionItem.description,
-                style: TextStyle(
-                  color: AppColors.blackText,
-                  fontSize: 14,
-                ),
-                textAlign: TextAlign.center,
-              ),
-            )
+            // Text(
+            //   _selectionItem.description,
+            //   style: TextStyle(
+            //     color: AppColors.blackText,
+            //     fontSize: 14,
+            //   ),
+            // ),
           ],
         ),
       ),

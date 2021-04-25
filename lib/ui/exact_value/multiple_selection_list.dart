@@ -1,5 +1,6 @@
 import 'package:devicepe_client/dto/selection_item.dart';
 import 'package:devicepe_client/ui/exact_value/device_condition.dart';
+import 'package:devicepe_client/ui/exact_value/device_fault.dart';
 import 'package:devicepe_client/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -115,7 +116,7 @@ class _MultipleSelectionPageState extends State<MultipleSelectionPage> {
           //       });
           //   return;
           // }
-          Get.to(() => DeviceConditionPage());
+          Get.to(() => DeviceFaultSelectionPage());
         },
         child: Text("Next"),
       ),

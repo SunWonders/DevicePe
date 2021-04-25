@@ -23,7 +23,7 @@ class _SpecificationListViewState extends State<SpecificationListView> {
           ? Get.height / 2 - 10
           : Get.width / 3 - 10,
       child: ListView.builder(
-        padding: const EdgeInsets.all(10),
+        padding: const EdgeInsets.fromLTRB(10, 1, 10, 1),
         itemCount: specificationDetails.length,
         itemBuilder: (BuildContext context, int index) {
           var title = specificationDetails[index].key;
@@ -31,7 +31,7 @@ class _SpecificationListViewState extends State<SpecificationListView> {
           return Column(
             children: [
               Container(
-                margin: const EdgeInsets.all(10),
+                margin: EdgeInsets.fromLTRB(10, 1, 10, 1),
                 height: 1,
               ),
               IntrinsicHeight(
@@ -53,7 +53,7 @@ class _SpecificationListViewState extends State<SpecificationListView> {
                     ),
                     Container(
                         alignment: Alignment.centerRight,
-                        child: Text("- $value")),
+                        child: Text("$value")),
                   ],
                 ),
               ),

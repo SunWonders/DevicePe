@@ -10,3 +10,9 @@ const String GET_VARIANT_DETAILS = 'devicePe-ws/v1/varients/findByModelId/';
 
 const String GET_CHECK_LIST =
     'devicePe-ws/v1/varients/checklst/findByVarientId/';
+
+const String REGISTER = 'user-ws/v1/register';
+
+const String LOGIN = 'authenticate';
+
+const String VALIDATE_OTP = 'notification-ws/v1/otp/validate';
