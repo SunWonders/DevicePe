@@ -14,9 +14,10 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  var phoneNumber = "".obs;
+  var phoneNumber = "9538013461".obs;
   var countryCode = "+91".obs;
   var _password = "".obs;
+
   AuthenticationController authenticationController =
       Get.put(AuthenticationController());
 

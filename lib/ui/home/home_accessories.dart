@@ -3,6 +3,7 @@ import 'package:devicepe_client/repositories/network/models/accessaries_details_
 import 'package:devicepe_client/ui/brand_selection.dart';
 import 'package:devicepe_client/ui/common/progress_bar.dart';
 import 'package:devicepe_client/utils/colors.dart';
+import 'package:devicepe_client/utils/sahred_pref.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -24,6 +25,7 @@ class _HomeAccessoryState extends State<HomeAccessory> {
           .map(
             (element) => GestureDetector(
               onTap: () {
+                SharedPref().saveInt(SharedPref.ACCESSORY_ID, element.id);
                 Get.to(() => BrandSelectionPage());
               },
               child: AccessariesGridItem(element),

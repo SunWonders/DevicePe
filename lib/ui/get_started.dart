@@ -170,6 +170,7 @@ class _GetStartedPageState extends State<GetStartedPage> {
                 ),
                 SizedBox(height: 40),
                 FloatingActionButton(
+                    heroTag: null,
                     onPressed: () {
                       // redirectToHome = true;
                       // launchScreen(context, home);

@@ -1,3 +1,5 @@
+import 'package:devicepe_client/repositories/local/dao/login_request_dao.dart';
+import 'package:devicepe_client/repositories/local/dao/login_response_dao.dart';
 import 'package:devicepe_client/repositories/network/models/login_request.dart';
 import 'package:devicepe_client/repositories/network/models/login_response.dart';
 import 'package:devicepe_client/repositories/network/models/otp_validate_request.dart';
@@ -64,11 +66,14 @@ class AuthenticationController extends GetxController {
     isLoading(true);
     try {
       showLoaderDialog();
+      LoginRequestDao().insert(loginRequest);
       var response = await AuthenticationService.login(loginRequest);
+
       Get.back();
       if (response != null) {
         loginResponse.value = response;
-        if (response.message == "Success") {
+        if (response.jwtToken != null) {
+          LoginResponseDao().insert(response);
           Get.offAll(() => HomePage());
         }
       } else {

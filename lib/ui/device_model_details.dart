@@ -1,10 +1,11 @@
+import 'package:devicepe_client/repositories/local/dao/variant_data_dao.dart';
 import 'package:devicepe_client/repositories/network/controllers/variant_controller.dart';
-import 'package:devicepe_client/repositories/network/models/variant_response_model.dart';
 import 'package:devicepe_client/ui/common/progress_bar.dart';
 import 'package:devicepe_client/ui/device_details/device_slider.dart';
 import 'package:devicepe_client/ui/device_details/specification_list_view.dart';
 import 'package:devicepe_client/ui/exact_value/power_selection.dart';
 import 'package:devicepe_client/utils/colors.dart';
+import 'package:devicepe_client/utils/sahred_pref.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -17,12 +18,6 @@ class DeviceModelDetails extends StatefulWidget {
 
 class _DeviceModelDetailsState extends State<DeviceModelDetails> {
   VariantController variantController = Get.put(VariantController());
-
-  var variantDetails = [
-    VariantData(varientName: "Oneplus 7 64 GB"),
-    VariantData(varientName: "128 GB"),
-    VariantData(varientName: "256 GB"),
-  ].obs;
 
   Widget selectVarientView() {
     var h = (variantController.variantDetails.length / 3).ceilToDouble() * 80;
@@ -67,6 +62,8 @@ class _DeviceModelDetailsState extends State<DeviceModelDetails> {
                   ),
                   onTap: () {
                     variantController.selectedVariantData.value = data;
+                    SharedPref().saveInt(SharedPref.VARIANT_ID, data.id);
+                    VariantDataDao().insert(data);
                     variantController.selectedVariantData.refresh();
                   }),
             )

@@ -33,14 +33,13 @@ class _BrandSelectionPageState extends State<BrandSelectionPage> {
                 onTap: () {
                   setState(() {
                     _selectedBrand = brandData;
+                    SharedPref().saveBrandSelection(_selectedBrand.id);
+                    Get.to(() => ModelSelectionPage());
                   });
                 },
-                child: BrandGridItem(
-                    brandData,
-                    _selectedBrand ==
-                        brandData), // Pass iconData and a boolean that specifies if the icon is selected or not
+                child: BrandGridItem(brandData, _selectedBrand == brandData),
               );
-            }).toList(), // Convert the map to a list of widgets
+            }).toList(),
           )
         : NoDataFound();
   }
@@ -61,28 +60,27 @@ class _BrandSelectionPageState extends State<BrandSelectionPage> {
             ? ProgressBar()
             : gridViewSelection(),
       ),
-      floatingActionButton: ElevatedButton(
-        style: ButtonStyle(
-          backgroundColor:
-              MaterialStateProperty.all<Color>(AppColors.primaryLight),
-        ),
-        onPressed: () {
-          if (_selectedBrand == null) {
-            Get.defaultDialog(
-                title: "🙁  Alert 🙁",
-                middleText: "Please Select Brand to continue",
-                radius: 10,
-                buttonColor: AppColors.primaryDark,
-                onConfirm: () {
-                  Get.back();
-                });
-            return;
-          }
-          SharedPref().saveBrandSelection(_selectedBrand.id);
-          Get.to(() => ModelSelectionPage());
-        },
-        child: Text("Next"),
-      ),
+      // floatingActionButton: ElevatedButton(
+      //   style: ButtonStyle(
+      //     backgroundColor:
+      //         MaterialStateProperty.all<Color>(AppColors.primaryLight),
+      //   ),
+      //   onPressed: () {
+      //     if (_selectedBrand == null) {
+      //       Get.defaultDialog(
+      //           title: "🙁  Alert 🙁",
+      //           middleText: "Please Select Brand to continue",
+      //           radius: 10,
+      //           buttonColor: AppColors.primaryDark,
+      //           onConfirm: () {
+      //             Get.back();
+      //           });
+      //       return;
+      //     }
+
+      //   },
+      //   child: Text("Next"),
+      // ),
     );
   }
 }

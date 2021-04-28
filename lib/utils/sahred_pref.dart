@@ -4,6 +4,29 @@ class SharedPref {
   static const THEME_STATUS = "THEMESTATUS";
   static const BRAND_SELECTION = "BRAND_SELECTION";
   static const VARIENT_SELECTION = "VARIENT_SELECTION";
+  static const ACCESSORY_ID = "ACCESSORY_ID";
+  static const MODEL_ID = "MODEL_ID";
+  static const VARIANT_ID = "VARIANT_ID";
+
+  saveString(String key, String value) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString(key, value);
+  }
+
+  Future<String> readString(String key) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString(key) ?? null;
+  }
+
+  saveInt(String key, int value) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setInt(key, value);
+  }
+
+  Future<int> readInt(String key) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getInt(key) ?? -1;
+  }
 
   saveBrandSelection(int value) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();

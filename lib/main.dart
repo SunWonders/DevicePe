@@ -5,7 +5,7 @@ import 'package:devicepe_client/utils/dark_theme_provider.dart';
 import 'package:devicepe_client/utils/styles.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+void main() async {
   runApp(BaseApp());
 }
 

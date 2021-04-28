@@ -6,9 +6,6 @@ import 'package:dio/dio.dart';
 
 class ModelService {
   static Future<ModelDetailResponse> getModelByBrandId() async {
-    print("Api Call" +
-        GET_MODEL_BY_BRAND_ID +
-        "${SharedPref().getSelectedBrand()}");
     try {
       int brandId = await SharedPref().getSelectedBrand();
       Response<String> response =

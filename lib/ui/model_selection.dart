@@ -4,6 +4,7 @@ import 'package:devicepe_client/ui/common/no_dat_found.dart';
 import 'package:devicepe_client/ui/device_model_details.dart';
 import 'package:devicepe_client/ui/common/progress_bar.dart';
 import 'package:devicepe_client/utils/colors.dart';
+import 'package:devicepe_client/utils/sahred_pref.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -33,6 +34,9 @@ class _ModelSelectionPageState extends State<ModelSelectionPage> {
                   onTap: () {
                     setState(() {
                       _selectedModel = iconData;
+                      SharedPref()
+                          .saveInt(SharedPref.MODEL_ID, _selectedModel.id);
+                      Get.to(() => DeviceModelDetails());
                     });
                   },
                   child:
@@ -59,28 +63,28 @@ class _ModelSelectionPageState extends State<ModelSelectionPage> {
       body: Obx(() => modelController.isLoading.value
           ? ProgressBar()
           : gridViewSelection()),
-      floatingActionButton: ElevatedButton(
-        style: ButtonStyle(
-          backgroundColor:
-              MaterialStateProperty.all<Color>(AppColors.primaryLight),
-        ),
-        onPressed: () {
-          if (_selectedModel == null) {
-            Get.defaultDialog(
-              title: "🙁  Alert 🙁",
-              middleText: "Please Select Model to continue",
-              radius: 10,
-              buttonColor: AppColors.primaryDark,
-              onConfirm: () {
-                Get.back();
-              },
-            );
-            return;
-          }
-          Get.to(() => DeviceModelDetails());
-        },
-        child: Text("Next"),
-      ),
+      // floatingActionButton: ElevatedButton(
+      //   style: ButtonStyle(
+      //     backgroundColor:
+      //         MaterialStateProperty.all<Color>(AppColors.primaryLight),
+      //   ),
+      //   onPressed: () {
+      //     if (_selectedModel == null) {
+      //       Get.defaultDialog(
+      //         title: "🙁  Alert 🙁",
+      //         middleText: "Please Select Model to continue",
+      //         radius: 10,
+      //         buttonColor: AppColors.primaryDark,
+      //         onConfirm: () {
+      //           Get.back();
+      //         },
+      //       );
+      //       return;
+      //     }
+      //     Get.to(() => DeviceModelDetails());
+      //   },
+      //   child: Text("Next"),
+      // ),
     );
   }
 }
