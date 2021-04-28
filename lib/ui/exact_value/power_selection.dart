@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:devicepe_client/constants/constants.dart';
 import 'package:devicepe_client/repositories/network/controllers/check_list_controller.dart';
 import 'package:devicepe_client/repositories/network/models/check_list_detail_response.dart';
@@ -9,7 +11,6 @@ import 'package:devicepe_client/utils/colors.dart';
 import 'package:devicepe_client/utils/common_utility.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:toggle_switch/toggle_switch.dart';
 
 class PowerStateSelection extends StatefulWidget {
   PowerStateSelection({Key key}) : super(key: key);
@@ -20,7 +21,10 @@ class PowerStateSelection extends StatefulWidget {
 
 class _PowerStateSelectionState extends State<PowerStateSelection> {
   CheckListController checkListDetailResponse = Get.put(CheckListController());
-  List<int> _selectedCheckListIndex = [];
+
+  HashMap<int, Option> singleSelection = new HashMap();
+
+  HashMap<int, List<Option>> multipleSelection = new HashMap();
 
   @override
   void initState() {
@@ -119,8 +123,10 @@ class _PowerStateSelectionState extends State<PowerStateSelection> {
                   .forEach((CheckListData checkListData) => {
                         if (checkListData.isMandatory == 1)
                           {
-                            if (!_selectedCheckListIndex
-                                .contains(checkListData.id))
+                            if (singleSelection[checkListData.id] == null &&
+                                (multipleSelection[checkListData.id] == null ||
+                                    multipleSelection[checkListData.id]
+                                        .isEmpty))
                               {isSelected.value = false}
                           },
                       }),
@@ -168,26 +174,129 @@ class _PowerStateSelectionState extends State<PowerStateSelection> {
                       textAlign: TextAlign.left,
                     ),
                   ),
-                  ToggleSwitch(
-                    minWidth: 90.0,
-                    cornerRadius: 10.0,
-                    activeBgColor: AppColors.primaryLight,
-                    activeFgColor: AppColors.whiteText,
-                    inactiveBgColor: Colors.grey,
-                    inactiveFgColor: AppColors.shadowThree,
-                    labels: ['YES', 'NO'],
-                    initialLabelIndex: checkListData.isMandatory == 1 ? -1 : -1,
-                    icons: [Icons.verified, Icons.dangerous],
-                    onToggle: (index) {
-                      if (!_selectedCheckListIndex.contains(checkListData.id)) {
-                        _selectedCheckListIndex.add(checkListData.id);
-                      }
-                    },
-                  ),
+
+                  getCheckListOptions(index, checkListData),
+
+                  // ToggleSwitch(
+                  //   minWidth: 90.0,
+                  //   cornerRadius: 10.0,
+                  //   activeBgColor: AppColors.primaryLight,
+                  //   activeFgColor: AppColors.whiteText,
+                  //   inactiveBgColor: Colors.grey,
+                  //   inactiveFgColor: AppColors.shadowThree,
+                  //   labels: ['YES', 'NO'],
+                  //   initialLabelIndex: checkListData.isMandatory == 1 ? -1 : -1,
+                  //   icons: [Icons.verified, Icons.dangerous],
+                  //   onToggle: (index) {
+                  //     if (!_selectedCheckListIndex.contains(checkListData.id)) {
+                  //       _selectedCheckListIndex.add(checkListData.id);
+                  //     }
+                  //   },
+                  // ),
                 ],
               ),
             )
             .toList(),
+      ),
+    );
+  }
+
+  Widget getCheckListOptions(int index, CheckListData checkListData) {
+    return Container(
+      //height: h,
+      child: GridView.count(
+        childAspectRatio: 2.5,
+        shrinkWrap: true,
+        crossAxisCount:
+            MediaQuery.of(context).orientation == Orientation.portrait ? 2 : 3,
+        padding: EdgeInsets.symmetric(horizontal: 1.0, vertical: 1),
+        children: checkListData.options.map((Option option) {
+          return GestureDetector(
+              onTap: () {
+                setState(() {
+                  if (checkListData.type == "SINGLE") {
+                    singleSelection[checkListData.id] = option;
+                  } else {
+                    List<Option> c = multipleSelection[checkListData.id];
+                    if (c == null) {
+                      c = [];
+                    }
+                    if (c.contains(option)) {
+                      c.remove(option);
+                    } else {
+                      c.add(option);
+                    }
+
+                    multipleSelection[checkListData.id] = c;
+                  }
+                });
+              },
+              child: checkListData.type == "SINGLE"
+                  ? OptionItem(
+                      option, singleSelection[checkListData.id] == option)
+                  : OptionItem(
+                      option,
+                      multipleSelection[checkListData.id] != null &&
+                          multipleSelection[checkListData.id]
+                              .contains(option)));
+        }).toList(),
+      ),
+    );
+  }
+}
+
+class OptionItem extends StatelessWidget {
+  final Option _selectionItem;
+  final bool _isSelected;
+
+  OptionItem(this._selectionItem, this._isSelected);
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      borderRadius: BorderRadius.all(Radius.circular(1.0)),
+      child: Container(
+        decoration: new BoxDecoration(
+          border: Border.all(
+              color: _isSelected ? AppColors.primaryLight : Colors.transparent),
+          borderRadius: BorderRadius.circular(5),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.5),
+              spreadRadius: 1,
+              blurRadius: 5,
+              offset: Offset(0, 3),
+            ),
+          ],
+          gradient: new LinearGradient(
+            colors: _isSelected
+                ? [
+                    AppColors.nutralLight,
+                    AppColors.nutralLight,
+                  ]
+                : [
+                    AppColors.whiteText,
+                    AppColors.whiteText,
+                  ],
+          ),
+        ),
+        margin: EdgeInsets.fromLTRB(15.0, 10, 15, 10),
+        padding: EdgeInsets.all(2.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(
+              width: 5.0,
+            ),
+            Text(
+              _selectionItem.name,
+              style: TextStyle(
+                color: AppColors.primaryDark,
+                fontWeight: FontWeight.bold,
+                fontSize: 14,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
