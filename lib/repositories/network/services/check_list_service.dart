@@ -9,7 +9,6 @@ class CheckListService {
     print("Api Call");
     try {
       int variantId = await SharedPref().getSelectedVarientId();
-      print(variantId);
       Response<String> response =
           await ApiClient.dio.get<String>(GET_CHECK_LIST + "$variantId");
       print(response.data);

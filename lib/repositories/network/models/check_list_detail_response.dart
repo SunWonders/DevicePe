@@ -38,6 +38,8 @@ class CheckListDetailResponse {
       };
 }
 
+//SINGLE
+
 class CheckListData {
   CheckListData({
     this.isActive,
@@ -48,6 +50,8 @@ class CheckListData {
     this.isMandatory,
     this.iconUrl,
     this.id,
+    this.options,
+    this.priceType,
   });
 
   int isActive;
@@ -58,6 +62,8 @@ class CheckListData {
   int isMandatory;
   String iconUrl;
   int id;
+  List<Option> options;
+  String priceType;
 
   factory CheckListData.fromJson(Map<String, dynamic> json) => CheckListData(
         isActive: json["isActive"],
@@ -68,6 +74,9 @@ class CheckListData {
         isMandatory: json["isMandatory"],
         iconUrl: json["iconUrl"],
         id: json["id"],
+        options:
+            List<Option>.from(json["options"].map((x) => Option.fromJson(x))),
+        priceType: json["priceType"] == null ? null : json["priceType"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -79,5 +88,35 @@ class CheckListData {
         "isMandatory": isMandatory,
         "iconUrl": iconUrl,
         "id": id,
+        "options": List<dynamic>.from(options.map((x) => x.toJson())),
+        "priceType": priceType == null ? null : priceType,
+      };
+}
+
+class Option {
+  Option({
+    this.id,
+    this.iconUrl,
+    this.name,
+    this.price,
+  });
+
+  int id;
+  String iconUrl;
+  String name;
+  double price;
+
+  factory Option.fromJson(Map<String, dynamic> json) => Option(
+        id: json["id"],
+        iconUrl: json["iconUrl"],
+        name: json["name"],
+        price: json["price"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "iconUrl": iconUrl,
+        "name": name,
+        "price": price,
       };
 }

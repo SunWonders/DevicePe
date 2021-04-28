@@ -1,3 +1,4 @@
+import 'package:devicepe_client/ui/exact_value/power_selection.dart';
 import 'package:devicepe_client/utils/colors.dart';
 import 'package:flutter/material.dart';
 

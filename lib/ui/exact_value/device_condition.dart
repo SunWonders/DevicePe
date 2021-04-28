@@ -121,7 +121,7 @@ class _DeviceConditionPageState extends State<DeviceConditionPage> {
           //     onConfirm: () {
           //       Get.back();
           //     });
-          Get.bottomSheet(DeviceSummaryPage());
+          Get.to(() => DeviceSummaryPage());
         },
         child: Text("Next"),
       ),

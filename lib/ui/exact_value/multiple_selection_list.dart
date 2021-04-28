@@ -116,7 +116,8 @@ class _MultipleSelectionPageState extends State<MultipleSelectionPage> {
           //       });
           //   return;
           // }
-          Get.to(() => DeviceFaultSelectionPage());
+          //Get.to(() => DeviceFaultSelectionPage());
+          Get.to(() => DeviceConditionPage());
         },
         child: Text("Next"),
       ),
