@@ -1,5 +1,8 @@
+import 'dart:collection';
+import 'dart:convert';
 import 'dart:ui';
 
+import 'package:devicepe_client/repositories/network/models/check_list_detail_response.dart';
 import 'package:devicepe_client/utils/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -43,5 +46,27 @@ class CommonUtility {
       yield f(index, item);
       index = index + 1;
     }
+  }
+
+  String hashMapToString(HashMap<int, dynamic> a) {
+    HashMap<String, dynamic> newMap = HashMap.from(a.map((key, value) {
+      //List<Option> values = List.from(value);
+      return MapEntry("$key", value.toJson().toString());
+    }));
+    return newMap.toString();
+  }
+
+  String hashMapListToString(HashMap<int, dynamic> a) {
+    HashMap<String, dynamic> newMap = HashMap.from(a.map((key, value) {
+      List<dynamic> values = List.from(value);
+      return MapEntry(
+        "$key",
+        values.map((theValue) {
+          return theValue.toJson();
+        }).toList(),
+      );
+    }));
+
+    return newMap.toString();
   }
 }

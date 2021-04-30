@@ -1,3 +1,4 @@
+import 'package:devicepe_client/repositories/local/dao/check_list_data_dao.dart';
 import 'package:devicepe_client/repositories/network/models/check_list_detail_response.dart';
 import 'package:devicepe_client/repositories/network/services/check_list_service.dart';
 import 'package:get/get.dart';
@@ -18,6 +19,7 @@ class CheckListController extends GetxController {
 
       if (response != null) {
         checkListDetails = response.data;
+        CheckListDataDao().insertAll(response.data);
         isLoading(false);
       } else {
         isLoading(false);

@@ -11,6 +11,7 @@ import 'package:devicepe_client/ui/authentication/login_page.dart';
 import 'package:devicepe_client/ui/authentication/otp_page.dart';
 import 'package:devicepe_client/ui/common/progress_dialog.dart';
 import 'package:devicepe_client/ui/home/home.dart';
+import 'package:devicepe_client/utils/sahred_pref.dart';
 import 'package:get/get.dart';
 
 class AuthenticationController extends GetxController {
@@ -74,6 +75,9 @@ class AuthenticationController extends GetxController {
         loginResponse.value = response;
         if (response.jwtToken != null) {
           LoginResponseDao().insert(response);
+
+          SharedPref().saveString(SharedPref.JWT_TOKEN, response.jwtToken);
+
           Get.offAll(() => HomePage());
         }
       } else {
@@ -88,3 +92,5 @@ class AuthenticationController extends GetxController {
     }
   }
 }
+
+class JWT_TOKEN {}

@@ -1,5 +1,5 @@
-import 'package:devicepe_client/ui/exact_value/power_selection.dart';
 import 'package:devicepe_client/utils/colors.dart';
+import 'package:devicepe_client/utils/sahred_pref.dart';
 import 'package:flutter/material.dart';
 
 class DeviceSummaryPage extends StatefulWidget {
@@ -8,6 +8,13 @@ class DeviceSummaryPage extends StatefulWidget {
 }
 
 class _DeviceSummaryPageState extends State<DeviceSummaryPage> {
+  getData() async {
+    var a = await SharedPref().readString(SharedPref.SINGLE_SELECTION);
+    var b = await SharedPref().readString(SharedPref.MULTIPLE_SELECTION);
+    print(a.split("---")[0].split("--")[0]);
+    print(b);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

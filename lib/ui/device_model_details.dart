@@ -3,7 +3,7 @@ import 'package:devicepe_client/repositories/network/controllers/variant_control
 import 'package:devicepe_client/ui/common/progress_bar.dart';
 import 'package:devicepe_client/ui/device_details/device_slider.dart';
 import 'package:devicepe_client/ui/device_details/specification_list_view.dart';
-import 'package:devicepe_client/ui/exact_value/power_selection.dart';
+import 'package:devicepe_client/ui/exact_value/check_list.dart';
 import 'package:devicepe_client/utils/colors.dart';
 import 'package:devicepe_client/utils/sahred_pref.dart';
 import 'package:flutter/material.dart';
@@ -63,6 +63,8 @@ class _DeviceModelDetailsState extends State<DeviceModelDetails> {
                   onTap: () {
                     variantController.selectedVariantData.value = data;
                     SharedPref().saveInt(SharedPref.VARIANT_ID, data.id);
+                    SharedPref()
+                        .saveDouble(SharedPref.BASE_PRICE, data.basePrice);
                     VariantDataDao().insert(data);
                     variantController.selectedVariantData.refresh();
                   }),
@@ -156,7 +158,8 @@ class _DeviceModelDetailsState extends State<DeviceModelDetails> {
                   ),
                 ),
               ),
-        floatingActionButton: variantController.isLoading.value
+        floatingActionButton: variantController.isLoading.value ||
+                variantController.selectedVariantData.value.basePrice == null
             ? Container()
             : ClipRRect(
                 borderRadius: BorderRadius.all(Radius.circular(10.0)),

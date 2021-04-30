@@ -1,5 +1,7 @@
+import 'package:devicepe_client/repositories/local/dao/variant_data_dao.dart';
 import 'package:devicepe_client/repositories/network/models/variant_response_model.dart';
 import 'package:devicepe_client/repositories/network/services/varient_service.dart';
+import 'package:devicepe_client/utils/sahred_pref.dart';
 import 'package:get/get.dart';
 
 class VariantController extends GetxController {
@@ -22,6 +24,10 @@ class VariantController extends GetxController {
         variantDetails = response.data;
         if (response.data.isNotEmpty) {
           selectedVariantData = response.data[0].obs;
+          SharedPref().saveInt(SharedPref.VARIANT_ID, response.data[0].id);
+          SharedPref()
+              .saveDouble(SharedPref.BASE_PRICE, response.data[0].basePrice);
+          VariantDataDao().insert(response.data[0]);
         }
       }
       print(response);

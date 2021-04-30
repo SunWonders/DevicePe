@@ -1,14 +1,12 @@
 import 'dart:collection';
-
-import 'package:devicepe_client/constants/constants.dart';
 import 'package:devicepe_client/repositories/network/controllers/check_list_controller.dart';
 import 'package:devicepe_client/repositories/network/models/check_list_detail_response.dart';
-import 'package:devicepe_client/ui/common/not_accepting_page.dart';
 import 'package:devicepe_client/ui/common/progress_bar.dart';
 import 'package:devicepe_client/ui/exact_value/information_request_sheet.dart';
 import 'package:devicepe_client/ui/exact_value/multiple_selection_list.dart';
 import 'package:devicepe_client/utils/colors.dart';
 import 'package:devicepe_client/utils/common_utility.dart';
+import 'package:devicepe_client/utils/sahred_pref.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -24,12 +22,19 @@ class _PowerStateSelectionState extends State<PowerStateSelection> {
 
   HashMap<int, Option> singleSelection = new HashMap();
 
+  var price = 0.0.obs;
+
   HashMap<int, List<Option>> multipleSelection = new HashMap();
 
   @override
   void initState() {
     super.initState();
     _modalBottomSheetMenu();
+    updatePrice();
+  }
+
+  updatePrice() async {
+    price.value = await SharedPref().readDouble(SharedPref.BASE_PRICE);
   }
 
   void _modalBottomSheetMenu() {
@@ -74,38 +79,40 @@ class _PowerStateSelectionState extends State<PowerStateSelection> {
                 ),
               ),
       ),
-      bottomNavigationBar: ClipRRect(
-        borderRadius: BorderRadius.all(Radius.circular(10.0)),
-        child: Container(
-          color: AppColors.primaryDark,
-          padding: EdgeInsets.all(2),
-          child: ClipRRect(
-            borderRadius: BorderRadius.all(Radius.circular(15.0)),
-            child: Container(
-              color: AppColors.nutralLight,
-              padding: EdgeInsets.all(10),
-              width: 100,
-              height: 60,
-              alignment: Alignment.center,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "Get Upto",
-                    style: TextStyle(fontSize: 14, color: AppColors.dark),
-                    textAlign: TextAlign.center,
-                  ),
-                  SizedBox(
-                    width: 50,
-                  ),
-                  Text(
-                    "\u20B9 1028",
-                    style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.dark),
-                  ),
-                ],
+      bottomNavigationBar: Obx(
+        () => ClipRRect(
+          borderRadius: BorderRadius.all(Radius.circular(10.0)),
+          child: Container(
+            color: AppColors.primaryDark,
+            padding: EdgeInsets.all(2),
+            child: ClipRRect(
+              borderRadius: BorderRadius.all(Radius.circular(15.0)),
+              child: Container(
+                color: AppColors.nutralLight,
+                padding: EdgeInsets.all(10),
+                width: 100,
+                height: 60,
+                alignment: Alignment.center,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Get Upto",
+                      style: TextStyle(fontSize: 14, color: AppColors.dark),
+                      textAlign: TextAlign.center,
+                    ),
+                    SizedBox(
+                      width: 50,
+                    ),
+                    Text(
+                      "\u20B9 ${price.value}",
+                      style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.dark),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
@@ -132,16 +139,27 @@ class _PowerStateSelectionState extends State<PowerStateSelection> {
                       }),
               if (isSelected.value == false)
                 {
-                  //{Get.snackbar("Please Select Yes Or No", "")},
-                  Get.to(
-                    () => NotAcceptingPage(
-                      NOT_ACCEPTING,
-                      heading: VALUE_TOO_LOW,
-                    ),
-                  ),
+                  // Get.to(
+                  //   () => NotAcceptingPage(
+                  //     NOT_ACCEPTING,
+                  //     heading: VALUE_TOO_LOW,
+                  //   ),
+                  // ),
+                  Get.defaultDialog(
+                      middleText: "Please Answer All Mandatory Questions")
                 }
               else
                 {
+                  SharedPref().saveString(
+                    SharedPref.SINGLE_SELECTION,
+                    single.toString().replaceAll("[", "").replaceAll("]", ""),
+                  ),
+                  SharedPref().saveString(
+                    SharedPref.MULTIPLE_SELECTION,
+                    multiple.toString().replaceAll("[", "").replaceAll("]", ""),
+                  ),
+                  SharedPref()
+                      .saveDouble(SharedPref.CHECK_LIST_AMOUNT, price.value),
                   Get.to(() => MultipleSelectionPage()),
                 },
             },
@@ -174,31 +192,44 @@ class _PowerStateSelectionState extends State<PowerStateSelection> {
                       textAlign: TextAlign.left,
                     ),
                   ),
-
                   getCheckListOptions(index, checkListData),
-
-                  // ToggleSwitch(
-                  //   minWidth: 90.0,
-                  //   cornerRadius: 10.0,
-                  //   activeBgColor: AppColors.primaryLight,
-                  //   activeFgColor: AppColors.whiteText,
-                  //   inactiveBgColor: Colors.grey,
-                  //   inactiveFgColor: AppColors.shadowThree,
-                  //   labels: ['YES', 'NO'],
-                  //   initialLabelIndex: checkListData.isMandatory == 1 ? -1 : -1,
-                  //   icons: [Icons.verified, Icons.dangerous],
-                  //   onToggle: (index) {
-                  //     if (!_selectedCheckListIndex.contains(checkListData.id)) {
-                  //       _selectedCheckListIndex.add(checkListData.id);
-                  //     }
-                  //   },
-                  // ),
                 ],
               ),
             )
             .toList(),
       ),
     );
+  }
+
+  List<String> single = [];
+  List<String> multiple = [];
+  calculatePrice() async {
+    double basePrice = await SharedPref().readDouble(SharedPref.BASE_PRICE);
+    single = [];
+    multiple = [];
+    String m = "";
+    checkListDetailResponse.checkListDetails
+        .forEach((CheckListData checkListData) => {
+              if (singleSelection[checkListData.id] != null)
+                {
+                  single.add(
+                      "${checkListData.id}--${checkListData.description}---${singleSelection[checkListData.id].id}--${singleSelection[checkListData.id].name}"),
+                  basePrice -= singleSelection[checkListData.id].price,
+                },
+              if (multipleSelection[checkListData.id] != null &&
+                  multipleSelection[checkListData.id].isNotEmpty)
+                {
+                  m = "${checkListData.id}--${checkListData.description}---",
+                  for (Option option in multipleSelection[checkListData.id])
+                    {
+                      basePrice -= option.price,
+                      m += "${option.id}--${option.name}--",
+                    },
+                  multiple.add(m),
+                }
+            });
+
+    price.value = basePrice;
   }
 
   Widget getCheckListOptions(int index, CheckListData checkListData) {
@@ -229,6 +260,7 @@ class _PowerStateSelectionState extends State<PowerStateSelection> {
 
                     multipleSelection[checkListData.id] = c;
                   }
+                  calculatePrice();
                 });
               },
               child: checkListData.type == "SINGLE"

@@ -1,7 +1,9 @@
 import 'package:devicepe_client/dto/selection_item.dart';
+import 'package:devicepe_client/repositories/local/dao/selection_item_dao.dart';
+import 'package:devicepe_client/repositories/local/dao/variant_data_dao.dart';
 import 'package:devicepe_client/ui/exact_value/device_condition.dart';
-import 'package:devicepe_client/ui/exact_value/device_fault.dart';
 import 'package:devicepe_client/utils/colors.dart';
+import 'package:devicepe_client/utils/sahred_pref.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -13,6 +15,8 @@ class MultipleSelectionPage extends StatefulWidget {
 }
 
 class _MultipleSelectionPageState extends State<MultipleSelectionPage> {
+  var price = 0.0.obs;
+
   final List<SelectionItem> _icons = [
     SelectionItem(
       "https://image.flaticon.com/icons/png/512/189/189058.png",
@@ -104,19 +108,25 @@ class _MultipleSelectionPageState extends State<MultipleSelectionPage> {
           backgroundColor:
               MaterialStateProperty.all<Color>(AppColors.primaryLight),
         ),
-        onPressed: () {
-          // if (_selectedIcons == null || _selectedIcons.isEmpty) {
-          //   Get.defaultDialog(
-          //       title: "🙁  Alert 🙁",
-          //       middleText: "Please Select Brand to continue",
-          //       radius: 10,
-          //       buttonColor: AppColors.primaryDark,
-          //       onConfirm: () {
-          //         Get.back();
-          //       });
-          //   return;
-          // }
-          //Get.to(() => DeviceFaultSelectionPage());
+        onPressed: () async {
+          var variantData = await VariantDataDao().retrieve();
+
+          _selectedIcons.forEach((element) {
+            if (element.name.contains("Box")) {
+              price.value += variantData.boxPrice;
+            } else if (element.name.contains("Valid Bill")) {
+              price.value += variantData.billPrice;
+            } else if (element.name.contains("Original Charger")) {
+              price.value += variantData.chargerPrice;
+            } else {
+              price.value += variantData.headPhonePrice;
+            }
+          });
+
+          SelectionItemDao().insertAll(_selectedIcons);
+
+          SharedPref().saveDouble(SharedPref.ACCESSORIES_PRICE, price.value);
+
           Get.to(() => DeviceConditionPage());
         },
         child: Text("Next"),

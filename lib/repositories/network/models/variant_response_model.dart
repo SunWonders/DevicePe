@@ -39,17 +39,24 @@ class VarientDetailResponse {
 }
 
 class VariantData {
-  VariantData({
-    this.id,
-    this.varientName,
-    this.varientIconUrl,
-    this.isActive,
-    this.basePrice,
-    this.capacity,
-    this.color,
-    this.description,
-    this.specifications,
-  });
+  VariantData(
+      {this.id,
+      this.varientName,
+      this.varientIconUrl,
+      this.isActive,
+      this.basePrice,
+      this.capacity,
+      this.color,
+      this.description,
+      this.specifications,
+      this.boxPrice,
+      this.headPhonePrice,
+      this.chargerPrice,
+      this.billPrice,
+      this.likeNew,
+      this.good,
+      this.average,
+      this.belowAverage});
 
   int id;
   String varientName;
@@ -61,6 +68,15 @@ class VariantData {
   String description;
   RxList<Specification> specifications;
 
+  double boxPrice;
+  double headPhonePrice;
+  double chargerPrice;
+  double billPrice;
+  double likeNew;
+  double good;
+  double average;
+  double belowAverage;
+
   factory VariantData.fromJson(Map<String, dynamic> json) => VariantData(
         id: json["id"],
         varientName: json["varientName"],
@@ -68,6 +84,14 @@ class VariantData {
             RxList<String>.from(json["varientIconUrl"].map((x) => x)),
         isActive: json["isActive"],
         basePrice: json["basePrice"].toDouble(),
+        boxPrice: json["boxPrice"].toDouble(),
+        headPhonePrice: json["headPhonePrice"].toDouble(),
+        chargerPrice: json["chargerPrice"].toDouble(),
+        billPrice: json["billPrice"].toDouble(),
+        likeNew: json["likeNew"].toDouble(),
+        good: json["good"].toDouble(),
+        average: json["average"].toDouble(),
+        belowAverage: json["belowAverage"].toDouble(),
         capacity: json["capacity"],
         color: json["color"],
         description: json["description"],
@@ -83,6 +107,14 @@ class VariantData {
         "varientIconUrl": List<dynamic>.from(varientIconUrl.map((x) => x)),
         "isActive": isActive,
         "basePrice": basePrice,
+        "boxPrice": boxPrice,
+        "headPhonePrice": headPhonePrice,
+        "chargerPrice": chargerPrice,
+        "billPrice": billPrice,
+        "likeNew": likeNew,
+        "good": good,
+        "average": average,
+        "belowAverage": belowAverage,
         "capacity": capacity,
         "color": color,
         "description": description,
