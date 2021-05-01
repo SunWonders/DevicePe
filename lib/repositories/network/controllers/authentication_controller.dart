@@ -92,5 +92,3 @@ class AuthenticationController extends GetxController {
     }
   }
 }
-
-class JWT_TOKEN {}

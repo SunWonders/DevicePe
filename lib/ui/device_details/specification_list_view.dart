@@ -1,7 +1,6 @@
 import 'package:devicepe_client/repositories/network/models/variant_response_model.dart';
 import 'package:devicepe_client/utils/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class SpecificationListView extends StatefulWidget {
   SpecificationListView(this.specificationDetails);
@@ -18,11 +17,16 @@ class _SpecificationListViewState extends State<SpecificationListView> {
 
   @override
   Widget build(BuildContext context) {
+    //var h = (specificationDetails.length * 50).toInt();
+
     return Container(
-      height: MediaQuery.of(context).orientation == Orientation.portrait
-          ? Get.height / 2 - 10
-          : Get.width / 3 - 10,
+      // height: MediaQuery.of(context).orientation == Orientation.portrait
+      //   ? Get.height / 2 - 10
+      // : Get.width / 3 - 10,
+      //
+      //height: h.toDouble(),
       child: ListView.builder(
+        shrinkWrap: true,
         padding: const EdgeInsets.fromLTRB(10, 1, 10, 1),
         itemCount: specificationDetails.length,
         itemBuilder: (BuildContext context, int index) {
@@ -40,7 +44,7 @@ class _SpecificationListViewState extends State<SpecificationListView> {
                   children: [
                     Container(
                       width: 120,
-                      padding: const EdgeInsets.all(10),
+                      padding: const EdgeInsets.all(5),
                       alignment: Alignment.centerLeft,
                       child: Text(
                         title,
@@ -52,7 +56,8 @@ class _SpecificationListViewState extends State<SpecificationListView> {
                       ),
                     ),
                     Container(
-                        alignment: Alignment.centerRight,
+                        width: 200,
+                        alignment: Alignment.centerLeft,
                         child: Text("$value")),
                   ],
                 ),

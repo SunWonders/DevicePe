@@ -14,6 +14,7 @@ class SharedPref {
   static const CHECK_LIST_AMOUNT = "CHECK_LIST_AMOUNT";
   static const ACCESSORIES_PRICE = "ACCESSORIES_PRICE";
   static const DEVICE_CONDITION = "DEVICE_CONDITION";
+  static const LOCATION = "LOCATION";
 
   saveString(String key, String value) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -43,6 +44,16 @@ class SharedPref {
   Future<double> readDouble(String key) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getDouble(key) ?? 0;
+  }
+
+  saveBoolean(String key, bool value) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool(key, value);
+  }
+
+  Future<bool> readBoolean(String key) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getBool(key) ?? false;
   }
 
   saveBrandSelection(int value) async {

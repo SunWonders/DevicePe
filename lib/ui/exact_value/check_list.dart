@@ -139,12 +139,6 @@ class _PowerStateSelectionState extends State<PowerStateSelection> {
                       }),
               if (isSelected.value == false)
                 {
-                  // Get.to(
-                  //   () => NotAcceptingPage(
-                  //     NOT_ACCEPTING,
-                  //     heading: VALUE_TOO_LOW,
-                  //   ),
-                  // ),
                   Get.defaultDialog(
                       middleText: "Please Answer All Mandatory Questions")
                 }

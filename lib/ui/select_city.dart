@@ -1,4 +1,5 @@
 import 'package:devicepe_client/utils/colors.dart';
+import 'package:devicepe_client/utils/sahred_pref.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:autocomplete_textfield/autocomplete_textfield.dart';
@@ -11,12 +12,7 @@ class SelectCity extends StatefulWidget {
 }
 
 GlobalKey<AutoCompleteTextFieldState<String>> key = new GlobalKey();
-var cities = [
-  "Cochin",
-  "Delhi",
-  "Hydrabad",
-  "Jaipur",
-];
+var cities = ["Cochin", "Delhi", "Hydrabad", "Jaipur", "Jai"];
 
 class _SelectCityState extends State<SelectCity> {
   @override
@@ -109,7 +105,10 @@ class _SelectCityState extends State<SelectCity> {
           (value) {
             return GestureDetector(
               onTap: () {
-                setState(() {});
+                setState(() {
+                  SharedPref().saveString(SharedPref.LOCATION, value.name);
+                  Get.back();
+                });
               },
               child: CitySelectionGridItem(value),
             );

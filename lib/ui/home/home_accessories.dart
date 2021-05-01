@@ -2,6 +2,7 @@ import 'package:devicepe_client/repositories/network/controllers/accessories_con
 import 'package:devicepe_client/repositories/network/models/accessaries_details_response.dart';
 import 'package:devicepe_client/ui/brand_selection.dart';
 import 'package:devicepe_client/ui/common/progress_bar.dart';
+import 'package:devicepe_client/ui/select_city.dart';
 import 'package:devicepe_client/utils/colors.dart';
 import 'package:devicepe_client/utils/sahred_pref.dart';
 import 'package:flutter/material.dart';
@@ -24,9 +25,22 @@ class _HomeAccessoryState extends State<HomeAccessory> {
       children: a.accessoriesDetails
           .map(
             (element) => GestureDetector(
-              onTap: () {
-                SharedPref().saveInt(SharedPref.ACCESSORY_ID, element.id);
-                Get.to(() => BrandSelectionPage());
+              onTap: () async {
+                var location =
+                    await SharedPref().readString(SharedPref.LOCATION);
+                if (location != null && location.isNotEmpty) {
+                  SharedPref().saveInt(SharedPref.ACCESSORY_ID, element.id);
+                  Get.to(() => BrandSelectionPage());
+                } else {
+                  Get.defaultDialog(
+                      title: "Info",
+                      middleText: "Please Update Your Location To Continue.",
+                      onConfirm: () {
+                        Get.back();
+                        Get.to(() => SelectCity());
+                      },
+                      textConfirm: "Select City");
+                }
               },
               child: AccessariesGridItem(element),
             ),

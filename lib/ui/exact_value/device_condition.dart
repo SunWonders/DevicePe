@@ -117,14 +117,7 @@ class _DeviceConditionPageState extends State<DeviceConditionPage> {
 
           SharedPref().saveString(SharedPref.DEVICE_CONDITION,
               "${_selectedIcons.name}-${_selectedIcons.description}");
-          // Get.defaultDialog(
-          //     title: "Under Development",
-          //     middleText: "Coming Soon",
-          //     radius: 10,
-          //     buttonColor: AppColors.primaryDark,
-          //     onConfirm: () {
-          //       Get.back();
-          //     });
+
           Get.to(() => DeviceSummaryPage());
         },
         child: Text("Next"),
