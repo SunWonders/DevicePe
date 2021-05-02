@@ -126,7 +126,7 @@ class CityDetail {
 
 List<CityDetail> getCityDetail() {
   return <CityDetail>[
-    CityDetail("Bengaluru",
+    CityDetail("Bangalore",
         "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/1c504038542117.5765973d2c44e.jpg"),
     CityDetail("Chennai",
         "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/f70aaf38542117.5765973d2cb73.jpg"),
