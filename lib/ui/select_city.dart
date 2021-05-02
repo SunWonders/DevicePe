@@ -1,3 +1,4 @@
+import 'package:devicepe_client/repositories/network/controllers/city_check_controller.dart';
 import 'package:devicepe_client/utils/colors.dart';
 import 'package:devicepe_client/utils/sahred_pref.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +14,7 @@ class SelectCity extends StatefulWidget {
 
 GlobalKey<AutoCompleteTextFieldState<String>> key = new GlobalKey();
 var cities = ["Cochin", "Delhi", "Hydrabad", "Jaipur", "Jai"];
+var controller = Get.put(CityCheckController());
 
 class _SelectCityState extends State<SelectCity> {
   @override
@@ -106,8 +108,7 @@ class _SelectCityState extends State<SelectCity> {
             return GestureDetector(
               onTap: () {
                 setState(() {
-                  SharedPref().saveString(SharedPref.LOCATION, value.name);
-                  Get.back();
+                  controller.checkCity(value.name);
                 });
               },
               child: CitySelectionGridItem(value),

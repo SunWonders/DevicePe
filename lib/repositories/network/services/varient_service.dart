@@ -1,5 +1,6 @@
 import 'package:devicepe_client/repositories/network/api_client.dart';
 import 'package:devicepe_client/repositories/network/api_url.dart';
+import 'package:devicepe_client/repositories/network/models/city_check_response.dart';
 import 'package:devicepe_client/repositories/network/models/variant_response_model.dart';
 import 'package:devicepe_client/utils/sahred_pref.dart';
 import 'package:dio/dio.dart';
@@ -13,6 +14,21 @@ class VariantService {
           await ApiClient.dio.get<String>(GET_VARIANT_DETAILS + "$modelId");
       print(response.data);
       return varientDetailResponseFromJson(response.data);
+    } catch (e) {
+      print(e);
+      return null;
+    }
+  }
+}
+
+class CityCheckService {
+  static Future<CityCheckResponse> checkCity(String city) async {
+    print("Api Call");
+    try {
+      Response<String> response =
+          await ApiClient.dio.get<String>(CHECK_CITY + "$city");
+      print(response.data);
+      return cityCheckResponseFromJson(response.data);
     } catch (e) {
       print(e);
       return null;

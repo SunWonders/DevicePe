@@ -23,3 +23,5 @@ const String VALIDATE_OTP = 'notification-ws/v1/otp/validate';
 const String SAVE_ORDER = "devicePe-ws/v1/orders/save";
 
 const String VERSION_CHECK = "v1/versioncheck/checkAppIsActive";
+
+const String CHECK_CITY = "devicePe-ws/v1/version/check/find/";
