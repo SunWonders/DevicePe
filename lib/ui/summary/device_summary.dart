@@ -5,6 +5,7 @@ import 'package:devicepe_client/repositories/network/models/variant_response_mod
 import 'package:devicepe_client/ui/common/not_accepting_page.dart';
 import 'package:devicepe_client/ui/common/progress_bar.dart';
 import 'package:devicepe_client/ui/device_details/specification_list_view.dart';
+import 'package:devicepe_client/ui/orders/book_order.dart';
 import 'package:devicepe_client/utils/colors.dart';
 import 'package:devicepe_client/utils/sahred_pref.dart';
 import 'package:flutter/material.dart';
@@ -81,6 +82,8 @@ class _DeviceSummaryPageState extends State<DeviceSummaryPage> {
 
     price.value = checkListPrice + accoriesAmount - pr;
 
+    SharedPref().saveDouble(SharedPref.FINAL_PRICE, price.value);
+
     var deviceCondition =
         await SharedPref().readString(SharedPref.DEVICE_CONDITION);
     var f = deviceCondition.split("-");
@@ -131,7 +134,7 @@ class _DeviceSummaryPageState extends State<DeviceSummaryPage> {
                   ),
                 );
               } else {
-                Get.snackbar("Alert..!", "Coming Soon..!");
+                Get.to(() => BookOrder());
               }
             },
             child: Text(

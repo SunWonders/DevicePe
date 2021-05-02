@@ -61,6 +61,7 @@ dependencies:
 #  hive_generator: ^1.1.0
   permission_handler: ^7.0.0
   analyzer: 
+  flutter_form_builder: ^6.0.0
 
 dev_dependencies:
   flutter_test:

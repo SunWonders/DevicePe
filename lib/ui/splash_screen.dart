@@ -1,9 +1,7 @@
-import 'dart:async';
-
+import 'package:devicepe_client/repositories/network/controllers/authentication_controller.dart';
 import 'package:devicepe_client/utils/colors.dart';
-import 'package:devicepe_client/utils/sahred_pref.dart';
 import 'package:flutter/material.dart';
-import 'package:devicepe_client/routes/routes.dart';
+import 'package:get/get.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -11,25 +9,10 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  var controller = Get.put(AuthenticationController());
   void initState() {
     super.initState();
-
-    checkLogin();
-  }
-
-  checkLogin() async {
-    var token = await SharedPref().readString(SharedPref.JWT_TOKEN);
-    if (token == null || token.isEmpty) {
-      Timer(
-        Duration(seconds: 3),
-        () => launchScreen(context, getStarted),
-      );
-    } else {
-      Timer(
-        Duration(seconds: 3),
-        () => launchScreen(context, home),
-      );
-    }
+    controller.versionCheck();
   }
 
   @override

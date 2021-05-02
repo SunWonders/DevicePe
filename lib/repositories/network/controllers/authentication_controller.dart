@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:devicepe_client/repositories/local/dao/login_request_dao.dart';
 import 'package:devicepe_client/repositories/local/dao/login_response_dao.dart';
 import 'package:devicepe_client/repositories/network/models/login_request.dart';
@@ -7,10 +9,13 @@ import 'package:devicepe_client/repositories/network/models/otp_validate_respons
 import 'package:devicepe_client/repositories/network/models/register_request.dart';
 import 'package:devicepe_client/repositories/network/models/register_response.dart';
 import 'package:devicepe_client/repositories/network/services/authentication_service.dart';
+import 'package:devicepe_client/repositories/network/services/version_check_service.dart';
 import 'package:devicepe_client/ui/authentication/login_page.dart';
 import 'package:devicepe_client/ui/authentication/otp_page.dart';
 import 'package:devicepe_client/ui/common/progress_dialog.dart';
+import 'package:devicepe_client/ui/get_started.dart';
 import 'package:devicepe_client/ui/home/home.dart';
+import 'package:devicepe_client/ui/orders/service_unavailable.dart';
 import 'package:devicepe_client/utils/sahred_pref.dart';
 import 'package:get/get.dart';
 
@@ -89,6 +94,42 @@ class AuthenticationController extends GetxController {
       Get.snackbar("Failed", "Login Failed");
     } finally {
       isLoading(false);
+    }
+  }
+
+  void versionCheck() async {
+    isLoading(true);
+    try {
+      var response = await VersionCheckService.versionCheck();
+
+      if (response != null) {
+        if (response.isActive == true) {
+          checkLogin();
+        } else {
+          Get.offAll(() => ServiceUnAvailable());
+        }
+      } else {
+        Get.offAll(() => ServiceUnAvailable());
+      }
+    } catch (e) {
+      Get.offAll(() => ServiceUnAvailable());
+    } finally {
+      isLoading(false);
+    }
+  }
+
+  checkLogin() async {
+    var token = await SharedPref().readString(SharedPref.JWT_TOKEN);
+    if (token == null || token.isEmpty) {
+      Timer(
+        Duration(seconds: 2),
+        () => Get.offAll(() => GetStartedPage()),
+      );
+    } else {
+      Timer(
+        Duration(seconds: 2),
+        () => Get.offAll(() => HomePage()),
+      );
     }
   }
 }

@@ -19,3 +19,7 @@ const String REGISTER = 'user-ws/v1/register';
 const String LOGIN = 'authenticate';
 
 const String VALIDATE_OTP = 'notification-ws/v1/otp/validate';
+
+const String SAVE_ORDER = "devicePe-ws/v1/orders/save";
+
+const String VERSION_CHECK = "v1/versioncheck/checkAppIsActive";

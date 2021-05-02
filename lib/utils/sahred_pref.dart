@@ -15,6 +15,7 @@ class SharedPref {
   static const ACCESSORIES_PRICE = "ACCESSORIES_PRICE";
   static const DEVICE_CONDITION = "DEVICE_CONDITION";
   static const LOCATION = "LOCATION";
+  static const FINAL_PRICE = "FINAL_PRICE";
 
   saveString(String key, String value) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
