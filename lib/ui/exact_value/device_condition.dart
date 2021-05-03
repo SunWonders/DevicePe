@@ -48,12 +48,9 @@ class _DeviceConditionPageState extends State<DeviceConditionPage> {
               _selectedIcons = iconData;
             });
           },
-          child: SingleGridItem(
-              iconData,
-              _selectedIcons ==
-                  iconData), // Pass iconData and a boolean that specifies if the icon is selected or not
+          child: SingleGridItem(iconData, _selectedIcons == iconData),
         );
-      }).toList(), // Convert the map to a list of widgets
+      }).toList(),
     );
   }
 

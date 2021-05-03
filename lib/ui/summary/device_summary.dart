@@ -46,15 +46,17 @@ class _DeviceSummaryPageState extends State<DeviceSummaryPage> {
     var c = b.split(",");
 
     c.forEach((element) {
-      var multipleSelectionList = element.split("---");
-      var key = multipleSelectionList[0].split("--")[1];
-      var values = multipleSelectionList[1].split("--");
-      var val = "";
-      for (int j = 0; j < values.length - 1; j++) {
-        val += values[j + 1] + ",";
-        j++;
+      if (element.isNotEmpty && element != null) {
+        var multipleSelectionList = element.split("---");
+        var key = multipleSelectionList[0].split("--")[1];
+        var values = multipleSelectionList[1].split("--");
+        var val = "";
+        for (int j = 0; j < values.length - 1; j++) {
+          val += values[j + 1] + ",";
+          j++;
+        }
+        single.add(Specification(key: key, value: val));
       }
-      single.add(Specification(key: key, value: val));
     });
     checkListData.value = single;
 
@@ -269,7 +271,7 @@ class _DeviceSummaryPageState extends State<DeviceSummaryPage> {
   }
 
   Widget getCheckListDetails() {
-    var h = 60 + (checkListData.value.length * 70).toInt();
+    var h = 65 + (checkListData.value.length * 70).toInt();
     if (checkListData.value.isEmpty) {
       h += 60;
     }

@@ -80,86 +80,91 @@ class _PowerStateSelectionState extends State<PowerStateSelection> {
               ),
       ),
       bottomNavigationBar: Obx(
-        () => ClipRRect(
-          borderRadius: BorderRadius.all(Radius.circular(10.0)),
+        () => Container(
           child: Container(
-            color: AppColors.primaryDark,
-            padding: EdgeInsets.all(2),
-            child: ClipRRect(
-              borderRadius: BorderRadius.all(Radius.circular(15.0)),
-              child: Container(
-                color: AppColors.nutralLight,
-                padding: EdgeInsets.all(10),
-                width: 100,
-                height: 60,
-                alignment: Alignment.center,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Get Upto",
-                      style: TextStyle(fontSize: 14, color: AppColors.dark),
-                      textAlign: TextAlign.center,
-                    ),
-                    SizedBox(
-                      width: 50,
-                    ),
-                    Text(
-                      "\u20B9 ${price.value}",
-                      style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.dark),
-                    ),
-                  ],
+            color: AppColors.nutralLight,
+            height: 60,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Expanded(
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Get Upto",
+                          style: TextStyle(fontSize: 12, color: AppColors.dark),
+                          textAlign: TextAlign.center,
+                        ),
+                        SizedBox(height: 4),
+                        Text(
+                          "\u20B9 ${price.value}",
+                          style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.dark),
+                        ),
+                      ]),
                 ),
-              ),
-            ),
-          ),
-        ),
-      ),
-      floatingActionButton: ClipRRect(
-        borderRadius: BorderRadius.all(Radius.circular(10.0)),
-        child: Container(
-          width: 100,
-          color: AppColors.primaryLight,
-          child: TextButton(
-            onPressed: () => {
-              isSelected.value = true,
-              checkListDetailResponse.checkListDetails
-                  .forEach((CheckListData checkListData) => {
-                        if (checkListData.isMandatory == 1)
-                          {
-                            if (singleSelection[checkListData.id] == null &&
-                                (multipleSelection[checkListData.id] == null ||
-                                    multipleSelection[checkListData.id]
-                                        .isEmpty))
-                              {isSelected.value = false}
-                          },
-                      }),
-              if (isSelected.value == false)
-                {
-                  Get.defaultDialog(
-                      middleText: "Please Answer All Mandatory Questions")
-                }
-              else
-                {
-                  SharedPref().saveString(
-                    SharedPref.SINGLE_SELECTION,
-                    single.toString().replaceAll("[", "").replaceAll("]", ""),
+                Expanded(
+                  child: Container(
+                    color: AppColors.primaryLight,
+                    height: 60,
+                    width: Get.width / 2,
+                    child: TextButton(
+                      onPressed: () {
+                        isSelected.value = true;
+                        checkListDetailResponse.checkListDetails
+                            .forEach((CheckListData checkListData) => {
+                                  if (checkListData.isMandatory == 1)
+                                    {
+                                      if (singleSelection[checkListData.id] ==
+                                              null &&
+                                          (multipleSelection[
+                                                      checkListData.id] ==
+                                                  null ||
+                                              multipleSelection[
+                                                      checkListData.id]
+                                                  .isEmpty))
+                                        {isSelected.value = false}
+                                    },
+                                });
+                        if (isSelected.value == false) {
+                          Get.defaultDialog(
+                              middleText:
+                                  "Please Answer All Mandatory Questions");
+                        } else {
+                          SharedPref().saveString(
+                            SharedPref.SINGLE_SELECTION,
+                            single
+                                .toString()
+                                .replaceAll("[", "")
+                                .replaceAll("]", ""),
+                          );
+                          SharedPref().saveString(
+                            SharedPref.MULTIPLE_SELECTION,
+                            multiple
+                                .toString()
+                                .replaceAll("[", "")
+                                .replaceAll("]", ""),
+                          );
+                          SharedPref().saveDouble(
+                              SharedPref.CHECK_LIST_AMOUNT, price.value);
+                          Get.to(() => MultipleSelectionPage());
+                        }
+                      },
+                      child: Text(
+                        "Proceed",
+                        style: TextStyle(
+                          color: AppColors.whiteText,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ),
                   ),
-                  SharedPref().saveString(
-                    SharedPref.MULTIPLE_SELECTION,
-                    multiple.toString().replaceAll("[", "").replaceAll("]", ""),
-                  ),
-                  SharedPref()
-                      .saveDouble(SharedPref.CHECK_LIST_AMOUNT, price.value),
-                  Get.to(() => MultipleSelectionPage()),
-                },
-            },
-            child: Text(
-              "Proceed",
-              style: TextStyle(color: AppColors.whiteText),
+                ),
+              ],
             ),
           ),
         ),

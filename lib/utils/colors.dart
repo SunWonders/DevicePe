@@ -28,4 +28,6 @@ extension AppColors on ColorScheme {
   static const card3_end = Color.fromARGB(255, 77, 162, 249);
   static const card4 = Color.fromARGB(255, 90, 119, 235);
   static const card4_end = Color.fromARGB(255, 48, 86, 235);
+
+  static const one = Color.fromARGB(255, 61, 74, 138);
 }

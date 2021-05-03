@@ -109,10 +109,12 @@ class AuthenticationController extends GetxController {
           Get.offAll(() => ServiceUnAvailable());
         }
       } else {
-        Get.offAll(() => ServiceUnAvailable());
+        checkLogin();
+        //Get.offAll(() => ServiceUnAvailable());
       }
     } catch (e) {
-      Get.offAll(() => ServiceUnAvailable());
+      checkLogin();
+      //Get.offAll(() => ServiceUnAvailable());
     } finally {
       isLoading(false);
     }

@@ -19,22 +19,28 @@ class _MultipleSelectionPageState extends State<MultipleSelectionPage> {
 
   final List<SelectionItem> _icons = [
     SelectionItem(
-      "https://image.flaticon.com/icons/png/512/189/189058.png",
+      "https://firebasestorage.googleapis.com/v0/b/yabaze-profile.appspot.com/o/icons%2Fbox-open.png?alt=media&token=f054c5fa-bc94-408e-8760-cbf4c26c629c",
       "Box",
     ),
     SelectionItem(
-      "https://cdn4.iconfinder.com/data/icons/gradient-4/50/375-512.png",
+      "https://firebasestorage.googleapis.com/v0/b/yabaze-profile.appspot.com/o/icons%2Fbill_final.png?alt=media&token=07da52ff-b036-4355-a52c-9df03f79544c",
       "Valid Bill",
     ),
     SelectionItem(
-        "https://png.pngtree.com/png-vector/20200724/ourmid/pngtree-charging-phone-vector-illustration-with-flat-design-png-image_2312909.jpg",
+        "https://firebasestorage.googleapis.com/v0/b/yabaze-profile.appspot.com/o/icons%2Fcharging-station.png?alt=media&token=1b9dd175-c1f9-4810-abb8-5a60c31537fe",
         "Original Charger"),
     SelectionItem(
-        "https://icons.iconarchive.com/icons/paomedia/small-n-flat/1024/headphone-icon.png",
+        "https://firebasestorage.googleapis.com/v0/b/yabaze-profile.appspot.com/o/icons%2Fhead_phone.png?alt=media&token=63a1b372-e5fc-4feb-aed9-df95f057bf16",
         "Original Headphones"),
   ];
 
   List<SelectionItem> _selectedIcons = [];
+
+  initState() {
+    super.initState();
+    _selectedIcons.add(_icons[0]);
+    _selectedIcons.add(_icons[1]);
+  }
 
   Widget gridViewSelection() {
     return GridView.count(
@@ -75,6 +81,7 @@ class _MultipleSelectionPageState extends State<MultipleSelectionPage> {
         ),
       ),
       body: Container(
+        color: AppColors.background.withOpacity(1),
         child: Column(
           children: [
             Container(
@@ -103,33 +110,61 @@ class _MultipleSelectionPageState extends State<MultipleSelectionPage> {
           ],
         ),
       ),
-      floatingActionButton: ElevatedButton(
-        style: ButtonStyle(
-          backgroundColor:
-              MaterialStateProperty.all<Color>(AppColors.primaryLight),
+      bottomNavigationBar: Container(
+        child: Container(
+          color: AppColors.nutralLight,
+          height: 60,
+          child: Expanded(
+            child: Container(
+              color: AppColors.primaryLight,
+              height: 60,
+              width: Get.width / 2,
+              child: TextButton(
+                onPressed: () async {
+                  var variantData = await VariantDataDao().retrieve();
+                  var isBoxOrBillAvailable = false;
+                  _selectedIcons.forEach((element) {
+                    if (element.name.contains("Box")) {
+                      isBoxOrBillAvailable = true;
+                      price.value += variantData.boxPrice;
+                    } else if (element.name.contains("Valid Bill")) {
+                      price.value += variantData.billPrice;
+                      isBoxOrBillAvailable = true;
+                    } else if (element.name.contains("Original Charger")) {
+                      price.value += variantData.chargerPrice;
+                    } else {
+                      price.value += variantData.headPhonePrice;
+                    }
+                  });
+                  if (isBoxOrBillAvailable) {
+                    SelectionItemDao().insertAll(_selectedIcons);
+
+                    SharedPref()
+                        .saveDouble(SharedPref.ACCESSORIES_PRICE, price.value);
+
+                    Get.to(() => DeviceConditionPage());
+                  } else {
+                    Get.defaultDialog(
+                        title: "🙁  Alert 🙁",
+                        middleText: "We are Not accepting without Box Or Bill.",
+                        radius: 10,
+                        buttonColor: AppColors.primaryDark,
+                        onConfirm: () {
+                          Get.back();
+                        });
+                  }
+                },
+                child: Text(
+                  "Next",
+                  style: TextStyle(
+                    color: AppColors.whiteText,
+                    fontSize: 16,
+                  ),
+                ),
+              ),
+            ),
+          ),
         ),
-        onPressed: () async {
-          var variantData = await VariantDataDao().retrieve();
-
-          _selectedIcons.forEach((element) {
-            if (element.name.contains("Box")) {
-              price.value += variantData.boxPrice;
-            } else if (element.name.contains("Valid Bill")) {
-              price.value += variantData.billPrice;
-            } else if (element.name.contains("Original Charger")) {
-              price.value += variantData.chargerPrice;
-            } else {
-              price.value += variantData.headPhonePrice;
-            }
-          });
-
-          SelectionItemDao().insertAll(_selectedIcons);
-
-          SharedPref().saveDouble(SharedPref.ACCESSORIES_PRICE, price.value);
-
-          Get.to(() => DeviceConditionPage());
-        },
-        child: Text("Next"),
       ),
     );
   }
@@ -143,73 +178,90 @@ class SingleGridItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.all(Radius.circular(10.0)),
-      child: Container(
-        decoration: new BoxDecoration(
-          boxShadow: [
-            BoxShadow(
-              color: AppColors.shadowOne,
-              blurRadius: 1.0,
-            ),
-          ],
-          gradient: new LinearGradient(
-            colors: [
-              AppColors.whiteSubText,
-              AppColors.whiteSubText,
+    return Container(
+      margin: EdgeInsets.all(10),
+      decoration: BoxDecoration(
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.primaryDark.withOpacity(0.11),
+            blurRadius: 10.0,
+          ),
+        ],
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.all(Radius.circular(20.0)),
+        child: Container(
+          decoration: BoxDecoration(
+            boxShadow: [
+              BoxShadow(
+                color: AppColors.blackText.withOpacity(0.15),
+                blurRadius: 10.0,
+              ),
+            ],
+            gradient: LinearGradient(
+                colors: [AppColors.whiteText, AppColors.whiteText]),
+          ),
+          child: Stack(
+            alignment: Alignment.topRight,
+            children: [
+              Container(
+                margin: EdgeInsets.all(11),
+                width: 24,
+                height: 24,
+                child: _isSelected
+                    ? Icon(
+                        Icons.task_alt,
+                        color: AppColors.primaryLight.withOpacity(0.8),
+                      )
+                    : Container(),
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Container(
+                    width: 10,
+                    height: 10,
+                  ),
+                  Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      Container(
+                        height: 100,
+                        decoration: BoxDecoration(
+                            color: AppColors.nutralLight.withOpacity(0.6),
+                            shape: BoxShape.circle),
+                      ),
+                      Image.network(
+                        _selectionItem.imageUrl,
+                        height: 48,
+                        fit: BoxFit.fitWidth,
+                      ),
+                    ],
+                  ),
+                  Container(
+                    width: 5,
+                    height: 5,
+                  ),
+                  Expanded(
+                    child: Container(
+                      height: 40,
+                      color: AppColors.nutralLight,
+                      alignment: Alignment.center,
+                      child: Text(
+                        _selectionItem.name,
+                        style: TextStyle(
+                          color: AppColors.primaryDark,
+                          fontSize: 16,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  )
+                ],
+              ),
             ],
           ),
-        ),
-        margin: EdgeInsets.all(5.0),
-        padding: EdgeInsets.all(5.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(
-              height: 5.0,
-            ),
-            Container(
-              width: 24,
-              height: 24,
-              child: _isSelected
-                  ? Icon(
-                      Icons.task_alt,
-                      color: AppColors.primaryLight,
-                    )
-                  : Container(),
-            ),
-            _isSelected
-                ? SizedBox(
-                    height: 5.0,
-                  )
-                : Container(),
-            Image.network(
-              _selectionItem.imageUrl,
-              height: 48,
-              fit: BoxFit.fitWidth,
-            ),
-            SizedBox(
-              height: 15.0,
-            ),
-            Text(
-              _selectionItem.name,
-              style: TextStyle(
-                color: AppColors.primaryDark,
-                fontSize: 16,
-              ),
-              textAlign: TextAlign.center,
-            ),
-            SizedBox(
-              height: 5.0,
-            ),
-            // Text(
-            //   _selectionItem.description,
-            //   style: TextStyle(
-            //     color: AppColors.blackText,
-            //     fontSize: 14,
-            //   ),
-            // ),
-          ],
         ),
       ),
     );

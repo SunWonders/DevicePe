@@ -1,5 +1,6 @@
 import 'package:devicepe_client/repositories/local/dao/variant_data_dao.dart';
 import 'package:devicepe_client/repositories/network/controllers/variant_controller.dart';
+import 'package:devicepe_client/ui/agreement/aggreement.dart';
 import 'package:devicepe_client/ui/common/progress_bar.dart';
 import 'package:devicepe_client/ui/device_details/device_slider.dart';
 import 'package:devicepe_client/ui/device_details/specification_list_view.dart';
@@ -19,12 +20,26 @@ class DeviceModelDetails extends StatefulWidget {
 class _DeviceModelDetailsState extends State<DeviceModelDetails> {
   VariantController variantController = Get.put(VariantController());
 
+  @override
+  void initState() {
+    super.initState();
+    _modalBottomSheetMenu();
+  }
+
+  void _modalBottomSheetMenu() {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await Get.bottomSheet(Aggreement(), isDismissible: false);
+    });
+  }
+
   Widget selectVarientView() {
-    var h = (variantController.variantDetails.length / 3).ceilToDouble() * 80;
+    // var h = (variantController.variantDetails.length / 3).ceilToDouble() * 80;
 
     return Container(
-      height: h,
+      //height: h,
+
       child: GridView.count(
+        shrinkWrap: true,
         crossAxisCount: 3,
         childAspectRatio: 1.8,
         padding: EdgeInsets.all(5.0),
@@ -41,18 +56,19 @@ class _DeviceModelDetailsState extends State<DeviceModelDetails> {
                         color: data.varientName ==
                                 variantController
                                     .selectedVariantData.value.varientName
-                            ? AppColors.card1
+                            ? AppColors.card1.withOpacity(0.7)
                             : Colors.black12,
                         border: Border.all(
                           color: data.varientName ==
                                   variantController
                                       .selectedVariantData.value.varientName
-                              ? AppColors.card1
+                              ? AppColors.card1.withGreen(10)
                               : AppColors.background,
                         ),
                         borderRadius: BorderRadius.all(Radius.circular(5))),
                     child: Text(data.varientName,
                         style: TextStyle(
+                            fontWeight: FontWeight.w500,
                             color: data.varientName ==
                                     variantController
                                         .selectedVariantData.value.varientName
@@ -78,7 +94,7 @@ class _DeviceModelDetailsState extends State<DeviceModelDetails> {
   Widget build(BuildContext context) {
     return Obx(
       () => Scaffold(
-        backgroundColor: AppColors.nutralLight,
+        backgroundColor: Colors.white.withOpacity(0.95),
         appBar: AppBar(
           iconTheme: IconThemeData(color: AppColors.whiteText),
           backgroundColor: AppColors.primaryLight,
@@ -158,63 +174,58 @@ class _DeviceModelDetailsState extends State<DeviceModelDetails> {
                   ),
                 ),
               ),
-        floatingActionButton: variantController.isLoading.value ||
-                variantController.selectedVariantData.value.basePrice == null
-            ? Container()
-            : ClipRRect(
-                borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                child: Container(
-                  color: AppColors.primaryLight,
-                  child: TextButton(
-                    onPressed: () {
-                      Get.to(() => PowerStateSelection());
-                    },
-                    child: Text(
-                      "Get Exact Value",
-                      style: TextStyle(
-                        color: AppColors.whiteText,
-                        fontSize: 16,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
         bottomNavigationBar: Container(
-          child: ClipRRect(
-            borderRadius: BorderRadius.all(Radius.circular(10.0)),
-            child: Container(
-              color: AppColors.primaryDark,
-              padding: EdgeInsets.all(2),
-              child: ClipRRect(
-                borderRadius: BorderRadius.all(Radius.circular(15.0)),
-                child: Container(
-                  color: AppColors.nutralLight,
-                  padding: EdgeInsets.all(10),
-                  width: 100,
-                  height: 60,
-                  alignment: Alignment.center,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "Get Upto",
-                        style: TextStyle(fontSize: 14, color: AppColors.dark),
-                        textAlign: TextAlign.center,
-                      ),
-                      SizedBox(
-                        width: 50,
-                      ),
-                      Text(
-                        "\u20B9 ${variantController.selectedVariantData.value.basePrice == null ? 0 : variantController.selectedVariantData.value.basePrice}",
-                        style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: AppColors.dark),
-                      ),
-                    ],
-                  ),
+          child: Container(
+            color: AppColors.nutralLight,
+            height: 60,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Expanded(
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Get Upto",
+                          style: TextStyle(fontSize: 12, color: AppColors.dark),
+                          textAlign: TextAlign.center,
+                        ),
+                        SizedBox(height: 4),
+                        Text(
+                          "\u20B9 ${variantController.selectedVariantData.value.basePrice == null ? 0 : variantController.selectedVariantData.value.basePrice}",
+                          style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.dark),
+                        ),
+                      ]),
                 ),
-              ),
+                Expanded(
+                  child: variantController.isLoading.value ||
+                          variantController
+                                  .selectedVariantData.value.basePrice ==
+                              null
+                      ? Container()
+                      : Container(
+                          color: AppColors.primaryLight,
+                          height: 60,
+                          width: Get.width / 2,
+                          child: TextButton(
+                            onPressed: () {
+                              Get.to(() => PowerStateSelection());
+                            },
+                            child: Text(
+                              "Get Exact Value",
+                              style: TextStyle(
+                                color: AppColors.whiteText,
+                                fontSize: 16,
+                              ),
+                            ),
+                          ),
+                        ),
+                ),
+              ],
             ),
           ),
         ),

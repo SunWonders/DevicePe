@@ -1,4 +1,5 @@
 import 'package:devicepe_client/repositories/network/controllers/save_order_controller.dart';
+import 'package:devicepe_client/ui/agreement/aggreement.dart';
 import 'package:devicepe_client/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -28,7 +29,7 @@ class _BookOrderState extends State<BookOrder> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.nutralLight,
+      backgroundColor: AppColors.whiteText,
       appBar: AppBar(
         iconTheme: IconThemeData(color: AppColors.whiteText),
         backgroundColor: AppColors.primaryLight,
@@ -189,9 +190,7 @@ class _BookOrderState extends State<BookOrder> {
                             ),
                           ),
                           onTap: () {
-                            Get.bottomSheet(
-                              Container(),
-                            );
+                            Get.bottomSheet(Aggreement());
                           }),
                       validator: FormBuilderValidators.equal(
                         context,
