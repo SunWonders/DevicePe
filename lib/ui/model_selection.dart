@@ -52,11 +52,11 @@ class _ModelSelectionPageState extends State<ModelSelectionPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        iconTheme: IconThemeData(color: AppColors.whiteText),
-        backgroundColor: AppColors.primaryLight,
+        iconTheme: IconThemeData(color: AppColors.primaryLight),
+        backgroundColor: AppColors.nutralLight,
         title: Text(
           "Select Model",
-          style: TextStyle(color: AppColors.whiteText),
+          style: TextStyle(color: AppColors.primaryLight),
         ),
       ),
       //body: gridViewSelection(),

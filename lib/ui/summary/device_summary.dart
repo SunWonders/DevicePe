@@ -66,7 +66,7 @@ class _DeviceSummaryPageState extends State<DeviceSummaryPage> {
 
     var dcList = dc.split("-");
     var pr = 0.0;
-    if (dcList[0].contains("Like New")) {
+    if (dcList[0].contains("Excellent")) {
       pr += variantData.value.likeNew;
     } else if (dcList[0].contains("Good")) {
       pr += variantData.value.good;
@@ -115,45 +115,46 @@ class _DeviceSummaryPageState extends State<DeviceSummaryPage> {
         Scaffold(
       backgroundColor: AppColors.nutralLight,
       appBar: AppBar(
-        iconTheme: IconThemeData(color: AppColors.whiteText),
-        backgroundColor: AppColors.primaryLight,
+        iconTheme: IconThemeData(color: AppColors.primaryLight),
+        backgroundColor: AppColors.nutralLight,
         title: Text(
           "Device Report",
-          style: TextStyle(color: AppColors.whiteText),
+          style: TextStyle(color: AppColors.primaryLight),
         ),
       ),
-      floatingActionButton: ClipRRect(
-        borderRadius: BorderRadius.all(Radius.circular(10.0)),
-        child: Container(
-          color: AppColors.primaryLight,
-          child: TextButton(
-            onPressed: () {
-              if (price.value < 100) {
-                Get.to(
-                  () => NotAcceptingPage(
-                    NOT_ACCEPTING,
-                    heading: VALUE_TOO_LOW,
-                  ),
-                );
-              } else {
-                Get.to(() => BookOrder());
-              }
-            },
-            child: Text(
-              "Book Order",
-              style: TextStyle(
-                color: AppColors.whiteText,
-                fontSize: 16,
-              ),
-            ),
-          ),
-        ),
-      ),
+      // floatingActionButton: ClipRRect(
+      //   borderRadius: BorderRadius.all(Radius.circular(10.0)),
+      //   child: Container(
+      //     color: AppColors.primaryLight,
+      //     child: TextButton(
+      //       onPressed: () {
+      //         if (price.value < 100) {
+      //           Get.to(
+      //             () => NotAcceptingPage(
+      //               NOT_ACCEPTING,
+      //               heading: VALUE_TOO_LOW,
+      //             ),
+      //           );
+      //         } else {
+      //           Get.to(() => BookOrder());
+      //         }
+      //       },
+      //       child: Text(
+      //         "Book Order",
+      //         style: TextStyle(
+      //           color: AppColors.whiteText,
+      //           fontSize: 16,
+      //         ),
+      //       ),
+      //     ),
+      //   ),
+      // ),
       body: Obx(
         () => isLoading.value
             ? ProgressBar()
             : SingleChildScrollView(
                 child: Container(
+                  color: AppColors.shadowOne.withOpacity(0.1),
                   child: Column(
                     children: [
                       getMobileDetail(),
@@ -163,6 +164,40 @@ class _DeviceSummaryPageState extends State<DeviceSummaryPage> {
                   ),
                 ),
               ),
+      ),
+      bottomNavigationBar: Container(
+        child: Container(
+          color: AppColors.nutralLight,
+          height: 60,
+          child: Expanded(
+            child: Container(
+              color: AppColors.primaryLight,
+              height: 60,
+              width: Get.width / 2,
+              child: TextButton(
+                onPressed: () async {
+                  if (price.value < 100) {
+                    Get.to(
+                      () => NotAcceptingPage(
+                        NOT_ACCEPTING,
+                        heading: VALUE_TOO_LOW,
+                      ),
+                    );
+                  } else {
+                    Get.to(() => BookOrder());
+                  }
+                },
+                child: Text(
+                  "Book Order",
+                  style: TextStyle(
+                    color: AppColors.whiteText,
+                    fontSize: 16,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }
@@ -334,7 +369,7 @@ class _DeviceSummaryPageState extends State<DeviceSummaryPage> {
   }
 
   Widget getSpecificationDetails() {
-    var h = 200 + 60 + (variantData.value.specifications.length * 55).toInt();
+    var h = 200 + 75 + (variantData.value.specifications.length * 55).toInt();
     return ClipRRect(
       borderRadius: BorderRadius.all(Radius.circular(10.0)),
       child: Container(

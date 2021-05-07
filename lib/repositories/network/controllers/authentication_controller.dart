@@ -98,6 +98,8 @@ class AuthenticationController extends GetxController {
   }
 
   void versionCheck() async {
+    var a = await LoginRequestDao().retrieve();
+    print(a);
     isLoading(true);
     try {
       var response = await VersionCheckService.versionCheck();

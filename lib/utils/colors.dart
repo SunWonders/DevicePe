@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 
 extension AppColors on ColorScheme {
-  static const primaryDark = Color.fromARGB(255, 38, 6, 79);
+  //static const primaryDark = Color.fromARGB(255, 38, 6, 79);
+  static const primaryDark = Color.fromARGB(255, 117, 41, 149);
   static const dark = Color.fromARGB(255, 49, 36, 57);
   static const primaryShadow = Color.fromARGB(255, 69, 9, 147);
 
-  static const primaryLight = Color.fromARGB(255, 99, 15, 206);
+  //static const primaryLight = Color.fromARGB(255, 99, 15, 206);
+  static const primaryLight = Color.fromARGB(255, 131, 57, 182);
   static const secondary = Color.fromARGB(255, 173, 228, 82);
   static const nutralLight = Color.fromARGB(255, 236, 227, 246);
 
@@ -14,6 +16,7 @@ extension AppColors on ColorScheme {
   static const blackText = Color.fromARGB(255, 0, 0, 0);
   static const shadowOne = Color.fromARGB(255, 120, 120, 120);
   static const shadowTwo = Color.fromARGB(255, 112, 112, 112);
+  static const shadowFour = Color.fromARGB(255, 242, 242, 242);
   static const shadowThree = Color.fromARGB(255, 85, 85, 85);
   static const lightGrey = Color.fromARGB(255, 226, 226, 226);
   static const hintGrey = Color.fromARGB(255, 186, 206, 206);

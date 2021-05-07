@@ -94,10 +94,11 @@ class _DeviceModelDetailsState extends State<DeviceModelDetails> {
   Widget build(BuildContext context) {
     return Obx(
       () => Scaffold(
-        backgroundColor: Colors.white.withOpacity(0.95),
+        backgroundColor: //AppColors.whiteText,
+            Colors.white.withOpacity(0.95),
         appBar: AppBar(
-          iconTheme: IconThemeData(color: AppColors.whiteText),
-          backgroundColor: AppColors.primaryLight,
+          iconTheme: IconThemeData(color: AppColors.primaryLight),
+          backgroundColor: AppColors.nutralLight,
           title: Text(
             variantController.isLoading.value
                 ? "Device Details"
@@ -105,7 +106,7 @@ class _DeviceModelDetailsState extends State<DeviceModelDetails> {
                         null
                     ? ""
                     : variantController.selectedVariantData.value.varientName,
-            style: TextStyle(color: AppColors.whiteText),
+            style: TextStyle(color: AppColors.primaryLight),
           ),
         ),
         body: variantController.isLoading.value

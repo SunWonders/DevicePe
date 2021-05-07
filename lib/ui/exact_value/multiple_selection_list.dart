@@ -40,6 +40,26 @@ class _MultipleSelectionPageState extends State<MultipleSelectionPage> {
     super.initState();
     _selectedIcons.add(_icons[0]);
     _selectedIcons.add(_icons[1]);
+    calculatePrice();
+  }
+
+  Future<void> calculatePrice() async {
+    var variantData = await VariantDataDao().retrieve();
+    price.value -= (variantData.boxPrice +
+        variantData.billPrice +
+        variantData.chargerPrice +
+        variantData.headPhonePrice);
+    _selectedIcons.forEach((element) {
+      if (element.name.contains("Box")) {
+        price.value += variantData.boxPrice;
+      } else if (element.name.contains("Valid Bill")) {
+        price.value += variantData.billPrice;
+      } else if (element.name.contains("Original Charger")) {
+        price.value += variantData.chargerPrice;
+      } else {
+        price.value += variantData.headPhonePrice;
+      }
+    });
   }
 
   Widget gridViewSelection() {
@@ -73,15 +93,15 @@ class _MultipleSelectionPageState extends State<MultipleSelectionPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        iconTheme: IconThemeData(color: AppColors.whiteText),
-        backgroundColor: AppColors.primaryLight,
+        iconTheme: IconThemeData(color: AppColors.primaryLight),
+        backgroundColor: AppColors.nutralLight,
         title: Text(
           "Device Details",
-          style: TextStyle(color: AppColors.whiteText),
+          style: TextStyle(color: AppColors.primaryLight),
         ),
       ),
       body: Container(
-        color: AppColors.background.withOpacity(1),
+        color: AppColors.whiteText,
         child: Column(
           children: [
             Container(
@@ -90,7 +110,7 @@ class _MultipleSelectionPageState extends State<MultipleSelectionPage> {
               child: Text(
                 "Accessories",
                 style: TextStyle(
-                  color: AppColors.blackText,
+                  color: AppColors.dark.withOpacity(0.9),
                   fontWeight: FontWeight.bold,
                   fontSize: 18,
                 ),
@@ -101,9 +121,33 @@ class _MultipleSelectionPageState extends State<MultipleSelectionPage> {
               alignment: Alignment.centerLeft,
               child: Text(
                 "Please Select Available Accessories",
-                style: TextStyle(fontSize: 14.0),
+                style: TextStyle(fontSize: 16.0),
               ),
             ),
+            Container(
+              padding: EdgeInsets.all(10.0),
+              child: Row(
+                children: [
+                  Icon(Icons.task_alt, color: AppColors.secondary),
+                  SizedBox(width: 5),
+                  Text("Device without genuine box is not accepted.")
+                ],
+              ),
+            ), //
+            Container(
+              padding: EdgeInsets.all(10.0),
+              child: Row(
+                children: [
+                  Icon(Icons.task_alt, color: AppColors.secondary),
+                  SizedBox(width: 5),
+                  Flexible(
+                    child: Text(
+                        "Either Valid Bill or box is required for device to be acceptable."),
+                  ),
+                ],
+              ),
+            ),
+
             Flexible(
               child: gridViewSelection(),
             ),
@@ -123,6 +167,10 @@ class _MultipleSelectionPageState extends State<MultipleSelectionPage> {
                 onPressed: () async {
                   var variantData = await VariantDataDao().retrieve();
                   var isBoxOrBillAvailable = false;
+                  price.value -= (variantData.boxPrice +
+                      variantData.billPrice +
+                      variantData.chargerPrice +
+                      variantData.headPhonePrice);
                   _selectedIcons.forEach((element) {
                     if (element.name.contains("Box")) {
                       isBoxOrBillAvailable = true;
@@ -183,35 +231,45 @@ class SingleGridItem extends StatelessWidget {
       decoration: BoxDecoration(
         boxShadow: [
           BoxShadow(
-            color: AppColors.primaryDark.withOpacity(0.11),
+            //color: AppColors.dark.withOpacity(0.35),
+            color: !_isSelected
+                ? Colors.grey.shade400
+                : AppColors.primaryLight.withOpacity(0.5),
+
             blurRadius: 10.0,
           ),
         ],
       ),
       child: ClipRRect(
-        borderRadius: BorderRadius.all(Radius.circular(20.0)),
+        borderRadius: _isSelected
+            ? BorderRadius.all(Radius.circular(10.0))
+            : BorderRadius.all(Radius.circular(10.0)),
         child: Container(
+          margin: _isSelected ? EdgeInsets.all(0) : EdgeInsets.all(0),
+          //color: AppColors.shadowFour,
           decoration: BoxDecoration(
+            color: AppColors.shadowFour,
             boxShadow: [
               BoxShadow(
-                color: AppColors.blackText.withOpacity(0.15),
+                color:
+                    _isSelected ? Colors.greenAccent : AppColors.primaryLight,
                 blurRadius: 10.0,
               ),
             ],
-            gradient: LinearGradient(
-                colors: [AppColors.whiteText, AppColors.whiteText]),
           ),
           child: Stack(
             alignment: Alignment.topRight,
             children: [
               Container(
-                margin: EdgeInsets.all(11),
+                margin: EdgeInsets.all(21),
                 width: 24,
                 height: 24,
                 child: _isSelected
                     ? Icon(
                         Icons.task_alt,
-                        color: AppColors.primaryLight.withOpacity(0.8),
+                        //             color: AppColors.primaryLight.withOpacity(0.8),
+                        color: AppColors.secondary.withOpacity(0.8),
+                        //color: Colors.green.withOpacity(0.8),
                       )
                     : Container(),
               ),
@@ -229,8 +287,9 @@ class SingleGridItem extends StatelessWidget {
                       Container(
                         height: 100,
                         decoration: BoxDecoration(
-                            color: AppColors.nutralLight.withOpacity(0.6),
-                            shape: BoxShape.circle),
+                          color: AppColors.whiteText,
+                          shape: BoxShape.circle,
+                        ),
                       ),
                       Image.network(
                         _selectionItem.imageUrl,
@@ -246,12 +305,13 @@ class SingleGridItem extends StatelessWidget {
                   Expanded(
                     child: Container(
                       height: 40,
-                      color: AppColors.nutralLight,
+                      color: AppColors.primaryLight.withOpacity(0.2),
                       alignment: Alignment.center,
                       child: Text(
                         _selectionItem.name,
                         style: TextStyle(
-                          color: AppColors.primaryDark,
+                          fontWeight: FontWeight.w500,
+                          color: AppColors.primaryDark.withOpacity(0.9),
                           fontSize: 16,
                         ),
                         textAlign: TextAlign.center,

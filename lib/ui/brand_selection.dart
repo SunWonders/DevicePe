@@ -48,11 +48,11 @@ class _BrandSelectionPageState extends State<BrandSelectionPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        iconTheme: IconThemeData(color: AppColors.whiteText),
-        backgroundColor: AppColors.primaryLight,
+        iconTheme: IconThemeData(color: AppColors.primaryLight),
+        backgroundColor: AppColors.nutralLight,
         title: Text(
           "Select Brand",
-          style: TextStyle(color: AppColors.whiteText),
+          style: TextStyle(color: AppColors.primaryLight),
         ),
       ),
       body: Obx(
@@ -60,27 +60,6 @@ class _BrandSelectionPageState extends State<BrandSelectionPage> {
             ? ProgressBar()
             : gridViewSelection(),
       ),
-      // floatingActionButton: ElevatedButton(
-      //   style: ButtonStyle(
-      //     backgroundColor:
-      //         MaterialStateProperty.all<Color>(AppColors.primaryLight),
-      //   ),
-      //   onPressed: () {
-      //     if (_selectedBrand == null) {
-      //       Get.defaultDialog(
-      //           title: "🙁  Alert 🙁",
-      //           middleText: "Please Select Brand to continue",
-      //           radius: 10,
-      //           buttonColor: AppColors.primaryDark,
-      //           onConfirm: () {
-      //             Get.back();
-      //           });
-      //       return;
-      //     }
-
-      //   },
-      //   child: Text("Next"),
-      // ),
     );
   }
 }

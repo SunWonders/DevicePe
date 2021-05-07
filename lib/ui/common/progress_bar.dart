@@ -15,7 +15,7 @@ class _ProgressBarState extends State<ProgressBar> {
       child: Center(
         child: Column(
           children: [
-            LinearProgressIndicator(color: AppColors.card1),
+            LinearProgressIndicator(color: AppColors.secondary),
             Expanded(
               child: Center(
                 child: Text("Loading..!",

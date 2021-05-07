@@ -58,16 +58,16 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: AppColors.primaryLight,
+        backgroundColor: AppColors.nutralLight,
         title: Text(
           "DevicePe",
-          style: TextStyle(color: AppColors.whiteText),
+          style: TextStyle(color: AppColors.primaryLight),
         ),
         actions: <Widget>[
           IconButton(
             icon: Icon(
               Icons.location_pin,
-              color: AppColors.whiteText,
+              color: AppColors.primaryLight,
             ),
             onPressed: () {
               Get.to(() => SelectCity());

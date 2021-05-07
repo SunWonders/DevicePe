@@ -49,11 +49,11 @@ class _PowerStateSelectionState extends State<PowerStateSelection> {
 
     return Scaffold(
       appBar: AppBar(
-        iconTheme: IconThemeData(color: AppColors.whiteText),
-        backgroundColor: AppColors.primaryLight,
+        iconTheme: IconThemeData(color: AppColors.primaryLight),
+        backgroundColor: AppColors.nutralLight,
         title: Text(
           "About Your Device",
-          style: TextStyle(color: AppColors.whiteText),
+          style: TextStyle(color: AppColors.primaryLight),
         ),
       ),
       body: Obx(

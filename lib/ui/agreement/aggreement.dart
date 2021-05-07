@@ -26,7 +26,11 @@ class _AggreementState extends State<Aggreement> {
             ),
             Text(
               "By Clicking on proceed you agree that your device meets our minimum buying criteria.",
-              style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                fontSize: 18.0,
+                fontWeight: FontWeight.bold,
+              ),
+              //color: AppColors.dark), //.withOpacity(0.9)),
               textAlign: TextAlign.center,
             ),
             SizedBox(
@@ -97,9 +101,9 @@ class _AggreementState extends State<Aggreement> {
               children: [
                 Expanded(
                   child: ClipRRect(
-                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                    borderRadius: BorderRadius.all(Radius.circular(20.0)),
                     child: Container(
-                      margin: EdgeInsets.all(10),
+                      margin: EdgeInsets.all(2),
                       width: 100,
                       color: AppColors.primaryLight,
                       child: TextButton(
@@ -115,12 +119,13 @@ class _AggreementState extends State<Aggreement> {
                     ),
                   ),
                 ),
+                SizedBox(width: 10.0),
                 Expanded(
                   child: ClipRRect(
-                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                    borderRadius: BorderRadius.all(Radius.circular(20.0)),
                     child: Container(
                       width: 100,
-                      margin: EdgeInsets.all(10),
+                      margin: EdgeInsets.all(2),
                       color: AppColors.primaryLight,
                       child: TextButton(
                         onPressed: () => {
@@ -136,22 +141,6 @@ class _AggreementState extends State<Aggreement> {
                 )
               ],
             ),
-            // ClipRRect(
-            //   borderRadius: BorderRadius.all(Radius.circular(10.0)),
-            //   child: Container(
-            //     width: 100,
-            //     color: AppColors.primaryLight,
-            //     child: TextButton(
-            //       onPressed: () => {
-            //         Get.back(),
-            //       },
-            //       child: Text(
-            //         "Proceed",
-            //         style: TextStyle(color: AppColors.whiteText),
-            //       ),
-            //     ),
-            //   ),
-            // ),
           ],
         ),
       ),

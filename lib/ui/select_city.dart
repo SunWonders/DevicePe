@@ -1,6 +1,5 @@
 import 'package:devicepe_client/repositories/network/controllers/city_check_controller.dart';
 import 'package:devicepe_client/utils/colors.dart';
-import 'package:devicepe_client/utils/sahred_pref.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:autocomplete_textfield/autocomplete_textfield.dart';
@@ -21,12 +20,14 @@ class _SelectCityState extends State<SelectCity> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        iconTheme: IconThemeData(color: AppColors.whiteText),
+        iconTheme: IconThemeData(color: AppColors.primaryLight),
         title: Text(
           "Select City",
-          style: TextStyle(color: AppColors.whiteText),
+          style: TextStyle(
+            color: AppColors.primaryLight,
+          ),
         ),
-        backgroundColor: AppColors.primaryLight,
+        backgroundColor: AppColors.nutralLight,
       ),
       body: Container(
         child: Column(

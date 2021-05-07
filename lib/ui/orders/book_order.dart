@@ -31,11 +31,11 @@ class _BookOrderState extends State<BookOrder> {
     return Scaffold(
       backgroundColor: AppColors.whiteText,
       appBar: AppBar(
-        iconTheme: IconThemeData(color: AppColors.whiteText),
-        backgroundColor: AppColors.primaryLight,
+        iconTheme: IconThemeData(color: AppColors.primaryLight),
+        backgroundColor: AppColors.nutralLight,
         title: Text(
           "Book Order",
-          style: TextStyle(color: AppColors.whiteText),
+          style: TextStyle(color: AppColors.primaryLight),
         ),
       ),
       body: SingleChildScrollView(
@@ -203,40 +203,56 @@ class _BookOrderState extends State<BookOrder> {
                 ),
               ),
               SizedBox(height: 10),
-              Row(
-                children: <Widget>[
-                  Expanded(
-                    child: MaterialButton(
-                      color: AppColors.primaryLight,
-                      child: Text(
-                        "Submit",
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      onPressed: () {
-                        _formKey.currentState.save();
-                        if (_formKey.currentState.validate()) {
-                          orderController.buildSaveOrderRequest(
-                              _formKey.currentState.value);
-                        } else {
-                          Get.snackbar("Alert", "Provide Valid Information");
-                        }
-                      },
+            ],
+          ),
+        ),
+      ),
+      bottomNavigationBar: Container(
+        child: Container(
+          color: AppColors.nutralLight,
+          height: 60,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Expanded(
+                child: TextButton(
+                  onPressed: () {
+                    _formKey.currentState.reset();
+                  },
+                  child: Text(
+                    "Reset",
+                    style: TextStyle(
+                      color: AppColors.dark,
+                      fontSize: 16,
                     ),
                   ),
-                  SizedBox(width: 20),
-                  Expanded(
-                    child: MaterialButton(
-                      color: AppColors.primaryLight,
-                      child: Text(
-                        "Reset",
-                        style: TextStyle(color: Colors.white),
+                ),
+              ),
+              Expanded(
+                child: Container(
+                  color: AppColors.primaryLight,
+                  height: 60,
+                  width: Get.width / 2,
+                  child: TextButton(
+                    onPressed: () {
+                      _formKey.currentState.save();
+                      if (_formKey.currentState.validate()) {
+                        orderController
+                            .buildSaveOrderRequest(_formKey.currentState.value);
+                      } else {
+                        Get.snackbar("Alert", "Provide Valid Information");
+                      }
+                    },
+                    child: Text(
+                      "Submit",
+                      style: TextStyle(
+                        color: AppColors.whiteText,
+                        fontSize: 16,
                       ),
-                      onPressed: () {
-                        _formKey.currentState.reset();
-                      },
                     ),
                   ),
-                ],
+                ),
               ),
             ],
           ),
