@@ -108,7 +108,9 @@ class VariantData {
   factory VariantData.fromJson(Map<String, dynamic> json) => VariantData(
         id: json["id"] == null ? null : json["id"],
         varientName: json["varientName"] == null ? null : json["varientName"],
-        varientIconUrl: List<String>.from(json["varientIconUrl"]),
+        varientIconUrl: json["varientIconUrl"] != null
+            ? List<String>.from(json["varientIconUrl"])
+            : [],
         isActive: json["isActive"] == null ? null : json["isActive"],
         basePrice: json["basePrice"] == null ? null : json["basePrice"],
         capacity: json["capacity"] == null ? null : json["capacity"],
