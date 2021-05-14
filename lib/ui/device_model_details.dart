@@ -8,6 +8,7 @@ import 'package:devicepe_client/ui/exact_value/check_list.dart';
 import 'package:devicepe_client/utils/colors.dart';
 import 'package:devicepe_client/utils/sahred_pref.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_card_swipper/flutter_card_swiper.dart';
 import 'package:get/get.dart';
 
 class DeviceModelDetails extends StatefulWidget {
@@ -36,8 +37,6 @@ class _DeviceModelDetailsState extends State<DeviceModelDetails> {
     // var h = (variantController.variantDetails.length / 3).ceilToDouble() * 80;
 
     return Container(
-      //height: h,
-
       child: GridView.count(
         shrinkWrap: true,
         crossAxisCount: 3,
@@ -114,11 +113,13 @@ class _DeviceModelDetailsState extends State<DeviceModelDetails> {
             ? ProgressBar()
             : SingleChildScrollView(
                 child: Container(
+                  color: AppColors.shadowFour,
                   child: Column(
                     children: [
-                      //DeviceSliderCarousel(
-                      //  imgList: variantController
-                      //    .selectedVariantData.value.varientIconUrl),
+                      DeviceSliderCarousel(
+                          imgList: variantController
+                              .selectedVariantData.value.varientIconUrl),
+
                       Container(
                         padding: EdgeInsets.all(10),
                         alignment: Alignment.centerLeft,
@@ -172,6 +173,25 @@ class _DeviceModelDetailsState extends State<DeviceModelDetails> {
                           margin: EdgeInsets.all(20.0),
                           child: Text("Specification Details Not Available"),
                         ),
+
+                      // Container(
+                      //   height: 200,
+                      //   width: Get.width,
+                      //   color: AppColors.primaryLight,
+                      //   child: new Swiper(
+                      //     autoplay: true,
+                      //     loop: true,
+                      //     itemBuilder: (BuildContext context, int index) {
+                      //       return new Image.network(
+                      //         "https://static.toiimg.com/photo/73078527.cms",
+                      //         fit: BoxFit.fill,
+                      //       );
+                      //     },
+                      //     itemCount: 1,
+                      //     viewportFraction: 0.8,
+                      //     scale: 0.9,
+                      //   ),
+                      // ),
                     ],
                   ),
                 ),

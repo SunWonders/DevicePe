@@ -66,36 +66,40 @@ class AccessariesGridItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
-      borderRadius: BorderRadius.all(Radius.circular(50.0)),
+      borderRadius: BorderRadius.all(Radius.circular(25.0)),
       child: Container(
         width: MediaQuery.of(context).size.width,
-        decoration: new BoxDecoration(
-          gradient: new LinearGradient(
-            colors: [
-              AppColors.card1,
-              AppColors.primaryLight,
-            ],
+        // decoration: new BoxDecoration(
+        //   gradient: new LinearGradient(
+        //     colors: [
+        //       AppColors.card1,
+        //       AppColors.primaryLight,
+        //     ],
+        //   ),
+        // ),
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: NetworkImage('${data.imageUrl}'),
+            fit: BoxFit.cover,
           ),
         ),
-        margin: EdgeInsets.all(10.0),
-        padding: EdgeInsets.all(10.0),
-        child: Column(
+        margin: EdgeInsets.all(5.0),
+        child: Stack(
+          alignment: Alignment.bottomCenter,
           children: [
-            SizedBox(
-              height: 5.0,
-            ),
-            Text(
-              "${data.type}",
-              style: TextStyle(
-                  color: Colors.white,
+            Container(
+              width: Get.width,
+              height: 30,
+              color: AppColors.shadowOne.withOpacity(0.8),
+              child: Text(
+                "${data.type}",
+                style: TextStyle(
+                  color: AppColors.whiteSubText,
                   fontSize: 18,
-                  fontWeight: FontWeight.bold),
-            ),
-            SizedBox(
-              height: 5.0,
-            ),
-            Image(
-              image: AssetImage('assets/images/mobile.png'),
+                  fontWeight: FontWeight.bold,
+                ),
+                textAlign: TextAlign.center,
+              ),
             ),
           ],
         ),

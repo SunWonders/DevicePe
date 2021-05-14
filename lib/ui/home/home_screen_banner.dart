@@ -1,5 +1,7 @@
+import 'package:devicepe_client/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_card_swipper/flutter_card_swiper.dart';
+import 'package:get/get.dart';
 
 class HomeScreenBanner extends StatefulWidget {
   HomeScreenBanner({Key? key}) : super(key: key);
@@ -36,7 +38,49 @@ class _HomeScreenBannerState extends State<HomeScreenBanner> {
       control: new SwiperControl(),
     );
     */
-    return Container();
+    return Container(
+      child: ClipRRect(
+        borderRadius: BorderRadius.all(Radius.circular(5.0)),
+        child: Container(
+          margin: EdgeInsets.fromLTRB(0.0, 10.0, 0, 10.0),
+          height: 180,
+          width: Get.width,
+          child: new Swiper(
+            layout: SwiperLayout.STACK,
+            itemWidth: Get.width - 60,
+            autoplay: true,
+            loop: true,
+            itemBuilder: (BuildContext context, int index) {
+              return ClipRRect(
+                borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                child: Image.network(
+                  imgList[index],
+                  width: 350,
+                  fit: BoxFit.fill,
+                  errorBuilder: (context, error, stackTrace) {
+                    return Center(
+                      child: Image(
+                        image: AssetImage('assets/images/mobile.png'),
+                      ),
+                    );
+                  },
+                  loadingBuilder: (BuildContext context, Widget child,
+                      ImageChunkEvent? loadingProgress) {
+                    if (loadingProgress == null) return child;
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  },
+                ),
+              );
+            },
+            itemCount: imgList.length,
+            viewportFraction: 0.8,
+            scale: 0.9,
+          ),
+        ),
+      ),
+    );
   }
 }
 

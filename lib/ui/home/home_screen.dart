@@ -1,5 +1,6 @@
 import 'package:devicepe_client/ui/home/home_accessories.dart';
 import 'package:devicepe_client/ui/home/home_screen_banner.dart';
+import 'package:devicepe_client/utils/colors.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreenPage extends StatefulWidget {
@@ -16,9 +17,26 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
       resizeToAvoidBottomInset: false,
       body: SingleChildScrollView(
         child: Container(
+          // decoration: BoxDecoration(
+          //   image: DecorationImage(
+          //     repeat: ImageRepeat.noRepeat,
+          //     image: AssetImage('assets/images/background_one.png'),
+          //     fit: BoxFit.contain,
+          //   ),
+          // ),
+          // decoration: new BoxDecoration(
+          //   gradient: new LinearGradient(
+          //     colors: [
+          //       AppColors.primaryLight.withOpacity(0.1),
+          //       AppColors.one.withOpacity(0.1),
+          //       AppColors.card4.withOpacity(0.1),
+          //       AppColors.dark.withOpacity(0.1),
+          //     ],
+          //   ),
+          // ),
           child: Column(
             children: <Widget>[
-              //HomeScreenBanner(),
+              HomeScreenBanner(),
               Container(
                 margin: EdgeInsets.fromLTRB(0.0, 30, 0.0, 5.0),
                 child: Text(
