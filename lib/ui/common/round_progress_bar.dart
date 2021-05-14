@@ -2,7 +2,7 @@ import 'package:devicepe_client/utils/colors.dart';
 import 'package:flutter/material.dart';
 
 class RoundProgressBar extends StatefulWidget {
-  RoundProgressBar({Key key}) : super(key: key);
+  RoundProgressBar({Key? key}) : super(key: key);
 
   @override
   _ProgressBarState createState() => _ProgressBarState();

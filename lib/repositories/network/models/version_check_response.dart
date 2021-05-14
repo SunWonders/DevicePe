@@ -12,9 +12,9 @@ String versionCheckResponseToJson(VersionCheckResponse data) =>
 
 class VersionCheckResponse {
   VersionCheckResponse({
-    this.statusCode,
-    this.statusMessage,
-    this.isActive,
+    this.statusCode = 0,
+    this.statusMessage = "",
+    this.isActive = false,
   });
 
   int statusCode;

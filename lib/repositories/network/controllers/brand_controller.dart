@@ -15,15 +15,11 @@ class BrandController extends GetxController {
     try {
       var response = await BrandService.getBrandList();
 
-      if (response != null) {
-        brandDetails = response.data;
-        isLoading(false);
-      } else {
-        isLoading(false);
+      if (response != null && response.data != null) {
+        brandDetails = response.data!;
       }
     } catch (e) {
-      print("Error - " + e);
-      isLoading(false);
+      print("Error - $e");
     } finally {
       isLoading(false);
     }

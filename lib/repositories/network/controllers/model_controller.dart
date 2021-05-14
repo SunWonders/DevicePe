@@ -16,15 +16,11 @@ class ModelController extends GetxController {
     try {
       var response = await ModelService.getModelByBrandId();
 
-      if (response != null) {
-        modelDetails = response.data;
-        isLoading(false);
-      } else {
-        isLoading(false);
+      if (response != null && response.data != null) {
+        modelDetails = response.data!;
       }
     } catch (e) {
-      print("Error - " + e);
-      isLoading(false);
+      print("Error - $e");
     } finally {
       isLoading(false);
     }

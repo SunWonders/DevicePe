@@ -6,8 +6,8 @@ import 'dart:convert';
 
 import 'package:get/get_rx/get_rx.dart';
 
-BrandDetailResponse brandDetailResponseFromJson(String str) =>
-    BrandDetailResponse.fromJson(json.decode(str));
+BrandDetailResponse? brandDetailResponseFromJson(String? str) =>
+    str != null ? BrandDetailResponse.fromJson(json.decode(str)) : null;
 
 String brandDetailResponseToJson(BrandDetailResponse data) =>
     json.encode(data.toJson());
@@ -19,9 +19,9 @@ class BrandDetailResponse {
     this.data,
   });
 
-  int status;
-  String message;
-  RxList<BrandData> data;
+  int? status;
+  String? message;
+  RxList<BrandData>? data;
 
   factory BrandDetailResponse.fromJson(Map<String, dynamic> json) =>
       BrandDetailResponse(
@@ -34,7 +34,9 @@ class BrandDetailResponse {
   Map<String, dynamic> toJson() => {
         "status": status,
         "message": message,
-        "data": List<dynamic>.from(data.map((x) => x.toJson())),
+        "data": data != null
+            ? List<dynamic>.from(data!.map((x) => x.toJson()))
+            : [],
       };
 }
 
@@ -46,10 +48,10 @@ class BrandData {
     this.brandIconUrl,
   });
 
-  int id;
-  String brandName;
-  int isActive;
-  String brandIconUrl;
+  int? id;
+  String? brandName;
+  int? isActive;
+  String? brandIconUrl;
 
   factory BrandData.fromJson(Map<String, dynamic> json) => BrandData(
         id: json["id"],

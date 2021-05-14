@@ -5,7 +5,7 @@ import 'package:devicepe_client/utils/sahred_pref.dart';
 import 'package:dio/dio.dart';
 
 class BrandService {
-  static Future<BrandDetailResponse> getBrandList() async {
+  static Future<BrandDetailResponse?> getBrandList() async {
     print("Api Call");
     var a = await SharedPref().readInt(SharedPref.ACCESSORY_ID);
     try {

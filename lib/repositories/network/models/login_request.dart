@@ -15,8 +15,8 @@ class LoginRequest {
     this.password,
   });
 
-  String username;
-  String password;
+  String? username;
+  String? password;
 
   factory LoginRequest.fromJson(Map<String, dynamic> json) => LoginRequest(
         username: json["username"],

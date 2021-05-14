@@ -12,9 +12,9 @@ String saveOrderResponseToJson(SaveOrderResponse data) =>
 
 class SaveOrderResponse {
   SaveOrderResponse({
-    this.status,
-    this.message,
-    this.data,
+    this.status = 0,
+    this.message = "",
+    this.data = "",
   });
 
   int status;

@@ -5,13 +5,16 @@ import 'package:devicepe_client/utils/sahred_pref.dart';
 import 'package:dio/dio.dart';
 
 class ModelService {
-  static Future<ModelDetailResponse> getModelByBrandId() async {
+  static Future<ModelDetailResponse?> getModelByBrandId() async {
     try {
       int brandId = await SharedPref().getSelectedBrand();
       Response<String> response =
           await ApiClient.dio.get<String>(GET_MODEL_BY_BRAND_ID + "$brandId");
       print(response.data);
-      return modelDetailResponseFromJson(response.data);
+      if (response.data == null)
+        return null;
+      else
+        return modelDetailResponseFromJson(response.data!);
     } catch (e) {
       print(e);
       return null;

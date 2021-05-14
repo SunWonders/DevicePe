@@ -21,18 +21,26 @@ class VariantController extends GetxController {
       var response = await VariantService.getAllVarientDetails();
 
       if (response != null) {
-        variantDetails = response.data;
-        if (response.data.isNotEmpty) {
-          selectedVariantData = response.data[0].obs;
-          SharedPref().saveInt(SharedPref.VARIANT_ID, response.data[0].id);
-          SharedPref()
-              .saveDouble(SharedPref.BASE_PRICE, response.data[0].basePrice);
-          VariantDataDao().insert(response.data[0]);
+        variantDetails =
+            (response.data != null ? response.data : <VariantData>[].obs)!;
+        if (variantDetails.isNotEmpty) {
+          selectedVariantData = variantDetails[0].obs;
+          SharedPref().saveInt(
+              SharedPref.VARIANT_ID,
+              selectedVariantData.value.id == null
+                  ? 0
+                  : selectedVariantData.value.id!);
+          SharedPref().saveDouble(
+              SharedPref.BASE_PRICE,
+              selectedVariantData.value.basePrice == null
+                  ? 0.0
+                  : selectedVariantData.value.basePrice!);
+          VariantDataDao().insert(variantDetails[0]);
         }
       }
       print(response);
     } catch (e) {
-      print("Error - " + e);
+      print("Error - $e");
     } finally {
       isLoading(false);
     }

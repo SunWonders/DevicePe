@@ -17,16 +17,12 @@ class CheckListController extends GetxController {
     try {
       var response = await CheckListService.getCheckListDetails();
 
-      if (response != null) {
-        checkListDetails = response.data;
-        CheckListDataDao().insertAll(response.data);
-        isLoading(false);
-      } else {
-        isLoading(false);
+      if (response != null && response.data != null) {
+        checkListDetails = response.data!;
+        CheckListDataDao().insertAll(response.data!);
       }
     } catch (e) {
-      print("Error - " + e);
-      isLoading(false);
+      print("Error - $e");
     } finally {
       isLoading(false);
     }

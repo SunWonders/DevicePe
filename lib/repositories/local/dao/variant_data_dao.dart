@@ -29,7 +29,7 @@ class VariantDataDao {
     );
   }
 
-  Future<VariantData> retrieve() async {
+  Future<VariantData?> retrieve() async {
     final request = await _dbStore.find(await _db);
     List<VariantData> a = request.map((snapshot) {
       final books = VariantData.fromJson(snapshot.value);

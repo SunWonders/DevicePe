@@ -16,11 +16,11 @@ class AccessoriesController extends GetxController {
     try {
       var response = await AccessariesService.getAllAccessoriesDetails();
 
-      if (response != null) {
-        accessoriesDetails = response.data;
+      if (response != null && response.data != null) {
+        accessoriesDetails = response.data!;
       }
     } catch (e) {
-      print("Error - " + e);
+      print("Error - $e");
     } finally {
       isLoading(false);
     }

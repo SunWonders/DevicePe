@@ -13,13 +13,13 @@ class GetStartedPage extends StatefulWidget {
 }
 
 class _GetStartedPageState extends State<GetStartedPage> {
-  LiquidController liquidController;
+  LiquidController liquidController = LiquidController();
   bool redirectToHome = false;
 
   @override
   void initState() {
     super.initState();
-    liquidController = LiquidController();
+    //liquidController = LiquidController();
   }
 
   List<Widget> _getPages(BuildContext context) {

@@ -25,11 +25,11 @@ class LoginResponse {
 
   //DateTime timestamp;
   //int status;
-  int userId;
-  String firstName;
-  String lastName;
-  String middleName;
-  String jwtToken;
+  int? userId;
+  String? firstName;
+  String? lastName;
+  String? middleName;
+  String? jwtToken;
   //String error;
   //String message;
   //String path;

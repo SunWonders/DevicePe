@@ -13,11 +13,11 @@ String versionCheckRequestToJson(VersionCheckRequest data) =>
 class VersionCheckRequest {
   VersionCheckRequest({
     this.version,
-    this.typeOfApp,
-    this.application,
+    this.typeOfApp = "",
+    this.application = "",
   });
 
-  String version;
+  String? version;
   String typeOfApp;
   String application;
 

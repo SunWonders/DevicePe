@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class DeviceModelDetails extends StatefulWidget {
-  DeviceModelDetails({Key key}) : super(key: key);
+  DeviceModelDetails({Key? key}) : super(key: key);
 
   @override
   _DeviceModelDetailsState createState() => _DeviceModelDetailsState();
@@ -27,7 +27,7 @@ class _DeviceModelDetailsState extends State<DeviceModelDetails> {
   }
 
   void _modalBottomSheetMenu() {
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
+    WidgetsBinding.instance!.addPostFrameCallback((_) async {
       await Get.bottomSheet(Aggreement(), isDismissible: false);
     });
   }
@@ -66,7 +66,7 @@ class _DeviceModelDetailsState extends State<DeviceModelDetails> {
                               : AppColors.background,
                         ),
                         borderRadius: BorderRadius.all(Radius.circular(5))),
-                    child: Text(data.varientName,
+                    child: Text("${data.varientName}",
                         style: TextStyle(
                             fontWeight: FontWeight.w500,
                             color: data.varientName ==
@@ -78,9 +78,10 @@ class _DeviceModelDetailsState extends State<DeviceModelDetails> {
                   ),
                   onTap: () {
                     variantController.selectedVariantData.value = data;
-                    SharedPref().saveInt(SharedPref.VARIANT_ID, data.id);
-                    SharedPref()
-                        .saveDouble(SharedPref.BASE_PRICE, data.basePrice);
+                    SharedPref().saveInt(
+                        SharedPref.VARIANT_ID, data.id == null ? 0 : data.id!);
+                    SharedPref().saveDouble(SharedPref.BASE_PRICE,
+                        data.basePrice != null ? data.basePrice! : 0);
                     VariantDataDao().insert(data);
                     variantController.selectedVariantData.refresh();
                   }),
@@ -105,7 +106,7 @@ class _DeviceModelDetailsState extends State<DeviceModelDetails> {
                 : variantController.selectedVariantData.value.varientName ==
                         null
                     ? ""
-                    : variantController.selectedVariantData.value.varientName,
+                    : variantController.selectedVariantData.value.varientName!,
             style: TextStyle(color: AppColors.primaryLight),
           ),
         ),
@@ -115,9 +116,9 @@ class _DeviceModelDetailsState extends State<DeviceModelDetails> {
                 child: Container(
                   child: Column(
                     children: [
-                      DeviceSliderCarousel(
-                          imgList: variantController
-                              .selectedVariantData.value.varientIconUrl),
+                      //DeviceSliderCarousel(
+                      //  imgList: variantController
+                      //    .selectedVariantData.value.varientIconUrl),
                       Container(
                         padding: EdgeInsets.all(10),
                         alignment: Alignment.centerLeft,
@@ -163,9 +164,9 @@ class _DeviceModelDetailsState extends State<DeviceModelDetails> {
                                   .selectedVariantData.value.specifications !=
                               null &&
                           variantController.selectedVariantData.value
-                              .specifications.isNotEmpty)
+                              .specifications!.isNotEmpty)
                         SpecificationListView(variantController
-                            .selectedVariantData.value.specifications)
+                            .selectedVariantData.value.specifications!)
                       else
                         Container(
                           margin: EdgeInsets.all(20.0),

@@ -21,7 +21,7 @@ class CityCheckController extends GetxController {
       }
       
     } catch (e) {
-      print("Error - " + e);
+      print("Error - $e");
     } finally {
       isLoading(false);
     }

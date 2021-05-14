@@ -2,10 +2,10 @@ import 'package:devicepe_client/utils/colors.dart';
 import 'package:flutter/material.dart';
 
 class NotAcceptingPage extends StatefulWidget {
-  final String _message;
-  final String heading;
+  final String? _message;
+  final String? heading;
 
-  NotAcceptingPage(this._message, {Key key, this.heading}) : super(key: key);
+  NotAcceptingPage(this._message, {Key? key, this.heading}) : super(key: key);
 
   @override
   _NotAcceptingPageState createState() =>
@@ -13,8 +13,8 @@ class NotAcceptingPage extends StatefulWidget {
 }
 
 class _NotAcceptingPageState extends State<NotAcceptingPage> {
-  String _message;
-  String heading;
+  String? _message;
+  String? heading;
   _NotAcceptingPageState(this._message, {this.heading});
 
   @override
@@ -41,7 +41,7 @@ class _NotAcceptingPageState extends State<NotAcceptingPage> {
                 ? Container(
                     padding: EdgeInsets.all(10),
                     child: Text(
-                      heading,
+                      heading == null ? "Somthing Went Wrong " : heading!,
                       style: TextStyle(
                         fontWeight: FontWeight.w600,
                         fontSize: 24,
@@ -50,7 +50,7 @@ class _NotAcceptingPageState extends State<NotAcceptingPage> {
                     ),
                   )
                 : Container(),
-            Text(_message,
+            Text(_message == null ? "Please Try Again..." : _message!,
                 style: TextStyle(
                   fontWeight: FontWeight.w600,
                   fontSize: 16,

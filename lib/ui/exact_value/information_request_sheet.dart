@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class DetailsRequestAgreement extends StatefulWidget {
-  DetailsRequestAgreement({Key key}) : super(key: key);
+  DetailsRequestAgreement({Key? key}) : super(key: key);
 
   @override
   _DetailsRequestAgreementState createState() =>

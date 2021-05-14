@@ -8,7 +8,7 @@ import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:get/get.dart';
 
 class RegistrationPage extends StatefulWidget {
-  const RegistrationPage({Key key}) : super(key: key);
+  const RegistrationPage({Key? key}) : super(key: key);
   @override
   _RegistrationPageState createState() => _RegistrationPageState();
 }
@@ -167,11 +167,16 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           ),
                           onChanged: (phone) {
                             print(phone.completeNumber);
-                            phoneNumber.value = phone.number;
-                            countryCode.value = phone.countryCode;
+                            phoneNumber.value =
+                                phone.number == null ? "" : phone.number!;
+                            countryCode.value = phone.countryCode == null
+                                ? ""
+                                : phone.countryCode!;
                           },
                           onCountryChanged: (phone) {
-                            countryCode.value = phone.countryCode;
+                            countryCode.value = phone.countryCode == null
+                                ? ""
+                                : phone.countryCode!;
                           },
                         ),
                       ),

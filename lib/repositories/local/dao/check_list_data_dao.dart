@@ -36,7 +36,7 @@ class CheckListDataDao {
     );
   }
 
-  Future<CheckListData> retrieve() async {
+  Future<CheckListData?> retrieve() async {
     final request = await _dbStore.find(await _db);
     List<CheckListData> a = request.map((snapshot) {
       final books = CheckListData.fromJson(snapshot.value);

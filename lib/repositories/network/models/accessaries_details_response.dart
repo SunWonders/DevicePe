@@ -15,9 +15,9 @@ class AccessoriesDetailResponse {
     this.data,
   });
 
-  int status;
-  String message;
-  RxList<AccessoriesDetailData> data;
+  int? status;
+  String? message;
+  RxList<AccessoriesDetailData>? data;
 
   factory AccessoriesDetailResponse.fromJson(Map<String, dynamic> json) =>
       AccessoriesDetailResponse(
@@ -30,7 +30,9 @@ class AccessoriesDetailResponse {
   Map<String, dynamic> toJson() => {
         "status": status,
         "message": message,
-        "data": List<dynamic>.from(data.map((x) => x.toJson())),
+        "data": data != null
+            ? List<dynamic>.from(data!.map((x) => x.toJson()))
+            : [],
       };
 }
 
@@ -43,11 +45,11 @@ class AccessoriesDetailData {
     this.name,
   });
 
-  String type;
-  int isActive;
-  int id;
-  String imageUrl;
-  String name;
+  String? type;
+  int? isActive;
+  int? id;
+  String? imageUrl;
+  String? name;
 
   factory AccessoriesDetailData.fromJson(Map<String, dynamic> json) =>
       AccessoriesDetailData(

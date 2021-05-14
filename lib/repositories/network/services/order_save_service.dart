@@ -5,13 +5,16 @@ import 'package:devicepe_client/repositories/network/models/save_order_response.
 import 'package:dio/dio.dart';
 
 class SaveOrderService {
-  static Future<SaveOrderResponse> saveOrder(
+  static Future<SaveOrderResponse?> saveOrder(
       SaveOrderRequest registerRequest) async {
     print("Api Call");
     try {
       Response<String> response =
           await ApiClient.dio.post<String>(SAVE_ORDER, data: registerRequest);
-      return saveOrderResponseFromJson(response.data);
+      if (response.data == null)
+        return null;
+      else
+        return saveOrderResponseFromJson(response.data!);
     } catch (e) {
       print(e);
       return null;

@@ -3,12 +3,12 @@ import 'package:devicepe_client/utils/colors.dart';
 import 'package:flutter/material.dart';
 
 class OrderSuccessDialog extends StatefulWidget {
-  OrderSuccessDialog({Key key, this.orderId}) : super(key: key);
-  final String orderId;
+  OrderSuccessDialog({Key? key, this.orderId}) : super(key: key);
+  final String? orderId;
 
   @override
   _OrderSuccessDialogState createState() =>
-      _OrderSuccessDialogState(this.orderId);
+      _OrderSuccessDialogState(this.orderId == null ? "" : this.orderId!);
 }
 
 class _OrderSuccessDialogState extends State<OrderSuccessDialog> {

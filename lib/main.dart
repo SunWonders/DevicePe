@@ -35,7 +35,7 @@ class _BaseAppState extends State<BaseApp> {
         return themeChangeProvider;
       },
       child: Consumer<DarkThemeProvider>(
-        builder: (BuildContext context, value, Widget child) {
+        builder: (BuildContext context, value, Widget? child) {
           return GetMaterialApp(
             debugShowCheckedModeBanner: false,
             theme: Styles.themeData(themeChangeProvider.darkTheme, context),

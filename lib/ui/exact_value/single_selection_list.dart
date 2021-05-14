@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class SingleSelectionPage extends StatefulWidget {
-  SingleSelectionPage({Key key}) : super(key: key);
+  SingleSelectionPage({Key? key}) : super(key: key);
 
   @override
   _SingleSelectionPageState createState() => _SingleSelectionPageState();
@@ -35,7 +35,7 @@ class _SingleSelectionPageState extends State<SingleSelectionPage> {
         description: "No Scratches"),
   ];
 
-  SelectionItem _selectedIcons;
+  SelectionItem? _selectedIcons;
 
   Widget gridViewSelection() {
     return GridView.count(
@@ -192,7 +192,7 @@ class SingleGridItem extends StatelessWidget {
               height: 5.0,
             ),
             Text(
-              _selectionItem.description,
+              "${_selectionItem.description}",
               style: TextStyle(
                 color: AppColors.blackText,
                 fontSize: 14,

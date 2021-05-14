@@ -16,8 +16,8 @@ class OtpValidateResponse {
     this.message,
   });
 
-  int status;
-  String message;
+  int? status;
+  String? message;
 
   factory OtpValidateResponse.fromJson(Map<String, dynamic> json) =>
       OtpValidateResponse(

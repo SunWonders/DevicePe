@@ -52,7 +52,7 @@ class OrderController extends GetxController {
     });
 
     var request = SaveOrderRequest();
-    request.varientId = variantData.id;
+    request.varientId = variantData?.id;
     request.checkListData = data;
     request.price = price;
 
@@ -67,7 +67,7 @@ class OrderController extends GetxController {
     request.description = formData["comments"];
     request.latitude = 0.0;
     request.longitude = 0.0;
-    request.userId = loginData.userId;
+    request.userId = loginData!.userId;
     saveOrder(request);
   }
 
@@ -86,7 +86,7 @@ class OrderController extends GetxController {
         }
       }
     } catch (e) {
-      print("Error - " + e);
+      print("Error - $e");
     } finally {
       isLoading(false);
     }

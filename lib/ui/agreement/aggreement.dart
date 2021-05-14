@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class Aggreement extends StatefulWidget {
-  Aggreement({Key key}) : super(key: key);
+  Aggreement({Key? key}) : super(key: key);
 
   @override
   _AggreementState createState() => _AggreementState();

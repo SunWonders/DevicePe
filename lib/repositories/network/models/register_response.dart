@@ -12,10 +12,10 @@ String registerResponseToJson(RegisterResponse data) =>
 
 class RegisterResponse {
   RegisterResponse({
-    this.status,
-    this.message,
-    this.savedId,
-    this.otpInMinutes,
+    this.status = 0,
+    this.message = "",
+    this.savedId = 0,
+    this.otpInMinutes = 2,
   });
 
   int status;

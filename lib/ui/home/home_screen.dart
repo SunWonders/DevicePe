@@ -3,7 +3,7 @@ import 'package:devicepe_client/ui/home/home_screen_banner.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreenPage extends StatefulWidget {
-  HomeScreenPage({Key key}) : super(key: key);
+  HomeScreenPage({Key? key}) : super(key: key);
 
   @override
   _HomeScreenPageState createState() => _HomeScreenPageState();
@@ -18,7 +18,7 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
         child: Container(
           child: Column(
             children: <Widget>[
-              HomeScreenBanner(),
+              //HomeScreenBanner(),
               Container(
                 margin: EdgeInsets.fromLTRB(0.0, 30, 0.0, 5.0),
                 child: Text(

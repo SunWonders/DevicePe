@@ -6,14 +6,16 @@ import 'package:devicepe_client/utils/sahred_pref.dart';
 import 'package:dio/dio.dart';
 
 class VariantService {
-  static Future<VarientDetailResponse> getAllVarientDetails() async {
+  static Future<VarientDetailResponse?> getAllVarientDetails() async {
     print("Api Call");
     int modelId = await SharedPref().readInt(SharedPref.MODEL_ID);
     try {
       Response<String> response =
           await ApiClient.dio.get<String>(GET_VARIANT_DETAILS + "$modelId");
-      print(response.data);
-      return varientDetailResponseFromJson(response.data);
+      if (response.data == null)
+        return null;
+      else
+        return varientDetailResponseFromJson(response.data!);
     } catch (e) {
       print(e);
       return null;
@@ -22,13 +24,15 @@ class VariantService {
 }
 
 class CityCheckService {
-  static Future<CityCheckResponse> checkCity(String city) async {
+  static Future<CityCheckResponse?> checkCity(String city) async {
     print("Api Call");
     try {
       Response<String> response =
           await ApiClient.dio.get<String>(CHECK_CITY + "$city");
-      print(response.data);
-      return cityCheckResponseFromJson(response.data);
+      if (response.data == null)
+        return null;
+      else
+        return cityCheckResponseFromJson(response.data!);
     } catch (e) {
       print(e);
       return null;

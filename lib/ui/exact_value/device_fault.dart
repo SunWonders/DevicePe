@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class DeviceFaultSelectionPage extends StatefulWidget {
-  DeviceFaultSelectionPage({Key key}) : super(key: key);
+  DeviceFaultSelectionPage({Key? key}) : super(key: key);
 
   @override
   _DeviceFaultSelectionPageState createState() =>

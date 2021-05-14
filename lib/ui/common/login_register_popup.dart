@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class AuthenticationRequest extends StatefulWidget {
-  AuthenticationRequest({Key key}) : super(key: key);
+  AuthenticationRequest({Key? key}) : super(key: key);
 
   @override
   _AuthenticationRequestState createState() => _AuthenticationRequestState();

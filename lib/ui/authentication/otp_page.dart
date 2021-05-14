@@ -11,7 +11,7 @@ import 'package:timer_count_down/timer_count_down.dart';
 
 class OtpPage extends StatefulWidget {
   final RegisterRequest registerRequest;
-  const OtpPage(this.registerRequest, {Key key}) : super(key: key);
+  const OtpPage(this.registerRequest, {Key? key}) : super(key: key);
   @override
   _OtpPageState createState() => _OtpPageState(this.registerRequest);
 }
@@ -68,7 +68,7 @@ class _OtpPageState extends State<OtpPage> {
               ? Container(
                   child: TextButton(
                     onPressed: () {
-                      if (_controller.isCompleted) {
+                      if (_controller.isCompleted == true) {
                         _controller.restart();
                         showLoaderDialog();
                       }

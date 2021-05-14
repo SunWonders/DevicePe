@@ -29,7 +29,7 @@ class LoginResponseDao {
     );
   }
 
-  Future<LoginResponse> retrieve() async {
+  Future<LoginResponse?> retrieve() async {
     final request = await _dbStore.find(await _db);
     List<LoginResponse> a = request.map((snapshot) {
       final books = LoginResponse.fromJson(snapshot.value);

@@ -18,9 +18,9 @@ class CityCheckResponse {
     this.data,
   });
 
-  int status;
-  String message;
-  bool isActive;
+  int? status;
+  String? message;
+  bool? isActive;
   dynamic data;
 
   factory CityCheckResponse.fromJson(Map<String, dynamic> json) =>

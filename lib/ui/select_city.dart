@@ -1,11 +1,11 @@
+import 'package:autocomplete_textfield_ns/autocomplete_textfield_ns.dart';
 import 'package:devicepe_client/repositories/network/controllers/city_check_controller.dart';
 import 'package:devicepe_client/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 
 class SelectCity extends StatefulWidget {
-  SelectCity({Key key}) : super(key: key);
+  SelectCity({Key? key}) : super(key: key);
 
   @override
   _SelectCityState createState() => _SelectCityState();
@@ -142,7 +142,7 @@ List<CityDetail> getCityDetail() {
 
 class OtherCities extends StatelessWidget {
   final List<String> cityDetail;
-  OtherCities({Key key, @required this.cityDetail}) : super(key: key);
+  OtherCities({Key? key, required this.cityDetail}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -189,7 +189,7 @@ class CitySelectionGridItem extends StatelessWidget {
                 );
               },
               loadingBuilder: (BuildContext context, Widget child,
-                  ImageChunkEvent loadingProgress) {
+                  ImageChunkEvent? loadingProgress) {
                 if (loadingProgress == null) return child;
                 return Center(
                   child: CircularProgressIndicator(),

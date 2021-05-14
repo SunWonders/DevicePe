@@ -2,7 +2,7 @@ import 'package:devicepe_client/utils/colors.dart';
 import 'package:flutter/material.dart';
 
 class ServiceUnAvailable extends StatefulWidget {
-  ServiceUnAvailable({Key key}) : super(key: key);
+  ServiceUnAvailable({Key? key}) : super(key: key);
 
   @override
   _ServiceUnAvailableState createState() => _ServiceUnAvailableState();

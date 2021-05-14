@@ -5,14 +5,16 @@ import 'package:devicepe_client/utils/sahred_pref.dart';
 import 'package:dio/dio.dart';
 
 class CheckListService {
-  static Future<CheckListDetailResponse> getCheckListDetails() async {
+  static Future<CheckListDetailResponse?> getCheckListDetails() async {
     print("Api Call");
     try {
       int variantId = await SharedPref().getSelectedVarientId();
       Response<String> response =
           await ApiClient.dio.get<String>(GET_CHECK_LIST + "$variantId");
-      print(response.data);
-      return checkListDetailResponseFromJson(response.data);
+      if (response.data == null)
+        return null;
+      else
+        return checkListDetailResponseFromJson(response.data!);
     } catch (e) {
       print(e);
       return null;

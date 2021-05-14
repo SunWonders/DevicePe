@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class HomeAccessory extends StatefulWidget {
-  HomeAccessory({Key key}) : super(key: key);
+  HomeAccessory({Key? key}) : super(key: key);
 
   @override
   _HomeAccessoryState createState() => _HomeAccessoryState();
@@ -29,7 +29,8 @@ class _HomeAccessoryState extends State<HomeAccessory> {
                 var location =
                     await SharedPref().readString(SharedPref.LOCATION);
                 if (location != null && location.isNotEmpty) {
-                  SharedPref().saveInt(SharedPref.ACCESSORY_ID, element.id);
+                  SharedPref().saveInt(SharedPref.ACCESSORY_ID,
+                      element.id == null ? 0 : element.id!);
                   Get.to(() => BrandSelectionPage());
                 } else {
                   Get.defaultDialog(
@@ -84,7 +85,7 @@ class AccessariesGridItem extends StatelessWidget {
               height: 5.0,
             ),
             Text(
-              data.type,
+              "${data.type}",
               style: TextStyle(
                   color: Colors.white,
                   fontSize: 18,

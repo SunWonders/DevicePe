@@ -29,21 +29,21 @@ class SaveOrderRequest {
     this.pickuptime,
   });
 
-  String description;
-  double price;
-  int userId;
-  int varientId;
-  List<CheckListDatum> checkListData;
-  String fullname;
-  String mobileNumber;
-  String address;
-  String pincode;
-  String state;
-  String city;
-  String emailId;
-  double latitude;
-  double longitude;
-  int pickuptime;
+  String? description;
+  double? price;
+  int? userId;
+  int? varientId;
+  List<CheckListDatum>? checkListData;
+  String? fullname;
+  String? mobileNumber;
+  String? address;
+  String? pincode;
+  String? state;
+  String? city;
+  String? emailId;
+  double? latitude;
+  double? longitude;
+  int? pickuptime;
 
   factory SaveOrderRequest.fromJson(Map<String, dynamic> json) =>
       SaveOrderRequest(
@@ -70,8 +70,9 @@ class SaveOrderRequest {
         "price": price,
         "userId": userId,
         "varientId": varientId,
-        "checkListData":
-            List<dynamic>.from(checkListData.map((x) => x.toJson())),
+        "checkListData": checkListData != null
+            ? List<dynamic>.from(checkListData!.map((x) => x.toJson()))
+            : [],
         "fullname": fullname,
         "mobileNumber": mobileNumber,
         "address": address,
@@ -87,8 +88,8 @@ class SaveOrderRequest {
 
 class CheckListDatum {
   CheckListDatum({
-    this.userSelectedValue,
-    this.checkListId,
+    required this.userSelectedValue,
+    required this.checkListId,
   });
 
   List<int> userSelectedValue;

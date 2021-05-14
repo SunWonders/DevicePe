@@ -19,9 +19,9 @@ class ModelDetailResponse {
     this.data,
   });
 
-  int status;
-  String message;
-  RxList<ModelData> data;
+  int? status;
+  String? message;
+  RxList<ModelData>? data;
 
   factory ModelDetailResponse.fromJson(Map<String, dynamic> json) =>
       ModelDetailResponse(
@@ -34,7 +34,9 @@ class ModelDetailResponse {
   Map<String, dynamic> toJson() => {
         "status": status,
         "message": message,
-        "data": List<dynamic>.from(data.map((x) => x.toJson())),
+        "data": data == null
+            ? []
+            : List<dynamic>.from(data!.map((x) => x.toJson())),
       };
 }
 
@@ -46,10 +48,10 @@ class ModelData {
     this.modelIconUrl,
   });
 
-  int id;
-  String modelName;
-  int isActive;
-  String modelIconUrl;
+  int? id;
+  String? modelName;
+  int? isActive;
+  String? modelIconUrl;
 
   factory ModelData.fromJson(Map<String, dynamic> json) => ModelData(
         id: json["id"],

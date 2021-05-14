@@ -12,8 +12,8 @@ String registerRequestToJson(RegisterRequest data) =>
 
 class RegisterRequest {
   RegisterRequest({
-    this.phoneNumber,
-    this.password,
+    this.phoneNumber = "",
+    this.password = "",
     this.firstName = "",
     this.lastName = "",
     this.middleName = "",

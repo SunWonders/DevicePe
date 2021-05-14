@@ -19,9 +19,9 @@ class CheckListDetailResponse {
     this.data,
   });
 
-  int status;
-  String message;
-  RxList<CheckListData> data;
+  int? status;
+  String? message;
+  RxList<CheckListData>? data;
 
   factory CheckListDetailResponse.fromJson(Map<String, dynamic> json) =>
       CheckListDetailResponse(
@@ -34,7 +34,9 @@ class CheckListDetailResponse {
   Map<String, dynamic> toJson() => {
         "status": status,
         "message": message,
-        "data": List<dynamic>.from(data.map((x) => x.toJson())),
+        "data": data != null
+            ? List<dynamic>.from(data!.map((x) => x.toJson()))
+            : [],
       };
 }
 
@@ -54,16 +56,16 @@ class CheckListData {
     this.priceType,
   });
 
-  int isActive;
-  double price;
-  String description;
+  int? isActive;
+  double? price;
+  String? description;
   dynamic varientId;
-  String type;
-  int isMandatory;
-  String iconUrl;
-  int id;
-  List<Option> options;
-  String priceType;
+  String? type;
+  int? isMandatory;
+  String? iconUrl;
+  int? id;
+  List<Option>? options;
+  String? priceType;
 
   factory CheckListData.fromJson(Map<String, dynamic> json) => CheckListData(
         isActive: json["isActive"],
@@ -88,8 +90,10 @@ class CheckListData {
         "isMandatory": isMandatory,
         "iconUrl": iconUrl,
         "id": id,
-        "options": List<dynamic>.from(options.map((x) => x.toJson())),
-        "priceType": priceType == null ? null : priceType,
+        "options": options != null
+            ? List<dynamic>.from(options!.map((x) => x.toJson()))
+            : [],
+        "priceType": priceType,
       };
 }
 
@@ -101,10 +105,10 @@ class Option {
     this.price,
   });
 
-  int id;
-  String iconUrl;
-  String name;
-  double price;
+  int? id;
+  String? iconUrl;
+  String? name;
+  double? price;
 
   factory Option.fromJson(Map<String, dynamic> json) => Option(
         id: json["id"],

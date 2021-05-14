@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ModelSelectionPage extends StatefulWidget {
-  ModelSelectionPage({Key key}) : super(key: key);
+  ModelSelectionPage({Key? key}) : super(key: key);
 
   @override
   _ModelSelectionPageState createState() => _ModelSelectionPageState();
@@ -18,7 +18,7 @@ class ModelSelectionPage extends StatefulWidget {
 class _ModelSelectionPageState extends State<ModelSelectionPage> {
   ModelController modelController = Get.put(ModelController());
 
-  ModelData _selectedModel;
+  ModelData? _selectedModel;
 
   Widget gridViewSelection() {
     return modelController.modelDetails.isNotEmpty
@@ -34,8 +34,8 @@ class _ModelSelectionPageState extends State<ModelSelectionPage> {
                   onTap: () {
                     setState(() {
                       _selectedModel = iconData;
-                      SharedPref()
-                          .saveInt(SharedPref.MODEL_ID, _selectedModel.id);
+                      SharedPref().saveInt(SharedPref.MODEL_ID,
+                          _selectedModel?.id == null ? 0 : _selectedModel!.id!);
                       Get.to(() => DeviceModelDetails());
                     });
                   },
@@ -150,7 +150,7 @@ class BrandModelGridItem extends StatelessWidget {
                     )
                   : Container(),
               Image.network(
-                _modelDetail.modelIconUrl,
+                "${_modelDetail.modelIconUrl}",
                 height: 96,
                 errorBuilder: (context, error, stackTrace) {
                   return Center(
@@ -160,7 +160,7 @@ class BrandModelGridItem extends StatelessWidget {
                   );
                 },
                 loadingBuilder: (BuildContext context, Widget child,
-                    ImageChunkEvent loadingProgress) {
+                    ImageChunkEvent? loadingProgress) {
                   if (loadingProgress == null) return child;
                   return Center(
                     child: CircularProgressIndicator(),
@@ -171,7 +171,7 @@ class BrandModelGridItem extends StatelessWidget {
                 height: 5.0,
               ),
               Text(
-                _modelDetail.modelName,
+                "${_modelDetail.modelName}",
                 style: TextStyle(
                   color: AppColors.primaryDark,
                   fontSize: 16,

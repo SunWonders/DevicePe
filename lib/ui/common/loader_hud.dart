@@ -18,12 +18,12 @@ class LoaderHUD extends StatelessWidget {
   final Widget child;
 
   LoaderHUD({
-    Key key,
-    @required this.inAsyncCall,
+    Key? key,
+    required this.inAsyncCall,
     this.opacity = 0.3,
     this.color = Colors.grey,
     this.dismissible = false,
-    @required this.child,
+    required this.child,
   })  : assert(child != null),
         assert(inAsyncCall != null),
         super(key: key);

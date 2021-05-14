@@ -42,7 +42,7 @@ class AuthenticationController extends GetxController {
         }
       }
     } catch (e) {
-      print("Error - " + e);
+      print("Error - $e");
     } finally {
       isLoading(false);
     }
@@ -62,7 +62,7 @@ class AuthenticationController extends GetxController {
         }
       }
     } catch (e) {
-      print("Error - " + e);
+      print("Error - $e");
     } finally {
       isLoading(false);
     }
@@ -81,7 +81,7 @@ class AuthenticationController extends GetxController {
         if (response.jwtToken != null) {
           LoginResponseDao().insert(response);
 
-          SharedPref().saveString(SharedPref.JWT_TOKEN, response.jwtToken);
+          SharedPref().saveString(SharedPref.JWT_TOKEN, response.jwtToken!);
 
           Get.offAll(() => HomePage());
         }
@@ -89,7 +89,7 @@ class AuthenticationController extends GetxController {
         Get.snackbar("Failed", "Login Failed");
       }
     } catch (e) {
-      print("Error - " + e);
+      print("Error - $e");
 
       Get.snackbar("Failed", "Login Failed");
     } finally {

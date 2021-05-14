@@ -17,7 +17,7 @@ class DeviceSummaryPage extends StatefulWidget {
 }
 
 class _DeviceSummaryPageState extends State<DeviceSummaryPage> {
-  var variantData = VariantData().obs;
+  var variantData = Rx<VariantData?>(null);
   var isLoading = true.obs;
   var price = 0.0.obs;
   var checkListData = <Specification>[].obs;
@@ -67,13 +67,13 @@ class _DeviceSummaryPageState extends State<DeviceSummaryPage> {
     var dcList = dc.split("-");
     var pr = 0.0;
     if (dcList[0].contains("Excellent")) {
-      pr += variantData.value.likeNew;
+      pr += variantData.value!.likeNew!;
     } else if (dcList[0].contains("Good")) {
-      pr += variantData.value.good;
+      pr += variantData.value!.good!;
     } else if (dcList[0].contains("Average")) {
-      pr += variantData.value.average;
+      pr += variantData.value!.average!;
     } else {
-      pr += variantData.value.belowAverage;
+      pr += variantData.value!.belowAverage!;
     }
 
     var basePrice = await SharedPref().readDouble(SharedPref.BASE_PRICE);
@@ -122,33 +122,6 @@ class _DeviceSummaryPageState extends State<DeviceSummaryPage> {
           style: TextStyle(color: AppColors.primaryLight),
         ),
       ),
-      // floatingActionButton: ClipRRect(
-      //   borderRadius: BorderRadius.all(Radius.circular(10.0)),
-      //   child: Container(
-      //     color: AppColors.primaryLight,
-      //     child: TextButton(
-      //       onPressed: () {
-      //         if (price.value < 100) {
-      //           Get.to(
-      //             () => NotAcceptingPage(
-      //               NOT_ACCEPTING,
-      //               heading: VALUE_TOO_LOW,
-      //             ),
-      //           );
-      //         } else {
-      //           Get.to(() => BookOrder());
-      //         }
-      //       },
-      //       child: Text(
-      //         "Book Order",
-      //         style: TextStyle(
-      //           color: AppColors.whiteText,
-      //           fontSize: 16,
-      //         ),
-      //       ),
-      //     ),
-      //   ),
-      // ),
       body: Obx(
         () => isLoading.value
             ? ProgressBar()
@@ -160,44 +133,39 @@ class _DeviceSummaryPageState extends State<DeviceSummaryPage> {
                       getMobileDetail(),
                       getSpecificationDetails(),
                       getCheckListDetails(),
+                      Align(
+                        alignment: Alignment.bottomCenter,
+                        child: Container(
+                          color: AppColors.primaryLight,
+                          height: 60,
+                          width: Get.width - 1,
+                          child: TextButton(
+                            onPressed: () {
+                              if (price.value < 100) {
+                                Get.to(
+                                  () => NotAcceptingPage(
+                                    NOT_ACCEPTING,
+                                    heading: VALUE_TOO_LOW,
+                                  ),
+                                );
+                              } else {
+                                Get.to(() => BookOrder());
+                              }
+                            },
+                            child: Text(
+                              "Book Order",
+                              style: TextStyle(
+                                color: AppColors.whiteText,
+                                fontSize: 16,
+                              ),
+                            ),
+                          ),
+                        ),
+                      )
                     ],
                   ),
                 ),
               ),
-      ),
-      bottomNavigationBar: Container(
-        child: Container(
-          color: AppColors.nutralLight,
-          height: 60,
-          child: Expanded(
-            child: Container(
-              color: AppColors.primaryLight,
-              height: 60,
-              width: Get.width / 2,
-              child: TextButton(
-                onPressed: () async {
-                  if (price.value < 100) {
-                    Get.to(
-                      () => NotAcceptingPage(
-                        NOT_ACCEPTING,
-                        heading: VALUE_TOO_LOW,
-                      ),
-                    );
-                  } else {
-                    Get.to(() => BookOrder());
-                  }
-                },
-                child: Text(
-                  "Book Order",
-                  style: TextStyle(
-                    color: AppColors.whiteText,
-                    fontSize: 16,
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ),
       ),
     );
   }
@@ -236,7 +204,7 @@ class _DeviceSummaryPageState extends State<DeviceSummaryPage> {
               Padding(
                 padding: EdgeInsets.all(10.0),
                 child: Text(
-                  "${variantData.value.varientName}",
+                  "${variantData.value?.varientName}",
                   style: TextStyle(
                     color: AppColors.dark,
                     fontWeight: FontWeight.bold,
@@ -247,27 +215,7 @@ class _DeviceSummaryPageState extends State<DeviceSummaryPage> {
               SizedBox(height: 10),
               Row(
                 children: [
-                  Image.network(
-                    variantData.value.varientIconUrl[0],
-                    height: 130,
-                    width: 100,
-                    errorBuilder: (context, error, stackTrace) {
-                      return Padding(
-                        padding: EdgeInsets.all(5.0),
-                        child: Image(
-                          width: 90,
-                          image: AssetImage('assets/images/mobile.png'),
-                        ),
-                      );
-                    },
-                    loadingBuilder: (BuildContext context, Widget child,
-                        ImageChunkEvent loadingProgress) {
-                      if (loadingProgress == null) return child;
-                      return Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    },
-                  ),
+                  addDeviceImage(),
                   SizedBox(width: 20),
                   Column(
                     children: [
@@ -369,7 +317,7 @@ class _DeviceSummaryPageState extends State<DeviceSummaryPage> {
   }
 
   Widget getSpecificationDetails() {
-    var h = 200 + 75 + (variantData.value.specifications.length * 55).toInt();
+    var h = 200 + 75 + (variantData.value!.specifications!.length * 55).toInt();
     return ClipRRect(
       borderRadius: BorderRadius.all(Radius.circular(10.0)),
       child: Container(
@@ -416,9 +364,9 @@ class _DeviceSummaryPageState extends State<DeviceSummaryPage> {
               height: 1,
             ),
             if (variantData.value != null &&
-                variantData.value.specifications != null &&
-                variantData.value.specifications.isNotEmpty)
-              SpecificationListView(variantData.value.specifications)
+                variantData.value!.specifications != null &&
+                variantData.value!.specifications!.isNotEmpty)
+              SpecificationListView(variantData.value!.specifications!)
             else
               Container(
                 margin: EdgeInsets.all(20.0),
@@ -478,5 +426,33 @@ class _DeviceSummaryPageState extends State<DeviceSummaryPage> {
         )),
       ),
     );
+  }
+
+  Widget addDeviceImage() {
+    if (variantData.value?.varientIconUrl?.isNotEmpty == true) {
+      return Image.network(
+        "${variantData.value?.varientIconUrl?[0]}",
+        height: 130,
+        width: 100,
+        errorBuilder: (context, error, stackTrace) {
+          return Padding(
+            padding: EdgeInsets.all(5.0),
+            child: Image(
+              width: 90,
+              image: AssetImage('assets/images/mobile.png'),
+            ),
+          );
+        },
+        loadingBuilder: (BuildContext context, Widget child,
+            ImageChunkEvent? loadingProgress) {
+          if (loadingProgress == null) return child;
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        },
+      );
+    } else {
+      return Container();
+    }
   }
 }

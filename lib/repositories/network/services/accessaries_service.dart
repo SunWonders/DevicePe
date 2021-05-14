@@ -4,12 +4,16 @@ import 'package:devicepe_client/repositories/network/models/accessaries_details_
 import 'package:dio/dio.dart';
 
 class AccessariesService {
-  static Future<AccessoriesDetailResponse> getAllAccessoriesDetails() async {
+  static Future<AccessoriesDetailResponse?> getAllAccessoriesDetails() async {
     print("Api Call");
     try {
       Response<String> response =
           await ApiClient.dio.get<String>(GET_ACCESSORIES_URL);
-      return accessoriesDetailResponseFromJson(response.data);
+      if (response.data != null) {
+        return accessoriesDetailResponseFromJson(response.data!);
+      } else {
+        return null;
+      }
     } catch (e) {
       print(e);
       return null;

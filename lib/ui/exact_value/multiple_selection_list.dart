@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class MultipleSelectionPage extends StatefulWidget {
-  MultipleSelectionPage({Key key}) : super(key: key);
+  MultipleSelectionPage({Key? key}) : super(key: key);
 
   @override
   _MultipleSelectionPageState createState() => _MultipleSelectionPageState();
@@ -43,23 +43,31 @@ class _MultipleSelectionPageState extends State<MultipleSelectionPage> {
     calculatePrice();
   }
 
+  var isBoxOrBillAvailable = false;
+
   Future<void> calculatePrice() async {
     var variantData = await VariantDataDao().retrieve();
-    price.value -= (variantData.boxPrice +
-        variantData.billPrice +
-        variantData.chargerPrice +
-        variantData.headPhonePrice);
-    _selectedIcons.forEach((element) {
-      if (element.name.contains("Box")) {
-        price.value += variantData.boxPrice;
-      } else if (element.name.contains("Valid Bill")) {
-        price.value += variantData.billPrice;
-      } else if (element.name.contains("Original Charger")) {
-        price.value += variantData.chargerPrice;
-      } else {
-        price.value += variantData.headPhonePrice;
-      }
-    });
+    if (variantData != null) {
+      price.value -= (variantData.boxPrice! +
+          variantData.billPrice! +
+          variantData.chargerPrice! +
+          variantData.headPhonePrice!);
+      _selectedIcons.forEach((element) {
+        if (element.name.contains("Box")) {
+          price.value += variantData.boxPrice!;
+          isBoxOrBillAvailable = true;
+        } else if (element.name.contains("Valid Bill")) {
+          price.value += variantData.billPrice!;
+          isBoxOrBillAvailable = true;
+        } else if (element.name.contains("Original Charger")) {
+          price.value += variantData.chargerPrice!;
+        } else {
+          price.value += variantData.headPhonePrice!;
+        }
+      });
+    } else {
+      price.value = 0;
+    }
   }
 
   Widget gridViewSelection() {
@@ -151,67 +159,45 @@ class _MultipleSelectionPageState extends State<MultipleSelectionPage> {
             Flexible(
               child: gridViewSelection(),
             ),
-          ],
-        ),
-      ),
-      bottomNavigationBar: Container(
-        child: Container(
-          color: AppColors.nutralLight,
-          height: 60,
-          child: Expanded(
-            child: Container(
-              color: AppColors.primaryLight,
-              height: 60,
-              width: Get.width / 2,
-              child: TextButton(
-                onPressed: () async {
-                  var variantData = await VariantDataDao().retrieve();
-                  var isBoxOrBillAvailable = false;
-                  price.value -= (variantData.boxPrice +
-                      variantData.billPrice +
-                      variantData.chargerPrice +
-                      variantData.headPhonePrice);
-                  _selectedIcons.forEach((element) {
-                    if (element.name.contains("Box")) {
-                      isBoxOrBillAvailable = true;
-                      price.value += variantData.boxPrice;
-                    } else if (element.name.contains("Valid Bill")) {
-                      price.value += variantData.billPrice;
-                      isBoxOrBillAvailable = true;
-                    } else if (element.name.contains("Original Charger")) {
-                      price.value += variantData.chargerPrice;
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Container(
+                color: AppColors.primaryLight,
+                height: 60,
+                width: Get.width - 1,
+                child: TextButton(
+                  onPressed: () async {
+                    await calculatePrice();
+                    if (isBoxOrBillAvailable) {
+                      SelectionItemDao().insertAll(_selectedIcons);
+
+                      SharedPref().saveDouble(
+                          SharedPref.ACCESSORIES_PRICE, price.value);
+
+                      Get.to(() => DeviceConditionPage());
                     } else {
-                      price.value += variantData.headPhonePrice;
+                      Get.defaultDialog(
+                          title: "🙁  Alert 🙁",
+                          middleText:
+                              "We are Not accepting without Box Or Bill.",
+                          radius: 10,
+                          buttonColor: AppColors.primaryDark,
+                          onConfirm: () {
+                            Get.back();
+                          });
                     }
-                  });
-                  if (isBoxOrBillAvailable) {
-                    SelectionItemDao().insertAll(_selectedIcons);
-
-                    SharedPref()
-                        .saveDouble(SharedPref.ACCESSORIES_PRICE, price.value);
-
-                    Get.to(() => DeviceConditionPage());
-                  } else {
-                    Get.defaultDialog(
-                        title: "🙁  Alert 🙁",
-                        middleText: "We are Not accepting without Box Or Bill.",
-                        radius: 10,
-                        buttonColor: AppColors.primaryDark,
-                        onConfirm: () {
-                          Get.back();
-                        });
-                  }
-                },
-                child: Text(
-                  "Next",
-                  style: TextStyle(
-                    color: AppColors.whiteText,
-                    fontSize: 16,
+                  },
+                  child: Text(
+                    "Next",
+                    style: TextStyle(
+                      color: AppColors.whiteText,
+                      fontSize: 16,
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
+          ],
         ),
       ),
     );

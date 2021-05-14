@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class PowerStateSelection extends StatefulWidget {
-  PowerStateSelection({Key key}) : super(key: key);
+  PowerStateSelection({Key? key}) : super(key: key);
 
   @override
   _PowerStateSelectionState createState() => _PowerStateSelectionState();
@@ -38,7 +38,7 @@ class _PowerStateSelectionState extends State<PowerStateSelection> {
   }
 
   void _modalBottomSheetMenu() {
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
+    WidgetsBinding.instance!.addPostFrameCallback((_) async {
       await Get.bottomSheet(DetailsRequestAgreement(), isDismissible: false);
     });
   }
@@ -125,7 +125,7 @@ class _PowerStateSelectionState extends State<PowerStateSelection> {
                                                       checkListData.id] ==
                                                   null ||
                                               multipleSelection[
-                                                      checkListData.id]
+                                                      checkListData.id]!
                                                   .isEmpty))
                                         {isSelected.value = false}
                                     },
@@ -185,7 +185,7 @@ class _PowerStateSelectionState extends State<PowerStateSelection> {
                     padding: EdgeInsets.all(10),
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      "${index + 1}. " + checkListData.description,
+                      "${index + 1}. ${checkListData.description}",
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                       textAlign: TextAlign.left,
@@ -212,16 +212,16 @@ class _PowerStateSelectionState extends State<PowerStateSelection> {
               if (singleSelection[checkListData.id] != null)
                 {
                   single.add(
-                      "${checkListData.id}--${checkListData.description}---${singleSelection[checkListData.id].id}--${singleSelection[checkListData.id].name}"),
-                  basePrice -= singleSelection[checkListData.id].price,
+                      "${checkListData.id}--${checkListData.description}---${singleSelection[checkListData.id]!.id!}--${singleSelection[checkListData.id]!.name!}"),
+                  basePrice -= singleSelection[checkListData.id]!.price!,
                 },
               if (multipleSelection[checkListData.id] != null &&
-                  multipleSelection[checkListData.id].isNotEmpty)
+                  multipleSelection[checkListData.id]!.isNotEmpty)
                 {
                   m = "${checkListData.id}--${checkListData.description}---",
-                  for (Option option in multipleSelection[checkListData.id])
+                  for (Option option in multipleSelection[checkListData.id]!)
                     {
-                      basePrice -= option.price,
+                      basePrice -= option.price!,
                       m += "${option.id}--${option.name}--",
                     },
                   multiple.add(m),
@@ -240,37 +240,40 @@ class _PowerStateSelectionState extends State<PowerStateSelection> {
         crossAxisCount:
             MediaQuery.of(context).orientation == Orientation.portrait ? 2 : 3,
         padding: EdgeInsets.symmetric(horizontal: 1.0, vertical: 1),
-        children: checkListData.options.map((Option option) {
-          return GestureDetector(
-              onTap: () {
-                setState(() {
-                  if (checkListData.type == "SINGLE") {
-                    singleSelection[checkListData.id] = option;
-                  } else {
-                    List<Option> c = multipleSelection[checkListData.id];
-                    if (c == null) {
-                      c = [];
-                    }
-                    if (c.contains(option)) {
-                      c.remove(option);
-                    } else {
-                      c.add(option);
-                    }
+        children: checkListData.options == null
+            ? []
+            : checkListData.options!.map((Option option) {
+                return GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        if (checkListData.type == "SINGLE") {
+                          singleSelection[checkListData.id!] = option;
+                        } else {
+                          List<Option> c =
+                              multipleSelection[checkListData.id] == null
+                                  ? []
+                                  : multipleSelection[checkListData.id]!;
 
-                    multipleSelection[checkListData.id] = c;
-                  }
-                  calculatePrice();
-                });
-              },
-              child: checkListData.type == "SINGLE"
-                  ? OptionItem(
-                      option, singleSelection[checkListData.id] == option)
-                  : OptionItem(
-                      option,
-                      multipleSelection[checkListData.id] != null &&
-                          multipleSelection[checkListData.id]
-                              .contains(option)));
-        }).toList(),
+                          if (c.contains(option)) {
+                            c.remove(option);
+                          } else {
+                            c.add(option);
+                          }
+
+                          multipleSelection[checkListData.id!] = c;
+                        }
+                        calculatePrice();
+                      });
+                    },
+                    child: checkListData.type == "SINGLE"
+                        ? OptionItem(
+                            option, singleSelection[checkListData.id] == option)
+                        : OptionItem(
+                            option,
+                            multipleSelection[checkListData.id] != null &&
+                                multipleSelection[checkListData.id]!
+                                    .contains(option)));
+              }).toList(),
       ),
     );
   }
@@ -319,7 +322,7 @@ class OptionItem extends StatelessWidget {
               width: 5.0,
             ),
             Text(
-              _selectionItem.name,
+              "${_selectionItem.name}",
               style: TextStyle(
                 color: AppColors.primaryDark,
                 fontWeight: FontWeight.bold,

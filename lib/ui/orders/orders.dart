@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class UserOrders extends StatefulWidget {
-  UserOrders({Key key}) : super(key: key);
+  UserOrders({Key? key}) : super(key: key);
 
   @override
   _UserOrdersState createState() => _UserOrdersState();

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class HomeDashBoard extends StatefulWidget {
-  HomeDashBoard({Key key}) : super(key: key);
+  HomeDashBoard({Key? key}) : super(key: key);
 
   @override
   _HomeDashBoardState createState() => _HomeDashBoardState();

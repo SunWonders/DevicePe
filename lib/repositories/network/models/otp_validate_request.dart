@@ -16,8 +16,8 @@ class OtpValidateRequest {
     this.otp,
   });
 
-  String mobileNumber;
-  String otp;
+  String? mobileNumber;
+  String? otp;
 
   factory OtpValidateRequest.fromJson(Map<String, dynamic> json) =>
       OtpValidateRequest(

@@ -1,8 +1,8 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_card_swipper/flutter_card_swiper.dart';
 
 class HomeScreenBanner extends StatefulWidget {
-  HomeScreenBanner({Key key}) : super(key: key);
+  HomeScreenBanner({Key? key}) : super(key: key);
 
   @override
   _HomeScreenBannerState createState() => _HomeScreenBannerState();
@@ -11,15 +11,32 @@ class HomeScreenBanner extends StatefulWidget {
 class _HomeScreenBannerState extends State<HomeScreenBanner> {
   @override
   Widget build(BuildContext context) {
-    return CarouselSlider(
-      options: CarouselOptions(
-        autoPlay: true,
-        height: 200,
-        aspectRatio: 2.0,
-        enlargeCenterPage: true,
-      ),
-      items: imageSliders,
+    // return CarouselSlider(
+    //   options: CarouselOptions(
+    //     autoPlay: true,
+    //     height: 200,
+    //     aspectRatio: 2.0,
+    //     enlargeCenterPage: true,
+    //   ),
+    //   items: imageSliders,
+    // );
+    /*
+    return new Swiper(
+      itemBuilder: (BuildContext context, int index) {
+        return new Image.network(
+          "http://via.placeholder.com/350x150",
+          fit: BoxFit.fill,
+        );
+      },
+      itemHeight: 200,
+      autoplay: true,
+      loop: true,
+      itemCount: imageSliders.length,
+      pagination: new SwiperPagination(),
+      control: new SwiperControl(),
     );
+    */
+    return Container();
   }
 }
 

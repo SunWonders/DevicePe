@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class DeviceConditionPage extends StatefulWidget {
-  DeviceConditionPage({Key key}) : super(key: key);
+  DeviceConditionPage({Key? key}) : super(key: key);
 
   @override
   _DeviceConditionPageState createState() => _DeviceConditionPageState();
@@ -36,7 +36,7 @@ class _DeviceConditionPageState extends State<DeviceConditionPage> {
             "Multiple Scratches on dents.,Panel Broken.,Rough body Condition"),
   ];
 
-  SelectionItem _selectedIcons;
+  SelectionItem? _selectedIcons;
 
   Widget gridViewSelection() {
     return GridView.count(
@@ -115,47 +115,42 @@ class _DeviceConditionPageState extends State<DeviceConditionPage> {
             Flexible(
               child: listViewSelection(),
             ),
-          ],
-        ),
-      ),
-      bottomNavigationBar: Container(
-        child: Container(
-          color: AppColors.nutralLight,
-          height: 60,
-          child: Expanded(
-            child: Container(
-              color: AppColors.primaryLight,
-              height: 60,
-              width: Get.width / 2,
-              child: TextButton(
-                onPressed: () async {
-                  if (_selectedIcons == null) {
-                    Get.defaultDialog(
-                        title: "🙁  Alert 🙁",
-                        middleText: "Please Select Device Condition",
-                        radius: 10,
-                        buttonColor: AppColors.primaryDark,
-                        onConfirm: () {
-                          Get.back();
-                        });
-                    return;
-                  }
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Container(
+                color: AppColors.primaryLight,
+                height: 60,
+                width: Get.width - 1,
+                child: TextButton(
+                  onPressed: () async {
+                    if (_selectedIcons == null) {
+                      Get.defaultDialog(
+                          title: "🙁  Alert 🙁",
+                          middleText: "Please Select Device Condition",
+                          radius: 10,
+                          buttonColor: AppColors.primaryDark,
+                          onConfirm: () {
+                            Get.back();
+                          });
+                      return;
+                    }
 
-                  SharedPref().saveString(SharedPref.DEVICE_CONDITION,
-                      "${_selectedIcons.name}-${_selectedIcons.description}");
+                    SharedPref().saveString(SharedPref.DEVICE_CONDITION,
+                        "${_selectedIcons?.name}-${_selectedIcons?.description}");
 
-                  Get.to(() => DeviceSummaryPage());
-                },
-                child: Text(
-                  "Next",
-                  style: TextStyle(
-                    color: AppColors.whiteText,
-                    fontSize: 16,
+                    Get.to(() => DeviceSummaryPage());
+                  },
+                  child: Text(
+                    "Next",
+                    style: TextStyle(
+                      color: AppColors.whiteText,
+                      fontSize: 16,
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
+          ],
         ),
       ),
     );
@@ -256,7 +251,10 @@ class SingleGridItem extends StatelessWidget {
                 ),
                 height: 4 * 40.toDouble(),
                 child: DescriptionListView(
-                    _selectionItem.description.split(","), _isSelected),
+                    _selectionItem.description != null
+                        ? _selectionItem.description!.split(",")
+                        : [],
+                    _isSelected),
               ),
             )
           ],
@@ -301,92 +299,5 @@ class DescriptionListView extends StatelessWidget {
         );
       },
     );
-
-    //return Container();
   }
 }
-
-// class SingleGridItem extends StatelessWidget {
-//   final SelectionItem _selectionItem;
-//   final bool _isSelected;
-
-//   SingleGridItem(this._selectionItem, this._isSelected);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return ClipRRect(
-//       borderRadius: BorderRadius.all(Radius.circular(10.0)),
-//       child: Container(
-//         decoration: new BoxDecoration(
-//           boxShadow: [
-//             BoxShadow(
-//               color: AppColors.shadowOne,
-//               blurRadius: 1.0,
-//             ),
-//           ],
-//           gradient: new LinearGradient(
-//             colors: [
-//               AppColors.whiteSubText,
-//               AppColors.whiteSubText,
-//             ],
-//           ),
-//         ),
-//         margin: EdgeInsets.all(5.0),
-//         padding: EdgeInsets.all(5.0),
-//         child: Column(
-//           mainAxisAlignment: MainAxisAlignment.center,
-//           children: [
-//             SizedBox(
-//               height: 5.0,
-//             ),
-//             Container(
-//               width: 24,
-//               height: 24,
-//               child: _isSelected
-//                   ? Icon(
-//                       Icons.task_alt,
-//                       color: AppColors.primaryLight,
-//                     )
-//                   : Container(),
-//             ),
-//             _isSelected
-//                 ? SizedBox(
-//                     height: 5.0,
-//                   )
-//                 : Container(),
-//             Image.network(
-//               _selectionItem.imageUrl,
-//               height: 48,
-//               fit: BoxFit.fitWidth,
-//             ),
-//             SizedBox(
-//               height: 5.0,
-//             ),
-//             Text(
-//               _selectionItem.name,
-//               style: TextStyle(
-//                 color: AppColors.primaryDark,
-//                 fontWeight: FontWeight.bold,
-//                 fontSize: 18,
-//               ),
-//             ),
-//             SizedBox(
-//               height: 5.0,
-//             ),
-//             Container(
-//               padding: EdgeInsets.all(5.0),
-//               child: Text(
-//                 _selectionItem.description,
-//                 style: TextStyle(
-//                   color: AppColors.blackText,
-//                   fontSize: 14,
-//                 ),
-//                 textAlign: TextAlign.center,
-//               ),
-//             )
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }

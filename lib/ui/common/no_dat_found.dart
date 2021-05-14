@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class NoDataFound extends StatefulWidget {
-  NoDataFound({Key key}) : super(key: key);
+  NoDataFound({Key? key}) : super(key: key);
 
   @override
   _NoDataFoundState createState() => _NoDataFoundState();

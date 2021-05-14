@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class BrandSelectionPage extends StatefulWidget {
-  BrandSelectionPage({Key key}) : super(key: key);
+  BrandSelectionPage({Key? key}) : super(key: key);
 
   @override
   _BrandSelectionPageState createState() => _BrandSelectionPageState();
@@ -18,7 +18,7 @@ class BrandSelectionPage extends StatefulWidget {
 class _BrandSelectionPageState extends State<BrandSelectionPage> {
   BrandController brandController = Get.put(BrandController());
 
-  BrandData _selectedBrand;
+  BrandData? _selectedBrand;
 
   Widget gridViewSelection() {
     return brandController.brandDetails.isNotEmpty
@@ -33,7 +33,8 @@ class _BrandSelectionPageState extends State<BrandSelectionPage> {
                 onTap: () {
                   setState(() {
                     _selectedBrand = brandData;
-                    SharedPref().saveBrandSelection(_selectedBrand.id);
+                    SharedPref().saveBrandSelection(
+                        _selectedBrand?.id == null ? 0 : _selectedBrand!.id!);
                     Get.to(() => ModelSelectionPage());
                   });
                 },
@@ -123,7 +124,9 @@ class BrandGridItem extends StatelessWidget {
                   )
                 : Container(),
             Image.network(
-              _brandDetail.brandIconUrl,
+              _brandDetail.brandIconUrl != null
+                  ? _brandDetail.brandIconUrl!
+                  : "",
               height: 40,
               errorBuilder: (context, error, stackTrace) {
                 print(error); //do something
@@ -134,7 +137,7 @@ class BrandGridItem extends StatelessWidget {
                 );
               },
               loadingBuilder: (BuildContext context, Widget child,
-                  ImageChunkEvent loadingProgress) {
+                  ImageChunkEvent? loadingProgress) {
                 if (loadingProgress == null) return child;
                 return Center(
                   child: CircularProgressIndicator(),
@@ -145,7 +148,7 @@ class BrandGridItem extends StatelessWidget {
               height: 5.0,
             ),
             Text(
-              _brandDetail.brandName,
+              "${_brandDetail.brandName}",
               style: TextStyle(
                 color: AppColors.primaryDark,
                 fontSize: 16,
