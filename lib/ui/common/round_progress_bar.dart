@@ -15,14 +15,14 @@ class _ProgressBarState extends State<RoundProgressBar> {
       child: Center(
         child: Column(
           children: [
-            CircularProgressIndicator(color: AppColors.card1),
+            CircularProgressIndicator(color: AppColors.secondary),
             Expanded(
               child: Center(
                 child: Text("Loading..!",
                     style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
-                        color: AppColors.card1)),
+                        color: AppColors.secondary)),
               ),
             ),
           ],

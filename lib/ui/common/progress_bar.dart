@@ -22,7 +22,7 @@ class _ProgressBarState extends State<ProgressBar> {
                     style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
-                        color: AppColors.card1)),
+                        color: AppColors.secondary)),
               ),
             ),
           ],

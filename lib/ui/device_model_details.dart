@@ -5,11 +5,13 @@ import 'package:devicepe_client/ui/common/progress_bar.dart';
 import 'package:devicepe_client/ui/device_details/device_slider.dart';
 import 'package:devicepe_client/ui/device_details/specification_list_view.dart';
 import 'package:devicepe_client/ui/exact_value/check_list.dart';
+import 'package:devicepe_client/ui/exact_value/power_status.dart';
 import 'package:devicepe_client/utils/colors.dart';
 import 'package:devicepe_client/utils/sahred_pref.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_card_swipper/flutter_card_swiper.dart';
 import 'package:get/get.dart';
+import 'package:marquee/marquee.dart';
 
 class DeviceModelDetails extends StatefulWidget {
   DeviceModelDetails({Key? key}) : super(key: key);
@@ -42,41 +44,46 @@ class _DeviceModelDetailsState extends State<DeviceModelDetails> {
         crossAxisCount: 3,
         childAspectRatio: 1.8,
         padding: EdgeInsets.all(5.0),
-        crossAxisSpacing: 10,
-        mainAxisSpacing: 10,
+        crossAxisSpacing: 5,
+        mainAxisSpacing: 5,
         children: variantController.variantDetails
             .map(
               (data) => GestureDetector(
                   child: Container(
                     alignment: Alignment.center,
-                    margin: EdgeInsets.all(10.0),
+                    margin: EdgeInsets.all(1.0),
                     padding: EdgeInsets.all(5.0),
                     decoration: BoxDecoration(
                         color: data.varientName ==
                                 variantController
                                     .selectedVariantData.value.varientName
-                            ? AppColors.card1.withOpacity(0.7)
+                            ? AppColors.whiteSubText.withOpacity(1)
                             : Colors.black12,
                         border: Border.all(
+                          width: 2,
                           color: data.varientName ==
                                   variantController
                                       .selectedVariantData.value.varientName
-                              ? AppColors.card1.withGreen(10)
+                              ? AppColors.secondary
                               : AppColors.background,
                         ),
                         borderRadius: BorderRadius.all(Radius.circular(5))),
-                    child: Text("${data.varientName}",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            color: data.varientName ==
-                                    variantController
-                                        .selectedVariantData.value.varientName
-                                ? AppColors.whiteText
-                                : Colors.black54),
-                        textAlign: TextAlign.center),
+                    child: Text(
+                      "${data.varientName}",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          color: data.varientName ==
+                                  variantController
+                                      .selectedVariantData.value.varientName
+                              ? Colors.black87
+                              : Colors.black54),
+                      textAlign: TextAlign.center,
+                    ),
                   ),
                   onTap: () {
                     variantController.selectedVariantData.value = data;
+                    SharedPref()
+                        .saveVariantSelection(data.id == null ? 0 : data.id!);
                     SharedPref().saveInt(
                         SharedPref.VARIANT_ID, data.id == null ? 0 : data.id!);
                     SharedPref().saveDouble(SharedPref.BASE_PRICE,
@@ -235,7 +242,7 @@ class _DeviceModelDetailsState extends State<DeviceModelDetails> {
                           width: Get.width / 2,
                           child: TextButton(
                             onPressed: () {
-                              Get.to(() => PowerStateSelection());
+                              Get.to(() => MobilePowerStatus());
                             },
                             child: Text(
                               "Get Exact Value",

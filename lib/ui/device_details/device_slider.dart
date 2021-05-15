@@ -30,12 +30,14 @@ class _DeviceSliderCarouselState extends State<DeviceSliderCarousel> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
+      color: AppColors.whiteText,
       child: ClipRRect(
         borderRadius: BorderRadius.all(Radius.circular(5.0)),
         child: Container(
           height: 200,
           width: Get.width,
-          color: AppColors.nutralLight,
+          color: AppColors.whiteText,
           child: new Swiper(
             autoplay: true,
             loop: true,

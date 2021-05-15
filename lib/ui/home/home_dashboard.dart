@@ -43,7 +43,7 @@ class _HomeDashBoardState extends State<HomeDashBoard> {
                               decoration: new BoxDecoration(
                                 gradient: new LinearGradient(
                                   colors: [
-                                    AppColors.card1,
+                                    AppColors.secondary,
                                     AppColors.primaryLight,
                                   ],
                                 ),

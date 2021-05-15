@@ -1,4 +1,5 @@
 import 'dart:collection';
+import 'package:devicepe_client/common/show_full_image.dart';
 import 'package:devicepe_client/repositories/network/controllers/check_list_controller.dart';
 import 'package:devicepe_client/repositories/network/models/check_list_detail_response.dart';
 import 'package:devicepe_client/ui/common/progress_bar.dart';
@@ -235,7 +236,11 @@ class _PowerStateSelectionState extends State<PowerStateSelection> {
     return Container(
       //height: h,
       child: GridView.count(
-        childAspectRatio: 2.5,
+        childAspectRatio: (checkListData.options?.isNotEmpty == true &&
+                checkListData.options?[0].iconUrl != null &&
+                (checkListData.options?[0].iconUrl?.isBlank == false))
+            ? 1
+            : 2.5,
         shrinkWrap: true,
         crossAxisCount:
             MediaQuery.of(context).orientation == Orientation.portrait ? 2 : 3,
@@ -282,7 +287,7 @@ class _PowerStateSelectionState extends State<PowerStateSelection> {
 class OptionItem extends StatelessWidget {
   final Option _selectionItem;
   final bool _isSelected;
-
+  var showImage = true.obs;
   OptionItem(this._selectionItem, this._isSelected);
   @override
   Widget build(BuildContext context) {
@@ -291,6 +296,7 @@ class OptionItem extends StatelessWidget {
       child: Container(
         decoration: new BoxDecoration(
           border: Border.all(
+              width: 1,
               color: _isSelected ? AppColors.primaryLight : Colors.transparent),
           borderRadius: BorderRadius.circular(5),
           boxShadow: [
@@ -302,33 +308,102 @@ class OptionItem extends StatelessWidget {
             ),
           ],
           gradient: new LinearGradient(
-            colors: _isSelected
-                ? [
-                    AppColors.nutralLight,
-                    AppColors.nutralLight,
-                  ]
-                : [
-                    AppColors.whiteText,
-                    AppColors.whiteText,
-                  ],
+            colors: [
+              AppColors.whiteText,
+              AppColors.whiteText,
+            ],
           ),
         ),
         margin: EdgeInsets.fromLTRB(15.0, 10, 15, 10),
         padding: EdgeInsets.all(2.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+        child: Stack(
+          alignment: Alignment.topCenter,
+          fit: StackFit.expand,
           children: [
-            SizedBox(
-              width: 5.0,
-            ),
-            Text(
-              "${_selectionItem.name}",
-              style: TextStyle(
-                color: AppColors.primaryDark,
-                fontWeight: FontWeight.bold,
-                fontSize: 14,
+            _selectionItem.iconUrl != null &&
+                    _selectionItem.iconUrl.isBlank == false
+                ? Align(
+                    alignment: Alignment.topCenter,
+                    // child: GestureDetector(
+                    //   onTap: () {
+                    //     Get.dialog(ShowFullImage(_selectionItem.iconUrl!));
+                    //   },
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                      child: Image.network(
+                        "${_selectionItem.iconUrl}",
+                        fit: BoxFit.contain,
+                        errorBuilder: (context, error, stackTrace) {
+                          return Center(
+                            child: Image(
+                              image: AssetImage('assets/images/mobile.png'),
+                            ),
+                          );
+                        },
+                        loadingBuilder: (BuildContext context, Widget child,
+                            ImageChunkEvent? loadingProgress) {
+                          if (loadingProgress == null) return child;
+                          return Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        },
+                      ),
+                      //),
+                    ),
+                  )
+                : Container(),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Container(
+                height: 50,
+                width: Get.width,
+                decoration: new BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.5),
+                      spreadRadius: 1,
+                      blurRadius: 5,
+                      offset: Offset(0, 3),
+                    ),
+                  ],
+                  gradient: new LinearGradient(
+                    colors: [
+                      AppColors.whiteText,
+                      AppColors.whiteText,
+                    ],
+                  ),
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "${_selectionItem.name}",
+                      style: TextStyle(
+                        color: AppColors.primaryDark,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                ),
               ),
             ),
+            _selectionItem.iconUrl != null &&
+                    _selectionItem.iconUrl.isBlank == false
+                ? Container(
+                    alignment: Alignment.topRight,
+                    child: IconButton(
+                      icon: Icon(Icons.zoom_out_map),
+                      iconSize: 20,
+                      color: AppColors.primaryLight,
+                      splashColor: AppColors.primaryLight,
+                      onPressed: () {
+                        Get.dialog(ShowFullImage(_selectionItem.iconUrl!));
+                      },
+                    ),
+                  )
+                : Container(),
           ],
         ),
       ),
