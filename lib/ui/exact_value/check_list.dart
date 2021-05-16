@@ -399,7 +399,8 @@ class OptionItem extends StatelessWidget {
                       color: AppColors.primaryLight,
                       splashColor: AppColors.primaryLight,
                       onPressed: () {
-                        Get.dialog(ShowFullImage(_selectionItem.iconUrl!));
+                        Get.dialog(ShowFullImage(_selectionItem.iconUrl!),
+                            barrierDismissible: true);
                       },
                     ),
                   )

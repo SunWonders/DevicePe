@@ -33,15 +33,20 @@ class _DeviceSummaryPageState extends State<DeviceSummaryPage> {
     variantData.value = await VariantDataDao().retrieve();
     var singleSelection =
         await SharedPref().readString(SharedPref.SINGLE_SELECTION);
-    var singleSelectionList = singleSelection.split("---");
+    var d = singleSelection.split(",");
     var single = <Specification>[];
-    for (int i = 0; i < singleSelectionList.length; i++) {
-      single.add(Specification(
-          key: singleSelectionList[i].split("--")[1],
-          value: singleSelectionList[i + 1].split("--")[1]));
-      i++;
-    }
-    print(single);
+
+    d.forEach((element) {
+      var singleSelectionList = element.split("---");
+      for (int i = 0; i < singleSelectionList.length; i++) {
+        single.add(Specification(
+            key: singleSelectionList[i].split("--")[1],
+            value: singleSelectionList[i + 1].split("--")[1]));
+        i++;
+      }
+      print(single);
+    });
+
     var b = await SharedPref().readString(SharedPref.MULTIPLE_SELECTION);
     var c = b.split(",");
 
@@ -317,7 +322,7 @@ class _DeviceSummaryPageState extends State<DeviceSummaryPage> {
   }
 
   Widget getSpecificationDetails() {
-    var h = 200 + 75 + (variantData.value!.specifications!.length * 55).toInt();
+    var h = 200 + 75 + (variantData.value!.specifications!.length * 70).toInt();
     return ClipRRect(
       borderRadius: BorderRadius.all(Radius.circular(10.0)),
       child: Container(

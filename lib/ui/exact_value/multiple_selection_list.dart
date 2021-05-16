@@ -47,6 +47,7 @@ class _MultipleSelectionPageState extends State<MultipleSelectionPage> {
 
   Future<void> calculatePrice() async {
     var variantData = await VariantDataDao().retrieve();
+    isBoxOrBillAvailable = false;
     if (variantData != null) {
       price.value -= (variantData.boxPrice! +
           variantData.billPrice! +

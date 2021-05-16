@@ -43,7 +43,7 @@ class _SpecificationListViewState extends State<SpecificationListView> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Container(
-                      width: 120,
+                      width: 130,
                       padding: const EdgeInsets.all(5),
                       alignment: Alignment.centerLeft,
                       child: Text(
@@ -56,7 +56,7 @@ class _SpecificationListViewState extends State<SpecificationListView> {
                       ),
                     ),
                     Container(
-                        width: 200,
+                        width: 190,
                         alignment: Alignment.centerLeft,
                         child: Text("$value")),
                   ],
