@@ -259,7 +259,7 @@ class _DeviceSummaryPageState extends State<DeviceSummaryPage> {
   }
 
   Widget getCheckListDetails() {
-    var h = 65 + (checkListData.value.length * 70).toInt();
+    var h = 80 + (checkListData.value.length * 75).toInt();
     if (checkListData.value.isEmpty) {
       h += 60;
     }
