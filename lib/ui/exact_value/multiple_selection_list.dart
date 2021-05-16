@@ -17,7 +17,7 @@ class MultipleSelectionPage extends StatefulWidget {
 class _MultipleSelectionPageState extends State<MultipleSelectionPage> {
   var price = 0.0.obs;
 
-  final List<SelectionItem> _icons = [
+  List<SelectionItem> _icons = [
     SelectionItem(
       "https://firebasestorage.googleapis.com/v0/b/yabaze-profile.appspot.com/o/icons%2Fbox-open.png?alt=media&token=f054c5fa-bc94-408e-8760-cbf4c26c629c",
       "Box",
@@ -35,12 +35,30 @@ class _MultipleSelectionPageState extends State<MultipleSelectionPage> {
   ];
 
   List<SelectionItem> _selectedIcons = [];
-
   initState() {
     super.initState();
-    _selectedIcons.add(_icons[0]);
-    _selectedIcons.add(_icons[1]);
+    addFields();
     calculatePrice();
+  }
+
+  var showGridView = false.obs;
+
+  addFields() async {
+    var singleSelection =
+        await SharedPref().readString(SharedPref.SINGLE_SELECTION);
+    _selectedIcons.add(_icons[1]);
+
+    _selectedIcons.add(_icons[0]);
+
+    _icons.removeWhere((element) =>
+        singleSelection.contains("Faulty Display") &&
+        element.name.contains("Valid Bill"));
+
+    _selectedIcons.removeWhere((element) =>
+        singleSelection.contains("Having Issue") &&
+        element.name.contains("Valid Bill"));
+
+    showGridView.value = true;
   }
 
   var isBoxOrBillAvailable = false;
@@ -157,9 +175,11 @@ class _MultipleSelectionPageState extends State<MultipleSelectionPage> {
               ),
             ),
 
-            Flexible(
-              child: gridViewSelection(),
-            ),
+            Obx(() => Flexible(
+                  child: showGridView.value == true
+                      ? gridViewSelection()
+                      : Container(),
+                )),
             Align(
               alignment: Alignment.bottomCenter,
               child: Container(

@@ -13,7 +13,7 @@ class DeviceConditionPage extends StatefulWidget {
 }
 
 class _DeviceConditionPageState extends State<DeviceConditionPage> {
-  final List<SelectionItem> _icons = [
+  List<SelectionItem> _icons = [
     SelectionItem(
         "https://firebasestorage.googleapis.com/v0/b/test-ec84e.appspot.com/o/good.png?alt=media&token=bf3697e5-dd3d-40df-96e9-c93a5c147f2b",
         "Excellent",
@@ -37,6 +37,35 @@ class _DeviceConditionPageState extends State<DeviceConditionPage> {
   ];
 
   SelectionItem? _selectedIcons;
+
+  initState() {
+    super.initState();
+    addFields();
+  }
+
+  var showGridView = false.obs;
+
+  addFields() async {
+    var singleSelection =
+        await SharedPref().readString(SharedPref.SINGLE_SELECTION);
+    var showExcellent = true;
+    var showGood = true;
+    if (!singleSelection.contains("Below 3 Months")) {
+      showExcellent = false;
+    }
+
+    if (singleSelection.contains("Faulty Display") ||
+        singleSelection.contains("Having Issue")) {
+      showExcellent = false;
+      showGood = false;
+    }
+
+    _icons.removeWhere(
+        (value) => value.name == "Excellent" && showExcellent == false);
+    _icons.removeWhere((value) => value.name == "Good" && showGood == false);
+
+    showGridView.value = true;
+  }
 
   Widget gridViewSelection() {
     return GridView.count(
@@ -112,9 +141,9 @@ class _DeviceConditionPageState extends State<DeviceConditionPage> {
                 ),
               ),
             ),
-            Flexible(
-              child: listViewSelection(),
-            ),
+            Obx(() => Flexible(
+                  child: showGridView.value ? listViewSelection() : Container(),
+                )),
             Align(
               alignment: Alignment.bottomCenter,
               child: Container(
