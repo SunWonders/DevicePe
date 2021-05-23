@@ -1,8 +1,5 @@
 import 'dart:collection';
-import 'dart:convert';
 import 'dart:ui';
-
-import 'package:devicepe_client/repositories/network/models/check_list_detail_response.dart';
 import 'package:devicepe_client/utils/colors.dart';
 import 'package:flutter/material.dart';
 

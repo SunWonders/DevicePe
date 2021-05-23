@@ -15,9 +15,10 @@ class _MobilePowerStatusState extends State<MobilePowerStatus> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.whiteText,
       appBar: AppBar(
         iconTheme: IconThemeData(color: AppColors.primaryLight),
-        backgroundColor: AppColors.nutralLight,
+        backgroundColor: AppColors.whiteText,
         title: Text(
           "About Your Device",
           style: TextStyle(color: AppColors.primaryLight),
@@ -31,34 +32,33 @@ class _MobilePowerStatusState extends State<MobilePowerStatus> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
 
             children: [
-              SizedBox(height: 30),
+              SizedBox(height: 20),
               Container(
                 padding: EdgeInsets.all(10.0),
                 child: Text(
                   "Does Your Mobile Switch on Successfully?",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                   textAlign: TextAlign.center,
                 ),
               ),
               SizedBox(height: 20),
               Text(
                 "Note: Mobile must be able to make & Receive call \n (If applicable )",
-                style: TextStyle(fontSize: 14),
+                style: TextStyle(fontSize: 16),
                 textAlign: TextAlign.center,
               ),
               SizedBox(height: 10),
               Text(
                 "IMEI / TAC should be authentic.",
-                style: TextStyle(fontSize: 14),
+                style: TextStyle(fontSize: 16),
                 textAlign: TextAlign.center,
               ),
               SizedBox(height: 10),
               Text(
                 "Should not have Brand/ iCloud/ Password lock.",
-                style: TextStyle(fontSize: 14),
+                style: TextStyle(fontSize: 16),
                 textAlign: TextAlign.center,
-              ),
-              Image(
+              ), Image(
                 image: AssetImage('assets/images/device_health.png'),
               ),
             ],

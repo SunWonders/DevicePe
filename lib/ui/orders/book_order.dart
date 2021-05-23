@@ -1,5 +1,6 @@
 import 'package:devicepe_client/repositories/network/controllers/save_order_controller.dart';
 import 'package:devicepe_client/ui/agreement/aggreement.dart';
+import 'package:devicepe_client/ui/orders/order_success.dart';
 import 'package:devicepe_client/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -32,7 +33,7 @@ class _BookOrderState extends State<BookOrder> {
       backgroundColor: AppColors.whiteText,
       appBar: AppBar(
         iconTheme: IconThemeData(color: AppColors.primaryLight),
-        backgroundColor: AppColors.nutralLight,
+        backgroundColor: AppColors.whiteText,
         title: Text(
           "Book Order",
           style: TextStyle(color: AppColors.primaryLight),

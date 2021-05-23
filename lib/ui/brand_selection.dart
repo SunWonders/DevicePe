@@ -48,9 +48,10 @@ class _BrandSelectionPageState extends State<BrandSelectionPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.whiteText,
       appBar: AppBar(
         iconTheme: IconThemeData(color: AppColors.primaryLight),
-        backgroundColor: AppColors.nutralLight,
+        backgroundColor: AppColors.whiteText,
         title: Text(
           "Select Brand",
           style: TextStyle(color: AppColors.primaryLight),
@@ -78,21 +79,23 @@ class BrandGridItem extends StatelessWidget {
       child: Container(
         decoration: new BoxDecoration(
           border: Border.all(
-              color: _isSelected ? AppColors.primaryLight : Colors.transparent),
+            color: _isSelected ? AppColors.whiteText : Colors.transparent,
+            width: _isSelected ? 2.0 : 1.0,
+          ),
           borderRadius: BorderRadius.circular(15),
           boxShadow: [
             BoxShadow(
-              color: Colors.grey.withOpacity(0.5),
+              color: Colors.grey.withOpacity(0.3),
               spreadRadius: 1,
-              blurRadius: 5,
-              offset: Offset(0, 3),
+              blurRadius: 2,
+              offset: Offset(0, 0),
             ),
           ],
           gradient: new LinearGradient(
             colors: _isSelected
                 ? [
-                    AppColors.nutralLight,
-                    AppColors.nutralLight,
+                    AppColors.bgColor,
+                    AppColors.bgColor,
                   ]
                 : [
                     AppColors.whiteText,

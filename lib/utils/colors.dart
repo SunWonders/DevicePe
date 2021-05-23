@@ -13,7 +13,8 @@ extension AppColors on ColorScheme {
   //static const primaryLight = Color.fromARGB(255, 250, 103, 70);
   static const secondary = Color.fromARGB(255, 173, 228, 82);
   //static const secondary = Color.fromARGB(255, 113, 159, 255);
-  static const nutralLight = Color.fromARGB(255, 236, 227, 246);
+  // static const nutralLight = Color.fromARGB(255, 236, 227, 246);
+  static const nutralLight = Color.fromARGB(255, 239, 239, 249);
   //static const nutralLight = Color.fromARGB(255, 250, 240, 221);
 
   static const whiteText = Color.fromARGB(255, 254, 254, 254);
@@ -39,4 +40,9 @@ extension AppColors on ColorScheme {
   static const card4_end = Color.fromARGB(255, 48, 86, 235);
 
   static const borderShadow = Color.fromARGB(170, 230, 232, 242);
+
+
+  static const bgColor = Color.fromARGB(255, 239, 239, 249);
+  static const darkBlue = Color.fromARGB(255, 25, 25, 49);
+
 }

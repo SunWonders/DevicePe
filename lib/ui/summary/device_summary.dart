@@ -118,10 +118,10 @@ class _DeviceSummaryPageState extends State<DeviceSummaryPage> {
     return //Obx(
         //() =>
         Scaffold(
-      backgroundColor: AppColors.nutralLight,
+      backgroundColor: AppColors.whiteText,
       appBar: AppBar(
         iconTheme: IconThemeData(color: AppColors.primaryLight),
-        backgroundColor: AppColors.nutralLight,
+        backgroundColor: AppColors.whiteText,
         title: Text(
           "Device Report",
           style: TextStyle(color: AppColors.primaryLight),
@@ -132,7 +132,7 @@ class _DeviceSummaryPageState extends State<DeviceSummaryPage> {
             ? ProgressBar()
             : SingleChildScrollView(
                 child: Container(
-                  color: AppColors.shadowOne.withOpacity(0.1),
+                  color: AppColors.whiteText,
                   child: Column(
                     children: [
                       getMobileDetail(),
@@ -186,10 +186,10 @@ class _DeviceSummaryPageState extends State<DeviceSummaryPage> {
           borderRadius: BorderRadius.circular(15),
           boxShadow: [
             BoxShadow(
-              color: Colors.grey.withOpacity(0.5),
-              spreadRadius: 1,
+              color: AppColors.bgColor,
+              spreadRadius: 2,
               blurRadius: 5,
-              offset: Offset(0, 3),
+              offset: Offset(0, 0),
             ),
           ],
           gradient: new LinearGradient(
@@ -259,7 +259,7 @@ class _DeviceSummaryPageState extends State<DeviceSummaryPage> {
   }
 
   Widget getCheckListDetails() {
-    var h = 65 + (checkListData.value.length * 70).toInt();
+    var h = 65 + (checkListData.value.length * 75).toInt();
     if (checkListData.value.isEmpty) {
       h += 60;
     }
@@ -273,10 +273,10 @@ class _DeviceSummaryPageState extends State<DeviceSummaryPage> {
           borderRadius: BorderRadius.circular(15),
           boxShadow: [
             BoxShadow(
-              color: Colors.grey.withOpacity(0.5),
-              spreadRadius: 1,
+              color: AppColors.bgColor,
+              spreadRadius: 2,
               blurRadius: 5,
-              offset: Offset(0, 3),
+              offset: Offset(0, 0),
             ),
           ],
           gradient: new LinearGradient(
@@ -333,10 +333,10 @@ class _DeviceSummaryPageState extends State<DeviceSummaryPage> {
           borderRadius: BorderRadius.circular(15),
           boxShadow: [
             BoxShadow(
-              color: Colors.grey.withOpacity(0.5),
-              spreadRadius: 1,
+              color: AppColors.bgColor,
+              spreadRadius: 2,
               blurRadius: 5,
-              offset: Offset(0, 3),
+              offset: Offset(0, 0),
             ),
           ],
           gradient: new LinearGradient(
@@ -365,7 +365,7 @@ class _DeviceSummaryPageState extends State<DeviceSummaryPage> {
             ),
             Container(
               margin: const EdgeInsets.fromLTRB(10, 0, 0, 0),
-              color: AppColors.background,
+              color: AppColors.whiteText,
               height: 1,
             ),
             if (variantData.value != null &&

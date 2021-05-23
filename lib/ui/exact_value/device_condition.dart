@@ -107,9 +107,10 @@ class _DeviceConditionPageState extends State<DeviceConditionPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.whiteText,
       appBar: AppBar(
         iconTheme: IconThemeData(color: AppColors.primaryLight),
-        backgroundColor: AppColors.nutralLight,
+        backgroundColor: AppColors.whiteText,
         title: Text(
           "Device Condition",
           style: TextStyle(color: AppColors.primaryLight),
@@ -134,7 +135,7 @@ class _DeviceConditionPageState extends State<DeviceConditionPage> {
               padding: EdgeInsets.all(10.0),
               alignment: Alignment.centerLeft,
               child: Text(
-                "Please Select Any one of the following",
+                "Please Select Any one of the following Condition",
                 style: TextStyle(
                   fontSize: 14.0,
                   color: AppColors.blackText.withOpacity(0.75),
@@ -194,99 +195,98 @@ class SingleGridItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.all(Radius.circular(10.0)),
-      child: Container(
-        margin: EdgeInsets.all(5.0),
-        decoration: new BoxDecoration(
-          gradient: new LinearGradient(
-            colors: [
-              AppColors.whiteSubText,
-              AppColors.whiteSubText,
-
-              /// _isSelected
-              //  ? AppColors.secondary.withOpacity(0.5)
-              //: AppColors.nutralLight,
+    return Container(
+      margin: EdgeInsets.all(5.0),
+      child: ClipRRect(
+        borderRadius: BorderRadius.all(Radius.circular(15.0)),
+        child: Container(
+          decoration: new BoxDecoration(
+            gradient: new LinearGradient(
+              colors: [
+                AppColors.whiteSubText,
+                AppColors.whiteSubText,
+              ],
+            ),
+          ),
+          padding: EdgeInsets.all(1),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Container(
+                padding: EdgeInsets.all(5.0),
+                width: 100,
+                alignment: Alignment.center,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      height: 10.0,
+                    ),
+                    Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        Container(
+                          height: 100,
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                                color: !_isSelected
+                                    ? AppColors.whiteText
+                                    : AppColors.secondary),
+                            color: !_isSelected
+                                ? AppColors.whiteText
+                                : AppColors.secondary.withOpacity(0.2),
+                            shape: BoxShape.circle,
+                          ),
+                        ),
+                        Image.network(
+                          _selectionItem.imageUrl,
+                          height: 48,
+                          fit: BoxFit.fitWidth,
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 10.0,
+                    ),
+                    Text(
+                      _selectionItem.name,
+                      style: TextStyle(
+                        color: _isSelected
+                            ? AppColors.primaryDark
+                            : AppColors.primaryLight,
+                        fontWeight: FontWeight.w700,
+                        fontSize: 16,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 5.0,
+              ),
+              Expanded(
+                child: Container(
+                  decoration: new BoxDecoration(
+                    gradient: new LinearGradient(
+                      colors: [
+                        AppColors.whiteSubText,
+                        _isSelected
+                            ? AppColors.secondary.withOpacity(0.5)
+                            : AppColors.nutralLight,
+                      ],
+                    ),
+                  ),
+                  height: 4 * 40.toDouble(),
+                  child: DescriptionListView(
+                      _selectionItem.description != null
+                          ? _selectionItem.description!.split(",")
+                          : [],
+                      _isSelected),
+                ),
+              )
             ],
           ),
-        ),
-        padding: EdgeInsets.all(5.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Container(
-              width: 100,
-              alignment: Alignment.center,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    height: 10.0,
-                  ),
-                  Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      Container(
-                        height: 100,
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                              color: !_isSelected
-                                  ? AppColors.whiteText
-                                  : AppColors.secondary),
-                          color: !_isSelected
-                              ? AppColors.whiteText
-                              : AppColors.secondary.withOpacity(0.2),
-                          shape: BoxShape.circle,
-                        ),
-                      ),
-                      Image.network(
-                        _selectionItem.imageUrl,
-                        height: 48,
-                        fit: BoxFit.fitWidth,
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 10.0,
-                  ),
-                  Text(
-                    _selectionItem.name,
-                    style: TextStyle(
-                      color: _isSelected
-                          ? AppColors.primaryDark
-                          : AppColors.primaryLight,
-                      fontWeight: FontWeight.w700,
-                      fontSize: 16,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(
-              height: 5.0,
-            ),
-            Expanded(
-              child: Container(
-                decoration: new BoxDecoration(
-                  gradient: new LinearGradient(
-                    colors: [
-                      AppColors.whiteSubText,
-                      _isSelected
-                          ? AppColors.secondary.withOpacity(0.5)
-                          : AppColors.nutralLight,
-                    ],
-                  ),
-                ),
-                height: 4 * 40.toDouble(),
-                child: DescriptionListView(
-                    _selectionItem.description != null
-                        ? _selectionItem.description!.split(",")
-                        : [],
-                    _isSelected),
-              ),
-            )
-          ],
         ),
       ),
     );

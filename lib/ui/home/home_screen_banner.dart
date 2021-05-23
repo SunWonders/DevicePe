@@ -1,4 +1,4 @@
-import 'package:devicepe_client/utils/colors.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_card_swipper/flutter_card_swiper.dart';
 import 'package:get/get.dart';
@@ -13,36 +13,14 @@ class HomeScreenBanner extends StatefulWidget {
 class _HomeScreenBannerState extends State<HomeScreenBanner> {
   @override
   Widget build(BuildContext context) {
-    // return CarouselSlider(
-    //   options: CarouselOptions(
-    //     autoPlay: true,
-    //     height: 200,
-    //     aspectRatio: 2.0,
-    //     enlargeCenterPage: true,
-    //   ),
-    //   items: imageSliders,
-    // );
-    /*
-    return new Swiper(
-      itemBuilder: (BuildContext context, int index) {
-        return new Image.network(
-          "http://via.placeholder.com/350x150",
-          fit: BoxFit.fill,
-        );
-      },
-      itemHeight: 200,
-      autoplay: true,
-      loop: true,
-      itemCount: imageSliders.length,
-      pagination: new SwiperPagination(),
-      control: new SwiperControl(),
-    );
-    */
+
     return Container(
       child: ClipRRect(
         borderRadius: BorderRadius.all(Radius.circular(5.0)),
         child: Container(
-          margin: EdgeInsets.fromLTRB(0.0, 10.0, 0, 10.0),
+          //scolor: AppColors.bgColor,
+          //margin: EdgeInsets.fromLTRB(0.0, 10.0, 0, 10.0),
+          padding: EdgeInsets.fromLTRB(0,10,0,10),
           height: 180,
           width: Get.width,
           child: new Swiper(
@@ -92,47 +70,3 @@ final List<String> imgList = [
   'https://images.unsplash.com/photo-1508704019882-f9cf40e475b4?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=8c6e5e3aba713b17aa1fe71ab4f0ae5b&auto=format&fit=crop&w=1352&q=80',
   'https://images.unsplash.com/photo-1519985176271-adb1088fa94c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=a0c8d632e977f94e5d312d9893258f59&auto=format&fit=crop&w=1355&q=80'
 ];
-
-final List<Widget> imageSliders = imgList
-    .map(
-      (item) => Container(
-        child: Container(
-          margin: EdgeInsets.all(5.0),
-          child: ClipRRect(
-              borderRadius: BorderRadius.all(Radius.circular(5.0)),
-              child: Stack(
-                children: <Widget>[
-                  Image.network(item, fit: BoxFit.cover, width: 1000.0),
-                  Positioned(
-                    bottom: 0.0,
-                    left: 0.0,
-                    right: 0.0,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [
-                            Color.fromARGB(200, 0, 0, 0),
-                            Color.fromARGB(0, 0, 0, 0)
-                          ],
-                          begin: Alignment.bottomCenter,
-                          end: Alignment.topCenter,
-                        ),
-                      ),
-                      padding: EdgeInsets.symmetric(
-                          vertical: 10.0, horizontal: 20.0),
-                      child: Text(
-                        'No. ${imgList.indexOf(item)} image',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20.0,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              )),
-        ),
-      ),
-    )
-    .toList();

@@ -4,14 +4,11 @@ import 'package:devicepe_client/ui/agreement/aggreement.dart';
 import 'package:devicepe_client/ui/common/progress_bar.dart';
 import 'package:devicepe_client/ui/device_details/device_slider.dart';
 import 'package:devicepe_client/ui/device_details/specification_list_view.dart';
-import 'package:devicepe_client/ui/exact_value/check_list.dart';
 import 'package:devicepe_client/ui/exact_value/power_status.dart';
 import 'package:devicepe_client/utils/colors.dart';
 import 'package:devicepe_client/utils/sahred_pref.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_card_swipper/flutter_card_swiper.dart';
 import 'package:get/get.dart';
-import 'package:marquee/marquee.dart';
 
 class DeviceModelDetails extends StatefulWidget {
   DeviceModelDetails({Key? key}) : super(key: key);
@@ -39,6 +36,7 @@ class _DeviceModelDetailsState extends State<DeviceModelDetails> {
     // var h = (variantController.variantDetails.length / 3).ceilToDouble() * 80;
 
     return Container(
+      color: AppColors.whiteText,
       child: GridView.count(
         shrinkWrap: true,
         crossAxisCount: 3,
@@ -58,14 +56,14 @@ class _DeviceModelDetailsState extends State<DeviceModelDetails> {
                                 variantController
                                     .selectedVariantData.value.varientName
                             ? AppColors.whiteSubText.withOpacity(1)
-                            : Colors.black12,
+                            : AppColors.whiteText,
                         border: Border.all(
                           width: 2,
                           color: data.varientName ==
                                   variantController
                                       .selectedVariantData.value.varientName
                               ? AppColors.secondary
-                              : AppColors.background,
+                              : AppColors.bgColor,
                         ),
                         borderRadius: BorderRadius.all(Radius.circular(5))),
                     child: Text(
@@ -102,10 +100,10 @@ class _DeviceModelDetailsState extends State<DeviceModelDetails> {
     return Obx(
       () => Scaffold(
         backgroundColor: //AppColors.whiteText,
-            Colors.white.withOpacity(0.95),
+            Colors.white.withOpacity(1),
         appBar: AppBar(
           iconTheme: IconThemeData(color: AppColors.primaryLight),
-          backgroundColor: AppColors.nutralLight,
+          backgroundColor: AppColors.whiteText,
           title: Text(
             variantController.isLoading.value
                 ? "Device Details"
@@ -126,33 +124,34 @@ class _DeviceModelDetailsState extends State<DeviceModelDetails> {
                       DeviceSliderCarousel(
                           imgList: variantController
                               .selectedVariantData.value.varientIconUrl),
-
                       Container(
+                        decoration: BoxDecoration(color: AppColors.whiteText),
                         padding: EdgeInsets.all(10),
                         alignment: Alignment.centerLeft,
                         child: Text(
-                          "Select Varient",
+                          "Select Variant",
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
-                            color: AppColors.blackText,
+                            color: Colors.black,
                             fontSize: 16,
                           ),
                         ),
                       ),
                       Container(
                         margin: const EdgeInsets.fromLTRB(10, 0, 0, 0),
-                        color: AppColors.background,
+                        color: AppColors.bgColor,
                         height: 1,
                       ),
                       selectVarientView(),
                       Container(
                         margin: const EdgeInsets.fromLTRB(10, 0, 0, 0),
-                        color: AppColors.background,
+                        color: AppColors.whiteText,
                         height: 1,
                       ),
                       Container(
                         padding: EdgeInsets.all(10),
                         alignment: Alignment.centerLeft,
+                        decoration: BoxDecoration(color: AppColors.whiteText),
                         child: Text(
                           "Specification",
                           style: TextStyle(
@@ -164,7 +163,7 @@ class _DeviceModelDetailsState extends State<DeviceModelDetails> {
                       ),
                       Container(
                         margin: const EdgeInsets.fromLTRB(10, 0, 0, 0),
-                        color: AppColors.background,
+                        color: AppColors.bgColor,
                         height: 1,
                       ),
                       if (variantController.selectedVariantData.value != null &&
@@ -180,25 +179,6 @@ class _DeviceModelDetailsState extends State<DeviceModelDetails> {
                           margin: EdgeInsets.all(20.0),
                           child: Text("Specification Details Not Available"),
                         ),
-
-                      // Container(
-                      //   height: 200,
-                      //   width: Get.width,
-                      //   color: AppColors.primaryLight,
-                      //   child: new Swiper(
-                      //     autoplay: true,
-                      //     loop: true,
-                      //     itemBuilder: (BuildContext context, int index) {
-                      //       return new Image.network(
-                      //         "https://static.toiimg.com/photo/73078527.cms",
-                      //         fit: BoxFit.fill,
-                      //       );
-                      //     },
-                      //     itemCount: 1,
-                      //     viewportFraction: 0.8,
-                      //     scale: 0.9,
-                      //   ),
-                      // ),
                     ],
                   ),
                 ),

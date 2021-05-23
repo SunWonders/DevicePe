@@ -25,6 +25,8 @@ class _SpecificationListViewState extends State<SpecificationListView> {
       // : Get.width / 3 - 10,
       //
       //height: h.toDouble(),
+      decoration:
+      BoxDecoration(color: AppColors.whiteText),
       child: ListView.builder(
         shrinkWrap: true,
         padding: const EdgeInsets.fromLTRB(10, 1, 10, 1),
@@ -36,6 +38,7 @@ class _SpecificationListViewState extends State<SpecificationListView> {
             children: [
               Container(
                 margin: EdgeInsets.fromLTRB(10, 1, 10, 1),
+                color: AppColors.whiteText,
                 height: 1,
               ),
               IntrinsicHeight(
@@ -64,7 +67,7 @@ class _SpecificationListViewState extends State<SpecificationListView> {
               ),
               Container(
                 margin: const EdgeInsets.all(10),
-                color: AppColors.background,
+                color: AppColors.bgColor,
                 height: 1,
               ),
             ],

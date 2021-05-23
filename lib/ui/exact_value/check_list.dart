@@ -49,9 +49,10 @@ class _PowerStateSelectionState extends State<PowerStateSelection> {
     var isSelected = true.obs;
 
     return Scaffold(
+      backgroundColor: AppColors.whiteText,
       appBar: AppBar(
         iconTheme: IconThemeData(color: AppColors.primaryLight),
-        backgroundColor: AppColors.nutralLight,
+        backgroundColor: AppColors.whiteText,
         title: Text(
           "About Your Device",
           style: TextStyle(color: AppColors.primaryLight),
@@ -115,6 +116,22 @@ class _PowerStateSelectionState extends State<PowerStateSelection> {
                     width: Get.width / 2,
                     child: TextButton(
                       onPressed: () {
+                        if (checkListDetailResponse.isLoading.value) {
+                          Get.showSnackbar(
+                            GetBar(
+                              backgroundColor: AppColors.bgColor,
+                              titleText: Text(
+                                "Alert",
+                                style: TextStyle(
+                                  color: AppColors.primaryLight,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              messageText: Text("Please Wait..!"),
+                            ),
+                          );
+                          return;
+                        }
                         isSelected.value = true;
                         checkListDetailResponse.checkListDetails
                             .forEach((CheckListData checkListData) => {
@@ -203,6 +220,7 @@ class _PowerStateSelectionState extends State<PowerStateSelection> {
 
   List<String> single = [];
   List<String> multiple = [];
+
   calculatePrice() async {
     double basePrice = await SharedPref().readDouble(SharedPref.BASE_PRICE);
     single = [];
@@ -288,7 +306,9 @@ class OptionItem extends StatelessWidget {
   final Option _selectionItem;
   final bool _isSelected;
   var showImage = true.obs;
+
   OptionItem(this._selectionItem, this._isSelected);
+
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
@@ -296,15 +316,15 @@ class OptionItem extends StatelessWidget {
       child: Container(
         decoration: new BoxDecoration(
           border: Border.all(
-              width: 1,
-              color: _isSelected ? AppColors.primaryLight : Colors.transparent),
+              width: 2,
+              color: _isSelected ? AppColors.secondary : Colors.transparent),
           borderRadius: BorderRadius.circular(5),
           boxShadow: [
             BoxShadow(
-              color: Colors.grey.withOpacity(0.5),
+              color: Colors.grey.withOpacity(0.3),
               spreadRadius: 1,
-              blurRadius: 5,
-              offset: Offset(0, 3),
+              blurRadius: 3,
+              offset: Offset(0, 0),
             ),
           ],
           gradient: new LinearGradient(
@@ -360,10 +380,10 @@ class OptionItem extends StatelessWidget {
                 decoration: new BoxDecoration(
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.grey.withOpacity(0.5),
+                      color: Colors.transparent,
                       spreadRadius: 1,
-                      blurRadius: 5,
-                      offset: Offset(0, 3),
+                      blurRadius: 1,
+                      offset: Offset(0, 0),
                     ),
                   ],
                   gradient: new LinearGradient(
@@ -379,7 +399,9 @@ class OptionItem extends StatelessWidget {
                     Text(
                       "${_selectionItem.name}",
                       style: TextStyle(
-                        color: AppColors.primaryDark,
+                        color: _isSelected
+                            ? AppColors.secondary
+                            : AppColors.blackText,
                         fontWeight: FontWeight.bold,
                         fontSize: 14,
                       ),

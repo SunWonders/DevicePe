@@ -32,7 +32,7 @@ class _OrderSuccessDialogState extends State<OrderSuccessDialog> {
                 "Congratulations",
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: 24,
+                  fontSize: 28,
                   color: AppColors.primaryLight,
                 ),
               ),
@@ -41,9 +41,6 @@ class _OrderSuccessDialogState extends State<OrderSuccessDialog> {
             Image(
               image: AssetImage('assets/images/order_booked_success.gif'),
             ),
-            // Image.asset(
-            //   "assets/images/order_booked_success.gif",
-            // ),
             SizedBox(height: 30),
             Container(
               padding: EdgeInsets.all(10),
@@ -51,8 +48,8 @@ class _OrderSuccessDialogState extends State<OrderSuccessDialog> {
                 "Order Placed. Your Order Id Is",
                 style: TextStyle(
                   fontWeight: FontWeight.w600,
-                  fontSize: 16,
-                  color: AppColors.primaryDark,
+                  fontSize: 18,
+                  color: AppColors.blackText,
                 ),
               ),
             ),
@@ -62,7 +59,7 @@ class _OrderSuccessDialogState extends State<OrderSuccessDialog> {
                 orderId,
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: 18,
+                  fontSize: 22,
                   color: AppColors.primaryLight,
                 ),
               ),
@@ -75,8 +72,8 @@ class _OrderSuccessDialogState extends State<OrderSuccessDialog> {
                 onPressed: () {
                   launchScreen(context, home);
                 },
-                child: Icon(Icons.home, color: AppColors.primaryDark),
-                backgroundColor: AppColors.secondary),
+                child: Icon(Icons.home, color: AppColors.primaryLight),
+                backgroundColor: AppColors.whiteText),
           ],
         ),
       ),
