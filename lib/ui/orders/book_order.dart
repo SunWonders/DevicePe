@@ -1,6 +1,5 @@
 import 'package:devicepe_client/repositories/network/controllers/save_order_controller.dart';
 import 'package:devicepe_client/ui/agreement/aggreement.dart';
-import 'package:devicepe_client/ui/orders/order_success.dart';
 import 'package:devicepe_client/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -15,18 +14,11 @@ class BookOrder extends StatefulWidget {
 
 class _BookOrderState extends State<BookOrder> {
   final _formKey = GlobalKey<FormBuilderState>();
+
   OrderController orderController = Get.put(OrderController());
 
-  String _nameError = "";
-  String _emailError = "";
-  String _phoneNumberError = "";
-  String _appointmentDateError = "";
-
-  String _addressError = "";
-  String _cityError = "";
-  String _stetError = "";
-  String _pinCodeError = "";
   var genderOptions = ["Male", "Female", "Others"];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,27 +54,28 @@ class _BookOrderState extends State<BookOrder> {
                     SizedBox(height: 10),
                     FormBuilder(
                       key: _formKey,
-                      autovalidateMode: AutovalidateMode.always,
                       child: Column(
                         children: <Widget>[
                           FormBuilderTextField(
                             name: 'name',
                             decoration: InputDecoration(
                               labelText: 'Full Name',
-                              errorText: _nameError,
+                              //errorText: _nameError,
                             ),
                             validator: FormBuilderValidators.compose([
-                              FormBuilderValidators.required(context),
+                              FormBuilderValidators.required(context,
+                                  errorText: "Enter Full Name"),
                             ]),
                           ),
                           FormBuilderTextField(
                             name: 'phoneNumber',
                             decoration: InputDecoration(
                               labelText: 'Phone Number',
-                              errorText: _phoneNumberError,
+                              //errorText: _phoneNumberError,
                             ),
                             validator: FormBuilderValidators.compose([
-                              FormBuilderValidators.required(context),
+                              FormBuilderValidators.required(context,
+                                  errorText: "Enter Mobile Number"),
                               FormBuilderValidators.minLength(context, 10,
                                   errorText: "Enter Valid Mobile Number"),
                               FormBuilderValidators.maxLength(context, 10,
@@ -94,12 +87,13 @@ class _BookOrderState extends State<BookOrder> {
                             name: 'email',
                             decoration: InputDecoration(
                               labelText: 'Email',
-                              errorText: _emailError,
+                              //errorText: _emailError,
                             ),
                             validator: FormBuilderValidators.compose([
-                              FormBuilderValidators.required(context),
+                              FormBuilderValidators.required(context,
+                                  errorText: "Enter Email ID"),
                               FormBuilderValidators.email(context,
-                                  errorText: "Enter valid EmailId"),
+                                  errorText: "Enter valid Email ID"),
                             ]),
                             keyboardType: TextInputType.emailAddress,
                           ),
@@ -107,47 +101,53 @@ class _BookOrderState extends State<BookOrder> {
                             name: 'address',
                             decoration: InputDecoration(
                               labelText: 'Door/Street/Area',
-                              errorText: _addressError,
+                              //errorText: _addressError,
                             ),
                             validator: FormBuilderValidators.compose([
-                              FormBuilderValidators.required(context),
-                              FormBuilderValidators.max(context, 70),
+                              FormBuilderValidators.required(context,
+                                  errorText: "Enter Door Street Area"),
+                              FormBuilderValidators.max(context, 70,
+                                  errorText:
+                                      "More Than 70 characters not allowed"),
                             ]),
                           ),
                           FormBuilderTextField(
                             name: 'city',
                             decoration: InputDecoration(
                               labelText: 'City',
-                              errorText: _cityError,
+                              //errorText: _cityError,
                             ),
                             validator: FormBuilderValidators.compose([
-                              FormBuilderValidators.required(context),
+                              FormBuilderValidators.required(context,
+                                  errorText: "Enter City"),
                             ]),
                           ),
                           FormBuilderTextField(
                             name: 'state',
                             decoration: InputDecoration(
                               labelText: 'State',
-                              errorText: _stetError,
+                              //errorText: _stetError,
                             ),
                             validator: FormBuilderValidators.compose([
-                              FormBuilderValidators.required(context),
+                              FormBuilderValidators.required(context,
+                                  errorText: "Enter State"),
                             ]),
                           ),
                           FormBuilderTextField(
                             name: 'pinCode',
                             decoration: InputDecoration(
                               labelText: 'Pin Code',
-                              errorText: _pinCodeError,
+                              //errorText: _pinCodeError,
                             ),
                             validator: FormBuilderValidators.compose([
-                              FormBuilderValidators.required(context),
+                              FormBuilderValidators.required(context,
+                                  errorText: "Enter Pin Code"),
                               FormBuilderValidators.numeric(context,
                                   errorText: "Enter number"),
                               FormBuilderValidators.minLength(context, 6,
                                   errorText: "Enter Valid Pin Code"),
-                             // FormBuilderValidators.maxLength(context, 6,
-                               //   errorText: "Enter Valid Pin Code"),
+                              FormBuilderValidators.maxLength(context, 6,
+                                  errorText: "Enter Valid Pin Code"),
                             ]),
                             keyboardType: TextInputType.number,
                           ),
@@ -157,7 +157,7 @@ class _BookOrderState extends State<BookOrder> {
                             inputType: InputType.both,
                             decoration: InputDecoration(
                               labelText: 'Appointment Date Time',
-                              errorText: _appointmentDateError,
+                              //errorText: _appointmentDateError,
                             ),
                             initialDate: DateTime.now().add(Duration(days: 1)),
                             firstDate: DateTime.now(),
@@ -168,17 +168,17 @@ class _BookOrderState extends State<BookOrder> {
                             decoration: InputDecoration(
                               labelText: 'Comments',
                             ),
-                            onChanged: (value) {},
+                            //onChanged: (value) {},
                             // valueTransformer: (text) => num.tryParse(text),
                             validator: FormBuilderValidators.compose([
-                              FormBuilderValidators.required(context),
+                              FormBuilderValidators.required(context,
+                                  errorText: "Enter Comments"),
                               FormBuilderValidators.max(context, 70),
                             ]),
                           ),
                           FormBuilderCheckbox(
                             name: 'accept_terms',
                             initialValue: false,
-                            onChanged: (value) {},
                             title: GestureDetector(
                                 child: RichText(
                                   text: TextSpan(

@@ -38,6 +38,7 @@ class OrderController extends GetxController {
 
     c.forEach((element) {
       var multipleSelectionList = element.split("---");
+      if(multipleSelectionList.isNotEmpty && multipleSelectionList.length>2 ){ 
       var checkListId = multipleSelectionList[0].split("--")[0];
       var values = multipleSelectionList[1].split("--");
       var val = <int>[];
@@ -49,6 +50,7 @@ class OrderController extends GetxController {
 
       data.add(CheckListDatum(
           checkListId: int.parse(checkListId), userSelectedValue: val));
+      }
     });
 
     var request = SaveOrderRequest();
