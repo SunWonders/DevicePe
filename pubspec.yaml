@@ -53,7 +53,7 @@ dependencies:
   #flutter_svg: ^0.19.3 # UnUsed
   dotted_border: 
   toggle_switch: "^0.1.9"
-  #autocomplete_textfield: ^1.7.3
+  google_fonts: ^2.1.0
   autocomplete_textfield_ns: ^2.0.0
 
   numeric_keyboard: ^1.1.0

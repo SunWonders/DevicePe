@@ -179,7 +179,7 @@ class _DeviceSummaryPageState extends State<DeviceSummaryPage> {
     return ClipRRect(
       borderRadius: BorderRadius.all(Radius.circular(10.0)),
       child: Container(
-        height: 160,
+        height: 180,
         width: Get.width,
         decoration: new BoxDecoration(
           border: Border.all(color: Colors.transparent),
@@ -259,7 +259,7 @@ class _DeviceSummaryPageState extends State<DeviceSummaryPage> {
   }
 
   Widget getCheckListDetails() {
-    var h = 65 + (checkListData.value.length * 75).toInt();
+    var h = 65 + (checkListData.value.length * 85).toInt();
     if (checkListData.value.isEmpty) {
       h += 60;
     }
@@ -322,7 +322,7 @@ class _DeviceSummaryPageState extends State<DeviceSummaryPage> {
   }
 
   Widget getSpecificationDetails() {
-    var h = 200 + 75 + (variantData.value!.specifications!.length * 70).toInt();
+    var h = 200 + 75 + (variantData.value!.specifications!.length * 80).toInt();
     return ClipRRect(
       borderRadius: BorderRadius.all(Radius.circular(10.0)),
       child: Container(

@@ -67,7 +67,7 @@ class _DeviceModelDetailsState extends State<DeviceModelDetails> {
                         ),
                         borderRadius: BorderRadius.all(Radius.circular(5))),
                     child: Text(
-                      "${data.varientName}",
+                      "${data.varientName} ${data.capacity}",
                       style: TextStyle(
                           fontWeight: FontWeight.w600,
                           color: data.varientName ==

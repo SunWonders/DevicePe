@@ -68,28 +68,13 @@ class _HomePageState extends State<HomePage> {
             child: Container(
               margin: EdgeInsets.all(1.0),
               padding: EdgeInsets.all(1.0),
-              color: AppColors.borderShadow,
-              child: ClipRRect(
-                borderRadius: BorderRadius.all(Radius.circular(50.0)),
-                child: Container(
-                  padding: EdgeInsets.all(3.0),
-                  color: AppColors.whiteText,
-                  child: Image.network(
-                    "",
-                    width: 350,
-                    fit: BoxFit.fill,
-                    errorBuilder: (context, error, stackTrace) {
-                      return Center(
-                          child: Icon(Icons.person,color: AppColors.primaryDark,)
-                      );
-                    },
-                    loadingBuilder: (BuildContext context, Widget child,
-                        ImageChunkEvent? loadingProgress) {
-                      if (loadingProgress == null) return child;
-                      return Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    },
+              color: AppColors.whiteText,
+              child: Container(
+                padding: EdgeInsets.all(3.0),
+                color: AppColors.whiteText,
+                child: Center(
+                  child: Image(
+                    image: AssetImage('assets/images/device_pe.png'),
                   ),
                 ),
               ),
