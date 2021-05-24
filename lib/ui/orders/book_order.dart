@@ -51,7 +51,7 @@ class _BookOrderState extends State<BookOrder> {
                     SizedBox(height: 10),
                     Text(
                         "Please Enter Correct Details in order for us to arrive on time at your doorstep to collect the device."),
-                    SizedBox(height: 10),
+                    SizedBox(height: 20),
                     FormBuilder(
                       key: _formKey,
                       child: Column(
@@ -61,6 +61,19 @@ class _BookOrderState extends State<BookOrder> {
                             decoration: InputDecoration(
                               labelText: 'Full Name',
                               //errorText: _nameError,
+                              labelStyle:
+                                  TextStyle(color: AppColors.primaryLight),
+                              hintStyle: TextStyle(color: AppColors.hintGrey),
+                              //border: OutlineInputBorder(),
+                              fillColor: AppColors.shadowThree,
+                              // enabledBorder: OutlineInputBorder(
+                              //   borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                              //   borderSide: BorderSide(color: AppColors.primaryLight),
+                              // ),
+                              // focusedBorder: OutlineInputBorder(
+                              //   borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                              //   borderSide: BorderSide(color: AppColors.primaryLight),
+                              // ),
                             ),
                             validator: FormBuilderValidators.compose([
                               FormBuilderValidators.required(context,
@@ -72,6 +85,10 @@ class _BookOrderState extends State<BookOrder> {
                             decoration: InputDecoration(
                               labelText: 'Phone Number',
                               //errorText: _phoneNumberError,
+                              labelStyle:
+                                  TextStyle(color: AppColors.primaryLight),
+                              hintStyle: TextStyle(color: AppColors.hintGrey),
+                              fillColor: AppColors.shadowThree,
                             ),
                             validator: FormBuilderValidators.compose([
                               FormBuilderValidators.required(context,
@@ -87,7 +104,10 @@ class _BookOrderState extends State<BookOrder> {
                             name: 'email',
                             decoration: InputDecoration(
                               labelText: 'Email',
-                              //errorText: _emailError,
+                              labelStyle:
+                                  TextStyle(color: AppColors.primaryLight),
+                              hintStyle: TextStyle(color: AppColors.hintGrey),
+                              fillColor: AppColors.shadowThree,
                             ),
                             validator: FormBuilderValidators.compose([
                               FormBuilderValidators.required(context,
@@ -101,7 +121,10 @@ class _BookOrderState extends State<BookOrder> {
                             name: 'address',
                             decoration: InputDecoration(
                               labelText: 'Door/Street/Area',
-                              //errorText: _addressError,
+                              labelStyle:
+                                  TextStyle(color: AppColors.primaryLight),
+                              hintStyle: TextStyle(color: AppColors.hintGrey),
+                              fillColor: AppColors.shadowThree,
                             ),
                             validator: FormBuilderValidators.compose([
                               FormBuilderValidators.required(context,
@@ -115,7 +138,10 @@ class _BookOrderState extends State<BookOrder> {
                             name: 'city',
                             decoration: InputDecoration(
                               labelText: 'City',
-                              //errorText: _cityError,
+                              labelStyle:
+                                  TextStyle(color: AppColors.primaryLight),
+                              hintStyle: TextStyle(color: AppColors.hintGrey),
+                              fillColor: AppColors.shadowThree,
                             ),
                             validator: FormBuilderValidators.compose([
                               FormBuilderValidators.required(context,
@@ -126,7 +152,10 @@ class _BookOrderState extends State<BookOrder> {
                             name: 'state',
                             decoration: InputDecoration(
                               labelText: 'State',
-                              //errorText: _stetError,
+                              labelStyle:
+                                  TextStyle(color: AppColors.primaryLight),
+                              hintStyle: TextStyle(color: AppColors.hintGrey),
+                              fillColor: AppColors.shadowThree,
                             ),
                             validator: FormBuilderValidators.compose([
                               FormBuilderValidators.required(context,
@@ -137,7 +166,10 @@ class _BookOrderState extends State<BookOrder> {
                             name: 'pinCode',
                             decoration: InputDecoration(
                               labelText: 'Pin Code',
-                              //errorText: _pinCodeError,
+                              labelStyle:
+                                  TextStyle(color: AppColors.primaryLight),
+                              hintStyle: TextStyle(color: AppColors.hintGrey),
+                              fillColor: AppColors.shadowThree,
                             ),
                             validator: FormBuilderValidators.compose([
                               FormBuilderValidators.required(context,
@@ -157,7 +189,10 @@ class _BookOrderState extends State<BookOrder> {
                             inputType: InputType.both,
                             decoration: InputDecoration(
                               labelText: 'Appointment Date Time',
-                              //errorText: _appointmentDateError,
+                              labelStyle:
+                                  TextStyle(color: AppColors.primaryLight),
+                              hintStyle: TextStyle(color: AppColors.hintGrey),
+                              fillColor: AppColors.shadowThree,
                             ),
                             initialDate: DateTime.now().add(Duration(days: 1)),
                             firstDate: DateTime.now(),
@@ -167,6 +202,10 @@ class _BookOrderState extends State<BookOrder> {
                             name: 'comments',
                             decoration: InputDecoration(
                               labelText: 'Comments',
+                              labelStyle:
+                                  TextStyle(color: AppColors.primaryLight),
+                              hintStyle: TextStyle(color: AppColors.hintGrey),
+                              fillColor: AppColors.shadowThree,
                             ),
                             //onChanged: (value) {},
                             // valueTransformer: (text) => num.tryParse(text),
