@@ -53,7 +53,7 @@ class _PowerStateSelectionState extends State<PowerStateSelection> {
       backgroundColor: AppColors.whiteText,
       appBar: AppBar(
         iconTheme: IconThemeData(color: AppColors.primaryLight),
-        backgroundColor: AppColors.nutralLight,
+        backgroundColor: AppColors.whiteText,
         title: Text(
           "About Your Device",
           style: TextStyle(color: AppColors.primaryLight),
@@ -83,112 +83,114 @@ class _PowerStateSelectionState extends State<PowerStateSelection> {
               ),
       ),
       bottomNavigationBar: Obx(
-        () =>checkListDetailResponse.isLoading.value
+        () => checkListDetailResponse.isLoading.value
             ? Container(height: 60, child: RoundProgressBar())
             : Container(
-          child: Container(
-            color: AppColors.nutralLight,
-            height: 60,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Expanded(
-                  child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Get Upto",
-                          style: TextStyle(fontSize: 12, color: AppColors.dark),
-                          textAlign: TextAlign.center,
-                        ),
-                        SizedBox(height: 4),
-                        Text(
-                          "\u20B9 ${price.value}",
-                          style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: AppColors.dark),
-                        ),
-                      ]),
-                ),
-                Expanded(
-                  child: Container(
-                    color: AppColors.primaryLight,
-                    height: 60,
-                    width: Get.width / 2,
-                    child: TextButton(
-                      onPressed: () {
-                        if (checkListDetailResponse.isLoading.value) {
-                          Get.showSnackbar(
-                            GetBar(
-                              backgroundColor: AppColors.bgColor,
-                              titleText: Text(
-                                "Alert",
+                child: Container(
+                  color: AppColors.nutralLight,
+                  height: 60,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Expanded(
+                        child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "Get Upto",
                                 style: TextStyle(
-                                  color: AppColors.primaryLight,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                                    fontSize: 12, color: AppColors.dark),
+                                textAlign: TextAlign.center,
                               ),
-                              messageText: Text("Please Wait..!"),
+                              SizedBox(height: 4),
+                              Text(
+                                "\u20B9 ${price.value}",
+                                style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: AppColors.dark),
+                              ),
+                            ]),
+                      ),
+                      Expanded(
+                        child: Container(
+                          color: AppColors.primaryLight,
+                          height: 60,
+                          width: Get.width / 2,
+                          child: TextButton(
+                            onPressed: () {
+                              if (checkListDetailResponse.isLoading.value) {
+                                Get.showSnackbar(
+                                  GetBar(
+                                    backgroundColor: AppColors.bgColor,
+                                    titleText: Text(
+                                      "Alert",
+                                      style: TextStyle(
+                                        color: AppColors.primaryLight,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    messageText: Text("Please Wait..!"),
+                                  ),
+                                );
+                                return;
+                              }
+                              isSelected.value = true;
+                              checkListDetailResponse.checkListDetails
+                                  .forEach((CheckListData checkListData) => {
+                                        if (checkListData.isMandatory == 1)
+                                          {
+                                            if (singleSelection[
+                                                        checkListData.id] ==
+                                                    null &&
+                                                (multipleSelection[
+                                                            checkListData.id] ==
+                                                        null ||
+                                                    multipleSelection[
+                                                            checkListData.id]!
+                                                        .isEmpty))
+                                              {isSelected.value = false}
+                                          },
+                                      });
+                              if (isSelected.value == false) {
+                                Get.defaultDialog(
+                                    middleText:
+                                        "Please Answer All Mandatory Questions");
+                              } else {
+                                SharedPref().saveString(
+                                  SharedPref.SINGLE_SELECTION,
+                                  single
+                                      .toString()
+                                      .replaceAll("[", "")
+                                      .replaceAll("]", ""),
+                                );
+                                SharedPref().saveString(
+                                  SharedPref.MULTIPLE_SELECTION,
+                                  multiple
+                                      .toString()
+                                      .replaceAll("[", "")
+                                      .replaceAll("]", ""),
+                                );
+                                SharedPref().saveDouble(
+                                    SharedPref.CHECK_LIST_AMOUNT, price.value);
+                                Get.to(() => MultipleSelectionPage());
+                              }
+                            },
+                            child: Text(
+                              "Proceed",
+                              style: TextStyle(
+                                color: AppColors.whiteText,
+                                fontSize: 16,
+                              ),
                             ),
-                          );
-                          return;
-                        }
-                        isSelected.value = true;
-                        checkListDetailResponse.checkListDetails
-                            .forEach((CheckListData checkListData) => {
-                                  if (checkListData.isMandatory == 1)
-                                    {
-                                      if (singleSelection[checkListData.id] ==
-                                              null &&
-                                          (multipleSelection[
-                                                      checkListData.id] ==
-                                                  null ||
-                                              multipleSelection[
-                                                      checkListData.id]!
-                                                  .isEmpty))
-                                        {isSelected.value = false}
-                                    },
-                                });
-                        if (isSelected.value == false) {
-                          Get.defaultDialog(
-                              middleText:
-                                  "Please Answer All Mandatory Questions");
-                        } else {
-                          SharedPref().saveString(
-                            SharedPref.SINGLE_SELECTION,
-                            single
-                                .toString()
-                                .replaceAll("[", "")
-                                .replaceAll("]", ""),
-                          );
-                          SharedPref().saveString(
-                            SharedPref.MULTIPLE_SELECTION,
-                            multiple
-                                .toString()
-                                .replaceAll("[", "")
-                                .replaceAll("]", ""),
-                          );
-                          SharedPref().saveDouble(
-                              SharedPref.CHECK_LIST_AMOUNT, price.value);
-                          Get.to(() => MultipleSelectionPage());
-                        }
-                      },
-                      child: Text(
-                        "Proceed",
-                        style: TextStyle(
-                          color: AppColors.whiteText,
-                          fontSize: 16,
+                          ),
                         ),
                       ),
-                    ),
+                    ],
                   ),
                 ),
-              ],
-            ),
-          ),
-        ),
+              ),
       ),
     );
   }

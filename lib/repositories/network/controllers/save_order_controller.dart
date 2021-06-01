@@ -1,5 +1,6 @@
 import 'package:devicepe_client/repositories/local/dao/login_response_dao.dart';
 import 'package:devicepe_client/repositories/local/dao/variant_data_dao.dart';
+import 'package:devicepe_client/repositories/network/models/order_detail_response.dart';
 import 'package:devicepe_client/repositories/network/models/save_order_request.dart';
 import 'package:devicepe_client/repositories/network/models/save_order_response.dart';
 import 'package:devicepe_client/repositories/network/services/order_save_service.dart';
@@ -10,6 +11,7 @@ import 'package:get/get.dart';
 
 class OrderController extends GetxController {
   var saveOrderResponse = SaveOrderResponse().obs;
+  var orderDetailsResponse = OrderDetailResponse().obs;
   var isLoading = false.obs;
 
   void buildSaveOrderRequest(Map<String, dynamic> formData) async {
@@ -38,18 +40,19 @@ class OrderController extends GetxController {
 
     c.forEach((element) {
       var multipleSelectionList = element.split("---");
-      if(multipleSelectionList.isNotEmpty && multipleSelectionList.length>2 ){ 
-      var checkListId = multipleSelectionList[0].split("--")[0];
-      var values = multipleSelectionList[1].split("--");
-      var val = <int>[];
+      if (multipleSelectionList.isNotEmpty &&
+          multipleSelectionList.length > 2) {
+        var checkListId = multipleSelectionList[0].split("--")[0];
+        var values = multipleSelectionList[1].split("--");
+        var val = <int>[];
 
-      for (int j = 0; j < values.length - 1; j++) {
-        val.add(int.parse(values[j]));
-        j++;
-      }
+        for (int j = 0; j < values.length - 1; j++) {
+          val.add(int.parse(values[j]));
+          j++;
+        }
 
-      data.add(CheckListDatum(
-          checkListId: int.parse(checkListId), userSelectedValue: val));
+        data.add(CheckListDatum(
+            checkListId: int.parse(checkListId), userSelectedValue: val));
       }
     });
 
@@ -100,14 +103,12 @@ class OrderController extends GetxController {
       var response = await SaveOrderService.getOrderDetails();
       Get.back();
       if (response != null) {
-        //orderDetailsResponse.value = response;
-        // if (response.checkStatus()) {
-        //   Get.offAll(() => OrderSuccessDialog(
-        //         orderId: response.data,
-        //       ));
-        // } else {
-        //   Get.snackbar("Alert", "Unable To Book an Order. Please Try Again..!");
-        // }
+        orderDetailsResponse.value = response;
+        if (response != null && response.data != null) {
+        } else {
+          Get.snackbar(
+              "Alert", "Unable To Retrieve Order Details. Please Try Again..!");
+        }
       }
     } catch (e) {
       print("Error - $e");

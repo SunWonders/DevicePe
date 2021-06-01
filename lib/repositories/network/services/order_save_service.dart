@@ -2,6 +2,7 @@ import 'package:devicepe_client/repositories/local/dao/login_response_dao.dart';
 import 'package:devicepe_client/repositories/network/api_client.dart';
 import 'package:devicepe_client/repositories/network/api_url.dart';
 import 'package:devicepe_client/repositories/network/models/login_response.dart';
+import 'package:devicepe_client/repositories/network/models/order_detail_response.dart';
 import 'package:devicepe_client/repositories/network/models/save_order_request.dart';
 import 'package:devicepe_client/repositories/network/models/save_order_response.dart';
 import 'package:dio/dio.dart';
@@ -23,7 +24,7 @@ class SaveOrderService {
     }
   }
 
-  static Future<String?> getOrderDetails() async {
+  static Future<OrderDetailResponse?> getOrderDetails() async {
     try {
       LoginResponse? userData = await LoginResponseDao().retrieve();
 
@@ -33,8 +34,7 @@ class SaveOrderService {
       if (response.data == null)
         return null;
       else
-        return response.data; //modelDetailResponseFromJson(response.data!);
-
+        return orderDetailResponseFromJson(response.data!);
     } catch (e) {
       print(e);
       return null;
