@@ -1,5 +1,6 @@
 import 'package:devicepe_client/repositories/network/controllers/save_order_controller.dart';
 import 'package:devicepe_client/repositories/network/models/order_detail_response.dart';
+import 'package:devicepe_client/ui/common/no_dat_found.dart';
 import 'package:devicepe_client/ui/common/progress_bar.dart';
 import 'package:devicepe_client/utils/colors.dart';
 import 'package:devicepe_client/utils/common_utility.dart';
@@ -30,7 +31,10 @@ class _UserOrdersState extends State<UserOrders> {
             MediaQuery.of(context).orientation == Orientation.portrait ? 1 : 2,
         padding: EdgeInsets.symmetric(horizontal: 1.0, vertical: 1),
         children: orderController.orderDetailsResponse.value.data == null
-            ? []
+            ? [
+                SizedBox(width: Get.width),
+                NoDataFound(),
+              ]
             : orderController.orderDetailsResponse.value.data!
                 .map((OrderDetailData data) {
                 return GestureDetector(
