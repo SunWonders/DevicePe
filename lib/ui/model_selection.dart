@@ -22,7 +22,11 @@ class _ModelSelectionPageState extends State<ModelSelectionPage> {
 
   Widget gridViewSelection() {
     return modelController.modelDetails.isNotEmpty
-        ? GridView.count(
+        ? Container(
+      padding: EdgeInsets.all(5.0),
+        child:GridView.count(
+          crossAxisSpacing: 5.0,
+            mainAxisSpacing: 5.0,
             crossAxisCount:
                 MediaQuery.of(context).orientation == Orientation.portrait
                     ? 2
@@ -44,47 +48,25 @@ class _ModelSelectionPageState extends State<ModelSelectionPage> {
                 );
               },
             ).toList(),
-          )
+          ))
         : NoDataFound();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.whiteText,
       appBar: AppBar(
         iconTheme: IconThemeData(color: AppColors.primaryLight),
-        backgroundColor: AppColors.nutralLight,
+        backgroundColor: AppColors.whiteText,
         title: Text(
           "Select Model",
           style: TextStyle(color: AppColors.primaryLight),
         ),
       ),
-      //body: gridViewSelection(),
       body: Obx(() => modelController.isLoading.value
           ? ProgressBar()
           : gridViewSelection()),
-      // floatingActionButton: ElevatedButton(
-      //   style: ButtonStyle(
-      //     backgroundColor:
-      //         MaterialStateProperty.all<Color>(AppColors.primaryLight),
-      //   ),
-      //   onPressed: () {
-      //     if (_selectedModel == null) {
-      //       Get.defaultDialog(
-      //         title: "🙁  Alert 🙁",
-      //         middleText: "Please Select Model to continue",
-      //         radius: 10,
-      //         buttonColor: AppColors.primaryDark,
-      //         onConfirm: () {
-      //           Get.back();
-      //         },
-      //       );
-      //       return;
-      //     }
-      //     Get.to(() => DeviceModelDetails());
-      //   },
-      //   child: Text("Next"),
-      // ),
     );
   }
 }
@@ -102,21 +84,23 @@ class BrandModelGridItem extends StatelessWidget {
       child: Container(
         decoration: new BoxDecoration(
           border: Border.all(
-              color: _isSelected ? AppColors.primaryLight : Colors.transparent),
+            color: _isSelected ? AppColors.whiteText : Colors.transparent,
+            width: _isSelected ? 2.0 : 1.0,
+          ),
           borderRadius: BorderRadius.circular(15),
           boxShadow: [
             BoxShadow(
-              color: Colors.grey.withOpacity(0.5),
+              color: Colors.grey.withOpacity(0.3),
               spreadRadius: 1,
-              blurRadius: 5,
-              offset: Offset(0, 3),
+              blurRadius: 2,
+              offset: Offset(0, 0),
             ),
           ],
           gradient: new LinearGradient(
             colors: _isSelected
                 ? [
-                    AppColors.nutralLight,
-                    AppColors.nutralLight,
+                    AppColors.bgColor,
+                    AppColors.bgColor,
                   ]
                 : [
                     AppColors.whiteText,

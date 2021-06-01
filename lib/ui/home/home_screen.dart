@@ -1,5 +1,7 @@
 import 'package:devicepe_client/ui/home/home_accessories.dart';
 import 'package:devicepe_client/ui/home/home_screen_banner.dart';
+import 'package:devicepe_client/utils/colors.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreenPage extends StatefulWidget {
@@ -16,14 +18,19 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
       resizeToAvoidBottomInset: false,
       body: SingleChildScrollView(
         child: Container(
+          color: AppColors.whiteText,
+          padding: EdgeInsets.all(5.0),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               HomeScreenBanner(),
               Container(
-                margin: EdgeInsets.fromLTRB(0.0, 30, 0.0, 5.0),
+                margin: EdgeInsets.fromLTRB(0.0, 20, 0.0, 20.0),
+                alignment: Alignment.center,
                 child: Text(
                   "What Would You Like To Sell with Us?",
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold,color: AppColors.primaryLight),
+                  textAlign: TextAlign.center,
                 ),
               ),
               Container(

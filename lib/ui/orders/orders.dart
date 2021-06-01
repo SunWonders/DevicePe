@@ -1,4 +1,5 @@
 import 'package:devicepe_client/repositories/network/controllers/save_order_controller.dart';
+import 'package:devicepe_client/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -18,6 +19,12 @@ class _UserOrdersState extends State<UserOrders> {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Container(
+      child: Center(
+        child: Image(
+          image: AssetImage('assets/images/coming_soon.png'),
+        ),
+      ),
+    );
   }
 }

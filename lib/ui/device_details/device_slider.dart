@@ -30,7 +30,7 @@ class _DeviceSliderCarouselState extends State<DeviceSliderCarousel> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
+      padding: EdgeInsets.fromLTRB(0, 5, 0, 5),
       color: AppColors.whiteText,
       child: ClipRRect(
         borderRadius: BorderRadius.all(Radius.circular(5.0)),

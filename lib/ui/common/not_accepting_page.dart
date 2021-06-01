@@ -15,22 +15,24 @@ class NotAcceptingPage extends StatefulWidget {
 class _NotAcceptingPageState extends State<NotAcceptingPage> {
   String? _message;
   String? heading;
+
   _NotAcceptingPageState(this._message, {this.heading});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.whiteText,
       appBar: AppBar(
-        iconTheme: IconThemeData(color: AppColors.whiteText),
-        backgroundColor: AppColors.primaryLight,
+        iconTheme: IconThemeData(color: AppColors.primaryLight),
+        backgroundColor: AppColors.whiteText,
         title: Text(
           "Oops..!",
-          style: TextStyle(color: AppColors.whiteText),
+          style: TextStyle(color: AppColors.primaryLight),
         ),
       ),
       body: Container(
         alignment: Alignment.center,
-        margin: EdgeInsets.all(10),
+        margin: EdgeInsets.all(20),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -52,8 +54,10 @@ class _NotAcceptingPageState extends State<NotAcceptingPage> {
                 : Container(),
             Text(_message == null ? "Please Try Again..." : _message!,
                 style: TextStyle(
+                  wordSpacing: 2.0,
+                  letterSpacing: 1.0,
                   fontWeight: FontWeight.w600,
-                  fontSize: 16,
+                  fontSize: 18,
                   color: AppColors.blackText,
                 ),
                 textAlign: TextAlign.center),

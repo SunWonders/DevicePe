@@ -49,17 +49,18 @@ class _PowerStateSelectionState extends State<PowerStateSelection> {
   Widget build(BuildContext context) {
     var isSelected = true.obs;
 
-    return Obx(
-      () => Scaffold(
-        appBar: AppBar(
-          iconTheme: IconThemeData(color: AppColors.primaryLight),
-          backgroundColor: AppColors.nutralLight,
-          title: Text(
-            "About Your Device",
-            style: TextStyle(color: AppColors.primaryLight),
-          ),
+    return Scaffold(
+      backgroundColor: AppColors.whiteText,
+      appBar: AppBar(
+        iconTheme: IconThemeData(color: AppColors.primaryLight),
+        backgroundColor: AppColors.nutralLight,
+        title: Text(
+          "About Your Device",
+          style: TextStyle(color: AppColors.primaryLight),
         ),
-        body: checkListDetailResponse.isLoading.value
+      ),
+      body: Obx(
+        () => checkListDetailResponse.isLoading.value
             ? ProgressBar()
             : SingleChildScrollView(
                 child: Container(
@@ -80,98 +81,114 @@ class _PowerStateSelectionState extends State<PowerStateSelection> {
                   ),
                 ),
               ),
-        bottomNavigationBar: checkListDetailResponse.isLoading.value
+      ),
+      bottomNavigationBar: Obx(
+        () =>checkListDetailResponse.isLoading.value
             ? Container(height: 60, child: RoundProgressBar())
             : Container(
-                child: Container(
-                  color: AppColors.nutralLight,
-                  height: 60,
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Expanded(
-                        child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                "Get Upto",
+          child: Container(
+            color: AppColors.nutralLight,
+            height: 60,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Expanded(
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Get Upto",
+                          style: TextStyle(fontSize: 12, color: AppColors.dark),
+                          textAlign: TextAlign.center,
+                        ),
+                        SizedBox(height: 4),
+                        Text(
+                          "\u20B9 ${price.value}",
+                          style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.dark),
+                        ),
+                      ]),
+                ),
+                Expanded(
+                  child: Container(
+                    color: AppColors.primaryLight,
+                    height: 60,
+                    width: Get.width / 2,
+                    child: TextButton(
+                      onPressed: () {
+                        if (checkListDetailResponse.isLoading.value) {
+                          Get.showSnackbar(
+                            GetBar(
+                              backgroundColor: AppColors.bgColor,
+                              titleText: Text(
+                                "Alert",
                                 style: TextStyle(
-                                    fontSize: 12, color: AppColors.dark),
-                                textAlign: TextAlign.center,
+                                  color: AppColors.primaryLight,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
-                              SizedBox(height: 4),
-                              Text(
-                                "\u20B9 ${price.value}",
-                                style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                    color: AppColors.dark),
-                              ),
-                            ]),
-                      ),
-                      Expanded(
-                        child: Container(
-                          color: AppColors.primaryLight,
-                          height: 60,
-                          width: Get.width / 2,
-                          child: TextButton(
-                            onPressed: () {
-                              isSelected.value = true;
-                              checkListDetailResponse.checkListDetails
-                                  .forEach((CheckListData checkListData) => {
-                                        if (checkListData.isMandatory == 1)
-                                          {
-                                            if (singleSelection[
-                                                        checkListData.id] ==
-                                                    null &&
-                                                (multipleSelection[
-                                                            checkListData.id] ==
-                                                        null ||
-                                                    multipleSelection[
-                                                            checkListData.id]!
-                                                        .isEmpty))
-                                              {isSelected.value = false}
-                                          },
-                                      });
-                              if (isSelected.value == false) {
-                                Get.defaultDialog(
-                                    middleText:
-                                        "Please Answer All Mandatory Questions");
-                              } else {
-                                SharedPref().saveString(
-                                  SharedPref.SINGLE_SELECTION,
-                                  single
-                                      .toString()
-                                      .replaceAll("[", "")
-                                      .replaceAll("]", ""),
-                                );
-                                SharedPref().saveString(
-                                  SharedPref.MULTIPLE_SELECTION,
-                                  multiple
-                                      .toString()
-                                      .replaceAll("[", "")
-                                      .replaceAll("]", ""),
-                                );
-                                SharedPref().saveDouble(
-                                    SharedPref.CHECK_LIST_AMOUNT, price.value);
-                                Get.to(() => MultipleSelectionPage());
-                              }
-                            },
-                            child: Text(
-                              "Proceed",
-                              style: TextStyle(
-                                color: AppColors.whiteText,
-                                fontSize: 16,
-                              ),
+                              messageText: Text("Please Wait..!"),
                             ),
-                          ),
+                          );
+                          return;
+                        }
+                        isSelected.value = true;
+                        checkListDetailResponse.checkListDetails
+                            .forEach((CheckListData checkListData) => {
+                                  if (checkListData.isMandatory == 1)
+                                    {
+                                      if (singleSelection[checkListData.id] ==
+                                              null &&
+                                          (multipleSelection[
+                                                      checkListData.id] ==
+                                                  null ||
+                                              multipleSelection[
+                                                      checkListData.id]!
+                                                  .isEmpty))
+                                        {isSelected.value = false}
+                                    },
+                                });
+                        if (isSelected.value == false) {
+                          Get.defaultDialog(
+                              middleText:
+                                  "Please Answer All Mandatory Questions");
+                        } else {
+                          SharedPref().saveString(
+                            SharedPref.SINGLE_SELECTION,
+                            single
+                                .toString()
+                                .replaceAll("[", "")
+                                .replaceAll("]", ""),
+                          );
+                          SharedPref().saveString(
+                            SharedPref.MULTIPLE_SELECTION,
+                            multiple
+                                .toString()
+                                .replaceAll("[", "")
+                                .replaceAll("]", ""),
+                          );
+                          SharedPref().saveDouble(
+                              SharedPref.CHECK_LIST_AMOUNT, price.value);
+                          Get.to(() => MultipleSelectionPage());
+                        }
+                      },
+                      child: Text(
+                        "Proceed",
+                        style: TextStyle(
+                          color: AppColors.whiteText,
+                          fontSize: 16,
                         ),
                       ),
-                    ],
+                    ),
                   ),
                 ),
-              ),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }
@@ -206,6 +223,7 @@ class _PowerStateSelectionState extends State<PowerStateSelection> {
 
   List<String> single = [];
   List<String> multiple = [];
+
   calculatePrice() async {
     double basePrice = await SharedPref().readDouble(SharedPref.BASE_PRICE);
     single = [];
@@ -291,7 +309,9 @@ class OptionItem extends StatelessWidget {
   final Option _selectionItem;
   final bool _isSelected;
   var showImage = true.obs;
+
   OptionItem(this._selectionItem, this._isSelected);
+
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
@@ -299,15 +319,15 @@ class OptionItem extends StatelessWidget {
       child: Container(
         decoration: new BoxDecoration(
           border: Border.all(
-              width: 1,
-              color: _isSelected ? AppColors.primaryLight : Colors.transparent),
+              width: 2,
+              color: _isSelected ? AppColors.secondary : Colors.transparent),
           borderRadius: BorderRadius.circular(5),
           boxShadow: [
             BoxShadow(
-              color: Colors.grey.withOpacity(0.5),
+              color: Colors.grey.withOpacity(0.3),
               spreadRadius: 1,
-              blurRadius: 5,
-              offset: Offset(0, 3),
+              blurRadius: 3,
+              offset: Offset(0, 0),
             ),
           ],
           gradient: new LinearGradient(
@@ -363,10 +383,10 @@ class OptionItem extends StatelessWidget {
                 decoration: new BoxDecoration(
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.grey.withOpacity(0.5),
+                      color: Colors.transparent,
                       spreadRadius: 1,
-                      blurRadius: 5,
-                      offset: Offset(0, 3),
+                      blurRadius: 1,
+                      offset: Offset(0, 0),
                     ),
                   ],
                   gradient: new LinearGradient(
@@ -382,7 +402,9 @@ class OptionItem extends StatelessWidget {
                     Text(
                       "${_selectionItem.name}",
                       style: TextStyle(
-                        color: AppColors.primaryDark,
+                        color: _isSelected
+                            ? AppColors.secondary
+                            : AppColors.blackText,
                         fontWeight: FontWeight.bold,
                         fontSize: 14,
                       ),

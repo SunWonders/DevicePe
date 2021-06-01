@@ -14,25 +14,18 @@ class BookOrder extends StatefulWidget {
 
 class _BookOrderState extends State<BookOrder> {
   final _formKey = GlobalKey<FormBuilderState>();
+
   OrderController orderController = Get.put(OrderController());
 
-  String _nameError = "";
-  String _emailError = "";
-  String _phoneNumberError = "";
-  String _appointmentDateError = "";
-
-  String _addressError = "";
-  String _cityError = "";
-  String _stetError = "";
-  String _pinCodeError = "";
   var genderOptions = ["Male", "Female", "Others"];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.whiteText,
       appBar: AppBar(
         iconTheme: IconThemeData(color: AppColors.primaryLight),
-        backgroundColor: AppColors.nutralLight,
+        backgroundColor: AppColors.whiteText,
         title: Text(
           "Book Order",
           style: TextStyle(color: AppColors.primaryLight),
@@ -58,30 +51,48 @@ class _BookOrderState extends State<BookOrder> {
                     SizedBox(height: 10),
                     Text(
                         "Please Enter Correct Details in order for us to arrive on time at your doorstep to collect the device."),
-                    SizedBox(height: 10),
+                    SizedBox(height: 20),
                     FormBuilder(
                       key: _formKey,
-                      autovalidateMode: AutovalidateMode.always,
                       child: Column(
                         children: <Widget>[
                           FormBuilderTextField(
                             name: 'name',
                             decoration: InputDecoration(
                               labelText: 'Full Name',
-                              errorText: _nameError,
+                              //errorText: _nameError,
+                              labelStyle:
+                                  TextStyle(color: AppColors.primaryLight),
+                              hintStyle: TextStyle(color: AppColors.hintGrey),
+                              //border: OutlineInputBorder(),
+                              fillColor: AppColors.shadowThree,
+                              // enabledBorder: OutlineInputBorder(
+                              //   borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                              //   borderSide: BorderSide(color: AppColors.primaryLight),
+                              // ),
+                              // focusedBorder: OutlineInputBorder(
+                              //   borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                              //   borderSide: BorderSide(color: AppColors.primaryLight),
+                              // ),
                             ),
                             validator: FormBuilderValidators.compose([
-                              FormBuilderValidators.required(context),
+                              FormBuilderValidators.required(context,
+                                  errorText: "Enter Full Name"),
                             ]),
                           ),
                           FormBuilderTextField(
                             name: 'phoneNumber',
                             decoration: InputDecoration(
                               labelText: 'Phone Number',
-                              errorText: _phoneNumberError,
+                              //errorText: _phoneNumberError,
+                              labelStyle:
+                                  TextStyle(color: AppColors.primaryLight),
+                              hintStyle: TextStyle(color: AppColors.hintGrey),
+                              fillColor: AppColors.shadowThree,
                             ),
                             validator: FormBuilderValidators.compose([
-                              FormBuilderValidators.required(context),
+                              FormBuilderValidators.required(context,
+                                  errorText: "Enter Mobile Number"),
                               FormBuilderValidators.minLength(context, 10,
                                   errorText: "Enter Valid Mobile Number"),
                               FormBuilderValidators.maxLength(context, 10,
@@ -93,12 +104,16 @@ class _BookOrderState extends State<BookOrder> {
                             name: 'email',
                             decoration: InputDecoration(
                               labelText: 'Email',
-                              errorText: _emailError,
+                              labelStyle:
+                                  TextStyle(color: AppColors.primaryLight),
+                              hintStyle: TextStyle(color: AppColors.hintGrey),
+                              fillColor: AppColors.shadowThree,
                             ),
                             validator: FormBuilderValidators.compose([
-                              FormBuilderValidators.required(context),
+                              FormBuilderValidators.required(context,
+                                  errorText: "Enter Email ID"),
                               FormBuilderValidators.email(context,
-                                  errorText: "Enter valid EmailId"),
+                                  errorText: "Enter valid Email ID"),
                             ]),
                             keyboardType: TextInputType.emailAddress,
                           ),
@@ -106,41 +121,59 @@ class _BookOrderState extends State<BookOrder> {
                             name: 'address',
                             decoration: InputDecoration(
                               labelText: 'Door/Street/Area',
-                              errorText: _addressError,
+                              labelStyle:
+                                  TextStyle(color: AppColors.primaryLight),
+                              hintStyle: TextStyle(color: AppColors.hintGrey),
+                              fillColor: AppColors.shadowThree,
                             ),
                             validator: FormBuilderValidators.compose([
-                              FormBuilderValidators.required(context),
-                              FormBuilderValidators.max(context, 70),
+                              FormBuilderValidators.required(context,
+                                  errorText: "Enter Door Street Area"),
+                              FormBuilderValidators.max(context, 70,
+                                  errorText:
+                                      "More Than 70 characters not allowed"),
                             ]),
                           ),
                           FormBuilderTextField(
                             name: 'city',
                             decoration: InputDecoration(
                               labelText: 'City',
-                              errorText: _cityError,
+                              labelStyle:
+                                  TextStyle(color: AppColors.primaryLight),
+                              hintStyle: TextStyle(color: AppColors.hintGrey),
+                              fillColor: AppColors.shadowThree,
                             ),
                             validator: FormBuilderValidators.compose([
-                              FormBuilderValidators.required(context),
+                              FormBuilderValidators.required(context,
+                                  errorText: "Enter City"),
                             ]),
                           ),
                           FormBuilderTextField(
                             name: 'state',
                             decoration: InputDecoration(
                               labelText: 'State',
-                              errorText: _stetError,
+                              labelStyle:
+                                  TextStyle(color: AppColors.primaryLight),
+                              hintStyle: TextStyle(color: AppColors.hintGrey),
+                              fillColor: AppColors.shadowThree,
                             ),
                             validator: FormBuilderValidators.compose([
-                              FormBuilderValidators.required(context),
+                              FormBuilderValidators.required(context,
+                                  errorText: "Enter State"),
                             ]),
                           ),
                           FormBuilderTextField(
                             name: 'pinCode',
                             decoration: InputDecoration(
                               labelText: 'Pin Code',
-                              errorText: _pinCodeError,
+                              labelStyle:
+                                  TextStyle(color: AppColors.primaryLight),
+                              hintStyle: TextStyle(color: AppColors.hintGrey),
+                              fillColor: AppColors.shadowThree,
                             ),
                             validator: FormBuilderValidators.compose([
-                              FormBuilderValidators.required(context),
+                              FormBuilderValidators.required(context,
+                                  errorText: "Enter Pin Code"),
                               FormBuilderValidators.numeric(context,
                                   errorText: "Enter number"),
                               FormBuilderValidators.minLength(context, 6,
@@ -156,7 +189,10 @@ class _BookOrderState extends State<BookOrder> {
                             inputType: InputType.both,
                             decoration: InputDecoration(
                               labelText: 'Appointment Date Time',
-                              errorText: _appointmentDateError,
+                              labelStyle:
+                                  TextStyle(color: AppColors.primaryLight),
+                              hintStyle: TextStyle(color: AppColors.hintGrey),
+                              fillColor: AppColors.shadowThree,
                             ),
                             initialDate: DateTime.now().add(Duration(days: 1)),
                             firstDate: DateTime.now(),
@@ -166,18 +202,22 @@ class _BookOrderState extends State<BookOrder> {
                             name: 'comments',
                             decoration: InputDecoration(
                               labelText: 'Comments',
+                              labelStyle:
+                                  TextStyle(color: AppColors.primaryLight),
+                              hintStyle: TextStyle(color: AppColors.hintGrey),
+                              fillColor: AppColors.shadowThree,
                             ),
-                            onChanged: (value) {},
+                            //onChanged: (value) {},
                             // valueTransformer: (text) => num.tryParse(text),
                             validator: FormBuilderValidators.compose([
-                              FormBuilderValidators.required(context),
+                              FormBuilderValidators.required(context,
+                                  errorText: "Enter Comments"),
                               FormBuilderValidators.max(context, 70),
                             ]),
                           ),
                           FormBuilderCheckbox(
                             name: 'accept_terms',
                             initialValue: false,
-                            onChanged: (value) {},
                             title: GestureDetector(
                                 child: RichText(
                                   text: TextSpan(

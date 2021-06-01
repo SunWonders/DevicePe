@@ -12,7 +12,7 @@ class SelectCity extends StatefulWidget {
 }
 
 GlobalKey<AutoCompleteTextFieldState<String>> key = new GlobalKey();
-var cities = ["Cochin", "Delhi", "Hydrabad", "Jaipur", "Jai"];
+var cities = ["Cochin", "Delhi", "Hydrabad", "Jaipur", "Mysore"];
 var controller = Get.put(CityCheckController());
 
 class _SelectCityState extends State<SelectCity> {

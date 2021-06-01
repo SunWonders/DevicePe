@@ -11,15 +11,14 @@ class CityCheckController extends GetxController {
     try {
       showLoaderDialog();
       var response = await CityCheckService.checkCity(city);
-          Get.back();
+      Get.back();
       if (response != null && response.isActive == true) {
-              SharedPref().saveString(SharedPref.LOCATION, city);
-
+        SharedPref().saveString(SharedPref.LOCATION, city);
+        Get.back();
       } else {
         SharedPref().saveString(SharedPref.LOCATION, "");
         Get.snackbar("Alert!", "Service is not available in your area.");
       }
-      
     } catch (e) {
       print("Error - $e");
     } finally {

@@ -35,6 +35,7 @@ class _MultipleSelectionPageState extends State<MultipleSelectionPage> {
   ];
 
   List<SelectionItem> _selectedIcons = [];
+
   initState() {
     super.initState();
     addFields();
@@ -121,7 +122,7 @@ class _MultipleSelectionPageState extends State<MultipleSelectionPage> {
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(color: AppColors.primaryLight),
-        backgroundColor: AppColors.nutralLight,
+        backgroundColor: AppColors.whiteText,
         title: Text(
           "Device Details",
           style: TextStyle(color: AppColors.primaryLight),
@@ -239,9 +240,9 @@ class SingleGridItem extends StatelessWidget {
         boxShadow: [
           BoxShadow(
             //color: AppColors.dark.withOpacity(0.35),
-            color: !_isSelected
-                ? Colors.grey.shade400
-                : AppColors.primaryLight.withOpacity(0.5),
+            color: _isSelected
+                ? AppColors.blackText.withOpacity(0.2)
+                : AppColors.bgColor, //.withOpacity(0.5),
 
             blurRadius: 10.0,
           ),
@@ -255,7 +256,7 @@ class SingleGridItem extends StatelessWidget {
           margin: _isSelected ? EdgeInsets.all(0) : EdgeInsets.all(0),
           //color: AppColors.shadowFour,
           decoration: BoxDecoration(
-            color: AppColors.shadowFour,
+            color: AppColors.whiteText,
             boxShadow: [
               BoxShadow(
                 color:
@@ -294,7 +295,7 @@ class SingleGridItem extends StatelessWidget {
                       Container(
                         height: 100,
                         decoration: BoxDecoration(
-                          color: AppColors.whiteText,
+                          color: AppColors.bgColor.withOpacity(0.7),
                           shape: BoxShape.circle,
                         ),
                       ),
@@ -307,18 +308,18 @@ class SingleGridItem extends StatelessWidget {
                   ),
                   Container(
                     width: 5,
-                    height: 5,
+                    height: 10,
                   ),
                   Expanded(
                     child: Container(
                       height: 40,
-                      color: AppColors.primaryLight.withOpacity(0.2),
+                      color: AppColors.primaryLight.withOpacity(0.1),
                       alignment: Alignment.center,
                       child: Text(
                         _selectionItem.name,
                         style: TextStyle(
                           fontWeight: FontWeight.w500,
-                          color: AppColors.primaryDark.withOpacity(0.9),
+                          color: AppColors.dark,
                           fontSize: 16,
                         ),
                         textAlign: TextAlign.center,

@@ -3,6 +3,7 @@ import 'package:devicepe_client/ui/orders/orders.dart';
 import 'package:devicepe_client/ui/profile/user_profile.dart';
 import 'package:devicepe_client/ui/select_city.dart';
 import 'package:devicepe_client/utils/colors.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
@@ -58,29 +59,63 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: AppColors.nutralLight,
+        centerTitle: true,
+        backgroundColor: AppColors.whiteText,
+        leading: Container(
+          margin: EdgeInsets.all(5.0),
+          child: ClipRRect(
+            borderRadius: BorderRadius.all(Radius.circular(80.0)),
+            child: Container(
+              margin: EdgeInsets.all(1.0),
+              padding: EdgeInsets.all(1.0),
+              color: AppColors.whiteText,
+              child: Container(
+                padding: EdgeInsets.all(3.0),
+                color: AppColors.whiteText,
+                child: Center(
+                  child: Image(
+                    image: AssetImage('assets/images/device_pe.png'),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
         title: Text(
           "DevicePe",
-          style: TextStyle(color: AppColors.primaryLight),
+          style: TextStyle(
+              color: AppColors.primaryLight, fontWeight: FontWeight.bold),
         ),
         actions: <Widget>[
-          IconButton(
-            icon: Icon(
-              Icons.location_pin,
-              color: AppColors.primaryLight,
+          Container(
+            margin: EdgeInsets.all(5.0),
+            //color: Colors.purple.withOpacity(0.1),
+            child: IconButton(
+              icon: Icon(
+                Icons.location_pin,
+                color: AppColors.primaryDark, //Colors.purpleAccent,
+              ),
+              onPressed: () {
+                Get.to(() => SelectCity());
+              },
             ),
-            onPressed: () {
-              Get.to(() => SelectCity());
-            },
-          )
+          ),
         ],
       ),
       bottomNavigationBar: Container(
-        color: AppColors.nutralLight,
-        child: SalomonBottomBar(
-          currentIndex: _currentIndex,
-          onTap: (i) => setState(() => _currentIndex = i),
-          items: _getBottomOptions(),
+        padding: EdgeInsets.all(10.0),
+        color: AppColors.whiteText,
+        child: ClipRRect(
+          borderRadius: BorderRadius.all(Radius.circular(50.0)),
+          child: Container(
+            color: AppColors.bgColor,
+            child: SalomonBottomBar(
+              currentIndex: _currentIndex,
+              onTap: (i) => setState(() => _currentIndex = i),
+              items: _getBottomOptions(),
+              margin: EdgeInsets.all(5.0),
+            ),
+          ),
         ),
       ),
       body: _getPage(),
