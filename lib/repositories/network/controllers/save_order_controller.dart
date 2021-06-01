@@ -91,4 +91,26 @@ class OrderController extends GetxController {
       isLoading(false);
     }
   }
+
+  void getOrderDetails() async {
+    isLoading(true);
+    try {
+      var response = await SaveOrderService.getOrderDetails();
+      Get.back();
+      if (response != null) {
+        //orderDetailsResponse.value = response;
+        // if (response.checkStatus()) {
+        //   Get.offAll(() => OrderSuccessDialog(
+        //         orderId: response.data,
+        //       ));
+        // } else {
+        //   Get.snackbar("Alert", "Unable To Book an Order. Please Try Again..!");
+        // }
+      }
+    } catch (e) {
+      print("Error - $e");
+    } finally {
+      isLoading(false);
+    }
+  }
 }
