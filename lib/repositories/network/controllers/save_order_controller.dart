@@ -24,16 +24,20 @@ class OrderController extends GetxController {
 
     var singleSelection =
         await SharedPref().readString(SharedPref.SINGLE_SELECTION);
-    var singleSelectionList = singleSelection.split("---");
+    var singleSelectionList1 = singleSelection.split(",");
     var data = <CheckListDatum>[];
-    for (int i = 0; i < singleSelectionList.length; i++) {
-      data.add(CheckListDatum(
-          checkListId: int.parse(singleSelectionList[i].split("--")[0]),
-          userSelectedValue: [
-            int.parse(singleSelectionList[i + 1].split("--")[0])
-          ]));
-      i++;
-    }
+
+    singleSelectionList1.forEach((element) {
+      var singleSelectionList = element.split("---");
+      for (int i = 0; i < singleSelectionList.length; i++) {
+        data.add(CheckListDatum(
+            checkListId: int.parse(singleSelectionList[i].split("--")[0]),
+            userSelectedValue: [
+              int.parse(singleSelectionList[i + 1].split("--")[0])
+            ]));
+        i++;
+      }
+    });
 
     var b = await SharedPref().readString(SharedPref.MULTIPLE_SELECTION);
     var c = b.split(",");
@@ -92,6 +96,7 @@ class OrderController extends GetxController {
       }
     } catch (e) {
       print("Error - $e");
+      Get.snackbar("Alert", "Unable To Book an Order. Please Try Again..!");
     } finally {
       isLoading(false);
     }
