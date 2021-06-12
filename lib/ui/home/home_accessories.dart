@@ -92,7 +92,7 @@ class AccessariesGridItem extends StatelessWidget {
               height: 30,
               color: AppColors.shadowOne.withOpacity(0.8),
               child: Text(
-                "${data.type}",
+                "${data.name}",
                 style: TextStyle(
                   color: AppColors.whiteSubText,
                   fontSize: 18,
